@@ -1,0 +1,2 @@
+﻿Succesfully added all the functionality for the assignment, but the program crashes at random times when running it. 
+In particular this happens when there are half or less than half of the ships left.
