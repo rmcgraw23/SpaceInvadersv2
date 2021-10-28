@@ -320,7 +320,7 @@ namespace SpaceInvaders.Model
             IList<GameObject> level3Enemies = new List<GameObject>();
             foreach (var ship in this.EnemyShips)
             {
-                if (ship.Sprite is Level3EnemySprite)
+                if (ship.Sprite is Level3EnemySprite || ship.Sprite is Level4EnemySprite)
                 {
                     level3Enemies.Add(ship);
                 }
