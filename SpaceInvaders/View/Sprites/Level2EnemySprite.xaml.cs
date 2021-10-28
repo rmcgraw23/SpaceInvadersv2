@@ -12,13 +12,16 @@ namespace SpaceInvaders.View.Sprites
     ///     Draws a level 2 enemy ship.
     /// </summary>
     /// <seealso cref="Windows.UI.Xaml.Controls.UserControl" />
-    public sealed partial class Level2EnemySprite
+    public partial class Level2EnemySprite
     {
         #region DataMembers
 
         private GameManager gameManager;
 
+        private bool hasMoved;
+
         #endregion
+
         #region Constructors
 
         /// <summary>
@@ -29,6 +32,7 @@ namespace SpaceInvaders.View.Sprites
         public Level2EnemySprite()
         {
             this.InitializeComponent();
+            this.hasMoved = true;
             //this.gameManager = new GameManager(640, 500);
 
             //this.gameManager.AnimationUpdated += this.AnimationOnAnimationUpdated;
@@ -40,13 +44,21 @@ namespace SpaceInvaders.View.Sprites
 
         public override void ChangeLightsColors()
         {
-            this.LeftLight.Fill = this.LeftLight.Fill.GetValue(SolidColorBrush.ColorProperty) == new SolidColorBrush(color:Colors.White)
-                ? new SolidColorBrush(color: Colors.Green)
-                : new SolidColorBrush(color: Colors.White);
-
-            this.RightLight.Fill = this.RightLight.Fill == new SolidColorBrush(color: Colors.White)
-                ? new SolidColorBrush(color: Colors.Green)
-                : new SolidColorBrush(color: Colors.White);
+            
+            if (this.hasMoved)
+            {
+                this.LeftLight.Fill = new SolidColorBrush(color: Colors.Green);
+                this.RightLight.Fill = new SolidColorBrush(color: Colors.Green);
+                this.hasMoved = false;
+            }
+            else
+            {
+                this.LeftLight.Fill = new SolidColorBrush(color: Colors.Red);
+                this.RightLight.Fill = new SolidColorBrush(color: Colors.Red);
+                this.hasMoved = true;
+            }
+            
+            //hasMoved = false;
         }
 
         #endregion

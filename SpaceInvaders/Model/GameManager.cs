@@ -155,18 +155,21 @@ namespace SpaceInvaders.Model
             if (this.move == (int)EnemyMoves.EnemyMove2)
             {
                 this.MoveEnemyShipsRight();
+                this.ChangeShipLights();
                 this.OnAnimationUpdated();
             }
 
             if (this.move == (int)EnemyMoves.EnemyMove3)
             {
                 this.MoveEnemyShipsRight();
+                this.ChangeShipLights();
                 this.OnAnimationUpdated();
             }
 
             if (this.move == (int)EnemyMoves.EnemyMove4)
             {
                 this.MoveEnemyShipsLeft();
+                this.ChangeShipLights();
                 this.OnAnimationUpdated();
                 this.move = 0;
             }

@@ -6,7 +6,7 @@ namespace SpaceInvaders.Model
     ///     Manages the level 2 enemy ship.
     /// </summary>
     /// <seealso cref="SpaceInvaders.Model.GameObject" />
-    internal class Level2EnemyShip : GameObject
+    public class Level2EnemyShip : GameObject
     {
         private const int SpeedXDirection = 20;
         private const int SpeedYDirection = 0;

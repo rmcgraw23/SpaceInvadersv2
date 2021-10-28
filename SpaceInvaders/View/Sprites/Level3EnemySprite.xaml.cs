@@ -1,5 +1,10 @@
 ﻿// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
+using System.Runtime.CompilerServices;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
+using SpaceInvaders.Model;
+
 namespace SpaceInvaders.View.Sprites
 {
     /// <summary>
@@ -8,6 +13,11 @@ namespace SpaceInvaders.View.Sprites
     /// <seealso cref="Windows.UI.Xaml.Controls.UserControl" />
     public sealed partial class Level3EnemySprite
     {
+        #region DataMembers
+
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -15,15 +25,16 @@ namespace SpaceInvaders.View.Sprites
         ///     Precondition: none
         ///     Post-condition: Sprite created.
         /// </summary>
-        public Level3EnemySprite()
+        public Level3EnemySprite() : base()
         {
-            this.InitializeComponent();
+         this.InitializeComponent();    
         }
 
         public override void ChangeLightsColors()
         {
-            
+            throw new System.NotImplementedException();
         }
+
 
         #endregion
     }
