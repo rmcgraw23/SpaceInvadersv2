@@ -36,6 +36,11 @@ namespace SpaceInvaders.View.Sprites
             Canvas.SetTop(this, y);
         }
 
+        /// <summary>
+        /// Changes the lights colors.
+        /// </summary>
+        public abstract void ChangeLightsColors();
+
         #endregion
     }
 }

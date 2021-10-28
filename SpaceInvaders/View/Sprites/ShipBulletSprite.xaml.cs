@@ -11,6 +11,11 @@ namespace SpaceInvaders.View.Sprites
             this.InitializeComponent();
         }
 
+        public override void ChangeLightsColors()
+        {
+            
+        }
+
         #endregion
     }
 }

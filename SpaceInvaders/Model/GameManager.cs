@@ -17,6 +17,8 @@ namespace SpaceInvaders.Model
 
         public delegate void GameOverHandler(string content, string title);
 
+        public delegate void AnimationHandler();
+
         #endregion
 
         #region Data members
@@ -147,21 +149,25 @@ namespace SpaceInvaders.Model
             if (this.move == (int)EnemyMoves.EnemyMove1)
             {
                 this.MoveEnemyShipsLeft();
+                this.ChangeShipLights();
             }
 
             if (this.move == (int)EnemyMoves.EnemyMove2)
             {
                 this.MoveEnemyShipsRight();
+                this.OnAnimationUpdated();
             }
 
             if (this.move == (int)EnemyMoves.EnemyMove3)
             {
                 this.MoveEnemyShipsRight();
+                this.OnAnimationUpdated();
             }
 
             if (this.move == (int)EnemyMoves.EnemyMove4)
             {
                 this.MoveEnemyShipsLeft();
+                this.OnAnimationUpdated();
                 this.move = 0;
             }
 
@@ -170,6 +176,14 @@ namespace SpaceInvaders.Model
             this.GetEnemyBulletsFired(this.theCanvas);
 
             this.bulletFired = this.shipsManager.BulletFired;
+        }
+
+        private void ChangeShipLights()
+        {
+            foreach (var ship in this.enemyShips)
+            {
+                ship.Sprite.ChangeLightsColors();
+            }
         }
 
 
@@ -197,6 +211,12 @@ namespace SpaceInvaders.Model
             this.GameOverUpdated?.Invoke(this.title, this.content);
         }
 
+        public event AnimationHandler AnimationUpdated;
+
+        public void OnAnimationUpdated()
+        {
+            this.AnimationUpdated?.Invoke();
+        }
 
         private void createAndPlacePlayerShip(Canvas background)
         {

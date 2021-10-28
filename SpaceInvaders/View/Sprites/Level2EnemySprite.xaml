@@ -21,5 +21,8 @@
         <Rectangle Width="4" Height="15" Fill="{StaticResource EnemyShipColor}" Canvas.Left="39" Canvas.Top="16" />
         <Rectangle Width="2" Height="2" Fill="{StaticResource EnemyShipColor}" Canvas.Left="8" Canvas.Top="31" />
         <Rectangle Width="2" Height="2" Fill="{StaticResource EnemyShipColor}" Canvas.Left="40" Canvas.Top="31" />
+
+        <Rectangle Name="LeftLight" Width= "3" Height="3" Fill="White" />
+        <Rectangle Name="RightLight"  Width= "3" Height="3" Fill="White" Canvas.Left="47" Canvas.Top="0" />
     </Canvas>
 </local:BaseSprite>
