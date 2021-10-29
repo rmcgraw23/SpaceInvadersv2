@@ -30,7 +30,7 @@ namespace SpaceInvaders.Model
         private PlayerShip playerShip;
         private IList<EnemyShip> enemyShips;
 
-        private ShipBullet playerBullet;
+        private IList<ShipBullet> playerBullet;
         private IList<GameObject> enemyBullets;
 
         private bool bulletFired;
@@ -110,7 +110,7 @@ namespace SpaceInvaders.Model
             this.bulletFired = false;
             this.enemyFired = false;
             this.enemyBullets = new List<GameObject>();
-            this.playerBullet = new ShipBullet();
+            this.playerBullet = new List<ShipBullet>();
             this.createAndPlacePlayerShip(background);
 
             this.createAndPlaceEnemyShips(background);
@@ -130,11 +130,11 @@ namespace SpaceInvaders.Model
 
         private void bulletTimerTick(object sender, object e)
         {
-            if (this.bulletFired)
-            {
+            //if (this.bulletFired)
+            //{
                 this.MoveBulletUp();
                 this.EnemyDestroyed(this.theCanvas);
-            }
+            //}
 
             if (this.enemyFired && this.enemyShips.Count != 0)
             {
@@ -311,11 +311,15 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void MoveBulletUp()
         {
-            if (this.playerBullet.Y + this.playerBullet.SpeedY < 0)
+            foreach (var bullet in playerBullet)
             {
-                this.theCanvas.Children.Remove(this.playerBullet.Sprite);
+                if (bullet.Y + bullet.SpeedY < 0)
+                {
+                    this.theCanvas.Children.Remove(bullet.Sprite);
+                }
+
+                bullet.MoveUp();
             }
-            this.playerBullet.MoveUp();
         }
 
         /// <summary>

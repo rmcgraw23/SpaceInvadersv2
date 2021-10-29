@@ -32,7 +32,7 @@ namespace SpaceInvaders.View.Sprites
 
         public override void ChangeLightsColors()
         {
-            throw new System.NotImplementedException();
+             
         }
 
 

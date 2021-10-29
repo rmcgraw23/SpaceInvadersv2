@@ -47,7 +47,7 @@ namespace SpaceInvaders.Model
         /// <value>
         ///     The player bullet.
         /// </value>
-        public ShipBullet PlayerBullet { get; set; }
+        public IList<ShipBullet> PlayerBullet { get; set; }
 
         /// <summary>
         ///     Gets or sets the enemy bullets.
@@ -109,7 +109,7 @@ namespace SpaceInvaders.Model
             this.EnemyFired = false;
             this.BulletFired = false;
             this.EnemyBullets = new List<GameObject>();
-            this.PlayerBullet = new ShipBullet();
+            this.PlayerBullet = new List<ShipBullet>();
         }
 
         /// <summary>
@@ -228,18 +228,21 @@ namespace SpaceInvaders.Model
         /// <param name="background"></param>
         public void CreateAndPlacePlayerShipBullet(Canvas background)
         {
-            if (!background.Children.Contains(this.PlayerBullet.Sprite))
+            ShipBullet bullet = new ShipBullet();
+
+            if (this.PlayerBullet.Count <= 3)
             {
-                background.Children.Add(this.PlayerBullet.Sprite);
-                this.placePlayerBullet();
+                this.PlayerBullet.Add(bullet);
+                background.Children.Add(bullet.Sprite);
+                this.placePlayerBullet(bullet);
                 this.BulletFired = true;
             }
         }
 
-        private void placePlayerBullet()
+        private void placePlayerBullet(ShipBullet bullet)
         {
-            this.PlayerBullet.X = this.PlayerShip.X + 1; //(this.playerShip.Width / 2);
-            this.PlayerBullet.Y = this.PlayerShip.Y - 15;
+            bullet.X = this.PlayerShip.X + 1; //(this.playerShip.Width / 2);
+            bullet.Y = this.PlayerShip.Y - 15;
         }
 
         private void placeLevel1EnemyShip(int count, GameObject ship)
@@ -344,18 +347,24 @@ namespace SpaceInvaders.Model
         public EnemyShip EnemyDestroyed(Canvas background)
         {
             EnemyShip destroyedShip = null;
+            ShipBullet hitBullet = null;
             foreach (var ship in this.EnemyShips)
             {
-                if (this.WithinShipHeight(ship, this.PlayerBullet) && this.WithinShipWidth(ship, this.PlayerBullet))
+                foreach (var bullet in PlayerBullet)
                 {
-                    background.Children.Remove(ship.Sprite);
-                    background.Children.Remove(this.PlayerBullet.Sprite);
-                    destroyedShip = ship;
-                    this.BulletFired = false;
+                    if (this.WithinShipHeight(ship, bullet) && this.WithinShipWidth(ship, bullet))
+                    {
+                        background.Children.Remove(ship.Sprite);
+                        background.Children.Remove(bullet.Sprite);
+                        destroyedShip = ship;
+                        hitBullet = bullet;
+                        this.BulletFired = false;
+                    }
                 }
             }
 
             this.EnemyShips.Remove(destroyedShip);
+            this.PlayerBullet.Remove(hitBullet);
             return destroyedShip;
         }
 
@@ -385,7 +394,7 @@ namespace SpaceInvaders.Model
 
         private bool WithinShipWidth(GameObject ship, GameObject bullet)
         {
-            return bullet.X <= ship.X + ship.Width && bullet.X >= ship.X - ship.Width;
+            return bullet.X <= ship.X + ship.Width/2 && bullet.X >= ship.X - ship.Width/2;
         }
         #endregion
     }
