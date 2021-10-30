@@ -52,6 +52,7 @@ namespace SpaceInvaders.View
 
             this.gameManager.ScoreCountUpdated += this.ScoreOnScoreCountUpdated;
             this.gameManager.GameOverUpdated += this.GameOnGameOverUpdated;
+            this.gameManager.LivesCountUpdated += this.LivesOnLivesCountUpdated;
         }
 
         #endregion
@@ -60,7 +61,12 @@ namespace SpaceInvaders.View
 
         private void ScoreOnScoreCountUpdated(int score)
         {
-            this.ScoreTextBlock.Text = score.ToString();
+            this.ScoreTextBlock.Text = "Score: " + score.ToString();
+        }
+
+        private void LivesOnLivesCountUpdated(int lives)
+        {
+            this.LivesTextBlock.Text = "Lives: " + lives.ToString();
         }
 
         private async void GameOnGameOverUpdated(string title, string content)

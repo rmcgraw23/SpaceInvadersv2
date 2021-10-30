@@ -19,6 +19,8 @@ namespace SpaceInvaders.Model
 
         public delegate void AnimationHandler();
 
+        public delegate void LivesCountHandler(int lives);
+
         #endregion
 
         #region Data members
@@ -41,9 +43,11 @@ namespace SpaceInvaders.Model
 
         private int move;
 
-        private Canvas theCanvas;
+        private Canvas background;
 
         private readonly ShipsManager shipsManager;
+
+        private int lives;
 
         #endregion
 
@@ -106,14 +110,15 @@ namespace SpaceInvaders.Model
             }
 
             this.shipsManager.InitializeShips();
-            this.theCanvas = background;
+            this.background = background;
             this.bulletFired = false;
             this.enemyFired = false;
             this.enemyBullets = new List<GameObject>();
             this.playerBullet = new List<ShipBullet>();
-            this.createAndPlacePlayerShip(background);
+            this.lives = 3;
+            this.createAndPlacePlayerShip(this.background);
 
-            this.createAndPlaceEnemyShips(background);
+            this.createAndPlaceEnemyShips(this.background);
 
             this.timer = new DispatcherTimer();
             this.timer.Tick += this.timerTick;
@@ -133,13 +138,13 @@ namespace SpaceInvaders.Model
             //if (this.bulletFired)
             //{
                 this.MoveBulletUp();
-                this.EnemyDestroyed(this.theCanvas);
+                this.EnemyDestroyed(this.background);
             //}
 
             if (this.enemyFired && this.enemyShips.Count != 0)
             {
                 this.MoveBulletDown();
-                this.PlayerDied(this.theCanvas);
+                this.PlayerDied(this.background);
             }
         
         }
@@ -176,7 +181,7 @@ namespace SpaceInvaders.Model
 
             this.move++;
 
-            this.GetEnemyBulletsFired(this.theCanvas);
+            this.GetEnemyBulletsFired(this.background);
 
             this.bulletFired = this.shipsManager.BulletFired;
         }
@@ -187,6 +192,23 @@ namespace SpaceInvaders.Model
             {
                 ship.Sprite.ChangeLightsColors();
             }
+        }
+
+        /// <summary>
+        /// Creates the handler to handle the score change
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
+        public event LivesCountHandler LivesCountUpdated;
+
+        /// <summary>
+        /// Defines what is handled when the score is changed.
+        /// Precondition: none
+        /// Post-condition: the score on screen should be updated if score is changed.
+        /// </summary>
+        public void OnLivesCountUpdated()
+        {
+            this.LivesCountUpdated?.Invoke(this.lives);
         }
 
 
@@ -315,7 +337,7 @@ namespace SpaceInvaders.Model
             {
                 if (bullet.Y + bullet.SpeedY < 0)
                 {
-                    this.theCanvas.Children.Remove(bullet.Sprite);
+                    this.background.Children.Remove(bullet.Sprite);
                 }
 
                 bullet.MoveUp();
@@ -364,9 +386,11 @@ namespace SpaceInvaders.Model
         /// <param name="background">the background canvas</param>
         public void PlayerDied(Canvas background)
         {
-            this.shipsManager.PlayerDied(background);
+            this.lives = this.shipsManager.PlayerDied(background);
+            this.OnLivesCountUpdated();
+            
             this.playerShip = this.shipsManager.PlayerShip;
-            this.gameOver(background);
+            //this.gameOver(background);
         }
 
         /// <summary>

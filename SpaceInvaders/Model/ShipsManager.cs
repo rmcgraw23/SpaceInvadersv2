@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.System.Preview;
+using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using SpaceInvaders.View.Sprites;
 
@@ -73,6 +75,14 @@ namespace SpaceInvaders.Model
         /// </value>
         public bool EnemyFired { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the lives.
+        /// </summary>
+        /// <value>
+        ///     The lives.
+        /// </value>
+        public int Lives { get; set; }
+
         #endregion
 
         #region Constructor
@@ -110,6 +120,7 @@ namespace SpaceInvaders.Model
             this.BulletFired = false;
             this.EnemyBullets = new List<GameObject>();
             this.PlayerBullet = new List<ShipBullet>();
+            this.Lives = 3;
         }
 
         /// <summary>
@@ -374,7 +385,7 @@ namespace SpaceInvaders.Model
         /// Post-condition: player ship should be removed if hit
         /// </summary>
         /// <param name="background">the background canvas</param>
-        public void PlayerDied(Canvas background)
+        public int PlayerDied(Canvas background)
         {
             foreach (var bullet in this.EnemyBullets)
             {
@@ -383,8 +394,14 @@ namespace SpaceInvaders.Model
                     background.Children.Remove(this.PlayerShip.Sprite);
                     background.Children.Remove(bullet.Sprite);
 
+                    if (this.Lives != 0)
+                    {
+                        this.Lives--;
+                        this.createAndPlacePlayerShip(background);
+                    }
                 }
             }
+            return this.Lives;
         }
 
         private bool WithinShipHeight(GameObject ship, GameObject bullet)
