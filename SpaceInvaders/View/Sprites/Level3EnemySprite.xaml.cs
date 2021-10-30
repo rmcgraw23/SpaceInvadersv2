@@ -15,6 +15,7 @@ namespace SpaceInvaders.View.Sprites
     {
         #region DataMembers
 
+        private bool hasMoved;
 
         #endregion
 
@@ -27,12 +28,22 @@ namespace SpaceInvaders.View.Sprites
         /// </summary>
         public Level3EnemySprite() : base()
         {
-         this.InitializeComponent();    
+         this.InitializeComponent();
+         this.hasMoved = true;
         }
 
         public override void ChangeLightsColors()
         {
-             
+            if (this.hasMoved)
+            {
+                this.Window.Fill = new SolidColorBrush(color: Colors.Black);
+                this.hasMoved = false;
+            }
+            else
+            {
+                this.Window.Fill = new SolidColorBrush(color: Colors.YellowGreen);
+                this.hasMoved = true;
+            }
         }
 
 

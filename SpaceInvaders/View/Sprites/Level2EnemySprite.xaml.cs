@@ -16,8 +16,6 @@ namespace SpaceInvaders.View.Sprites
     {
         #region DataMembers
 
-        private GameManager gameManager;
-
         private bool hasMoved;
 
         #endregion
