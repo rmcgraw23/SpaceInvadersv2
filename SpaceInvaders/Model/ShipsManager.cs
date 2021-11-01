@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using Windows.ApplicationModel.Resources.Core;
-using Windows.System.Preview;
-using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using SpaceInvaders.View.Sprites;
 
@@ -18,7 +14,6 @@ namespace SpaceInvaders.Model
         private const double PlayerShipBottomOffset = 30;
 
         private int enemyShipsPerRow = 8;
-        private const int RowsOfEnemys = 4;
 
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
@@ -129,7 +124,7 @@ namespace SpaceInvaders.Model
         /// Post-condition: the player ship has been placed on the background.
         /// </summary>
         /// <param name="background">The background.</param>
-        public void createAndPlacePlayerShip(Canvas background)
+        public void CreateAndPlacePlayerShip(Canvas background)
         {
             this.PlayerShip = new PlayerShip();
             background.Children.Add(this.PlayerShip.Sprite);
@@ -149,7 +144,7 @@ namespace SpaceInvaders.Model
         /// Post-condition: enemy ships have been placed on the background.
         /// </summary>
         /// <param name="background">The background.</param>
-        public void createAndPlaceEnemyShips(Canvas background)
+        public void CreateAndPlaceEnemyShips(Canvas background)
         {
             var count = 4;
             this.getEnemyShips();
@@ -158,7 +153,7 @@ namespace SpaceInvaders.Model
                 background.Children.Add(this.EnemyShips[index].Sprite);
                 if (index < 2)
                 {
-                    this.placeLevel1EnemyShip(count - 1, this.EnemyShips[index]);
+                    this.placeEnemyShips(count - 1, this.EnemyShips[index]);
                     //this.enemyShipsPerRow = 2;
                 }
 
@@ -166,7 +161,7 @@ namespace SpaceInvaders.Model
                 {
                     
                     //this.enemyShipsPerRow = 4;
-                    this.placeLevel1EnemyShip(count - 4, this.EnemyShips[index]);
+                    this.placeEnemyShips(count - 4, this.EnemyShips[index]);
                     
 
                 }
@@ -174,13 +169,13 @@ namespace SpaceInvaders.Model
                 else if (index < 12)
                 {
                     //this.enemyShipsPerRow = 6;
-                    this.placeLevel1EnemyShip(count - 9, this.EnemyShips[index]);
+                    this.placeEnemyShips(count - 9, this.EnemyShips[index]);
                     
                 }
                 else
                 {
                     //this.enemyShipsPerRow = 8;
-                    this.placeLevel1EnemyShip(count - 16, this.EnemyShips[index]);
+                    this.placeEnemyShips(count - 16, this.EnemyShips[index]);
                     
                 }
 
@@ -193,7 +188,7 @@ namespace SpaceInvaders.Model
         {
             this.EnemyShips = new List<EnemyShip>();
 
-            int ships = 0;
+            //int ships = 0;
             for (var ship = 0; ship < 20; ship++)
             {
                 /*this.EnemyShips.Add(new EnemyShip(new Level1EnemySprite()));
@@ -219,7 +214,7 @@ namespace SpaceInvaders.Model
                 }
 
                 //enemyShipsPerRow += 2;
-                ships += 1;
+                //ships += 1;
             }
         }
 
@@ -256,9 +251,9 @@ namespace SpaceInvaders.Model
             bullet.Y = this.PlayerShip.Y - 15;
         }
 
-        private void placeLevel1EnemyShip(int count, GameObject ship)
+        private void placeEnemyShips(int count, GameObject ship)
         {
-            var offset = (this.backgroundWidth - enemyShipsPerRow * ship.Width) / (enemyShipsPerRow + 1);
+            var offset = (this.backgroundWidth - this.enemyShipsPerRow * ship.Width) / (this.enemyShipsPerRow + 1);
             ship.X = offset * (count + 1) + count * ship.Width;
             if (ship.Sprite is Level1EnemySprite)
             {
@@ -280,7 +275,7 @@ namespace SpaceInvaders.Model
 
         private void placeLevel2EnemyShip(int count, GameObject ship)
         {
-            var offset = (this.backgroundWidth - enemyShipsPerRow * ship.Width) / (enemyShipsPerRow + 1);
+            var offset = (this.backgroundWidth - this.enemyShipsPerRow * ship.Width) / (this.enemyShipsPerRow + 1);
             ship.X = offset * (count + 1) + count * ship.Width;
             ship.Y = 103;
         }
@@ -361,7 +356,7 @@ namespace SpaceInvaders.Model
             ShipBullet hitBullet = null;
             foreach (var ship in this.EnemyShips)
             {
-                foreach (var bullet in PlayerBullet)
+                foreach (var bullet in this.PlayerBullet)
                 {
                     if (this.WithinShipHeight(ship, bullet) && this.WithinShipWidth(ship, bullet))
                     {
@@ -397,7 +392,7 @@ namespace SpaceInvaders.Model
                     if (this.Lives != 0)
                     {
                         this.Lives--;
-                        this.createAndPlacePlayerShip(background);
+                        this.CreateAndPlacePlayerShip(background);
                     }
                 }
             }

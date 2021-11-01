@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -35,7 +34,7 @@ namespace SpaceInvaders.Model
         private IList<ShipBullet> playerBullet;
         private IList<GameObject> enemyBullets;
 
-        private bool bulletFired;
+        //private bool bulletFired;
         private bool enemyFired;
 
         private DispatcherTimer timer;
@@ -61,9 +60,9 @@ namespace SpaceInvaders.Model
         /// </value>
         public int Score { get; set; }
 
-        public string title { get; set; }
+        public string Title { get; set; }
 
-        public string content { get; set; }
+        public string Content { get; set; }
 
         #endregion
 
@@ -111,14 +110,14 @@ namespace SpaceInvaders.Model
 
             this.shipsManager.InitializeShips();
             this.background = background;
-            this.bulletFired = false;
+            //this.bulletFired = false;
             this.enemyFired = false;
             this.enemyBullets = new List<GameObject>();
             this.playerBullet = new List<ShipBullet>();
             this.lives = 3;
-            this.createAndPlacePlayerShip(this.background);
+            this.createAndPlacePlayerShip();
 
-            this.createAndPlaceEnemyShips(this.background);
+            this.createAndPlaceEnemyShips();
 
             this.timer = new DispatcherTimer();
             this.timer.Tick += this.timerTick;
@@ -137,14 +136,14 @@ namespace SpaceInvaders.Model
         {
             //if (this.bulletFired)
             //{
-                this.MoveBulletUp();
-                this.EnemyDestroyed(this.background);
+            this.MoveBulletUp();
+            this.EnemyDestroyed();
             //}
 
             if (this.enemyFired && this.enemyShips.Count != 0)
             {
                 this.MoveBulletDown();
-                this.PlayerDied(this.background);
+                this.PlayerDied();
             }
         
         }
@@ -154,39 +153,39 @@ namespace SpaceInvaders.Model
             if (this.move == (int)EnemyMoves.EnemyMove1)
             {
                 this.MoveEnemyShipsLeft();
-                this.ChangeShipLights();
+                this.changeShipLights();
             }
 
             if (this.move == (int)EnemyMoves.EnemyMove2)
             {
                 this.MoveEnemyShipsRight();
-                this.ChangeShipLights();
+                this.changeShipLights();
                 this.OnAnimationUpdated();
             }
 
             if (this.move == (int)EnemyMoves.EnemyMove3)
             {
                 this.MoveEnemyShipsRight();
-                this.ChangeShipLights();
+                this.changeShipLights();
                 this.OnAnimationUpdated();
             }
 
             if (this.move == (int)EnemyMoves.EnemyMove4)
             {
                 this.MoveEnemyShipsLeft();
-                this.ChangeShipLights();
+                this.changeShipLights();
                 this.OnAnimationUpdated();
                 this.move = 0;
             }
 
             this.move++;
 
-            this.GetEnemyBulletsFired(this.background);
+            this.GetEnemyBulletsFired();
 
-            this.bulletFired = this.shipsManager.BulletFired;
+            //this.bulletFired = this.shipsManager.BulletFired;
         }
 
-        private void ChangeShipLights()
+        private void changeShipLights()
         {
             foreach (var ship in this.enemyShips)
             {
@@ -233,7 +232,7 @@ namespace SpaceInvaders.Model
 
         public void OnGameOverUpdated()
         {
-            this.GameOverUpdated?.Invoke(this.title, this.content);
+            this.GameOverUpdated?.Invoke(this.Title, this.Content);
         }
 
         public event AnimationHandler AnimationUpdated;
@@ -243,9 +242,9 @@ namespace SpaceInvaders.Model
             this.AnimationUpdated?.Invoke();
         }
 
-        private void createAndPlacePlayerShip(Canvas background)
+        private void createAndPlacePlayerShip()
         {
-            this.shipsManager.createAndPlacePlayerShip(background);
+            this.shipsManager.CreateAndPlacePlayerShip(this.background);
             this.playerShip = this.shipsManager.PlayerShip;
         }
 
@@ -275,9 +274,9 @@ namespace SpaceInvaders.Model
                 this.playerShip.MoveRight();
             }
         }
-        private void createAndPlaceEnemyShips(Canvas background)
+        private void createAndPlaceEnemyShips()
         {
-            this.shipsManager.createAndPlaceEnemyShips(background);
+            this.shipsManager.CreateAndPlaceEnemyShips(this.background);
             this.enemyShips = this.shipsManager.EnemyShips;
         }
 
@@ -318,10 +317,9 @@ namespace SpaceInvaders.Model
         /// Precondition: background != null
         /// post-condition: bullet has been placed on the canvas or bullet already exists.
         /// </summary>
-        /// <param name="background"></param>
-        public void CreateAndPlacePlayerShipBullet(Canvas background)
+        public void CreateAndPlacePlayerShipBullet()
         {
-            this.shipsManager.CreateAndPlacePlayerShipBullet(background);
+            this.shipsManager.CreateAndPlacePlayerShipBullet(this.background);
             this.playerBullet = this.shipsManager.PlayerBullet;
 
         }
@@ -333,7 +331,7 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void MoveBulletUp()
         {
-            foreach (var bullet in playerBullet)
+            foreach (var bullet in this.playerBullet)
             {
                 if (bullet.Y + bullet.SpeedY < 0)
                 {
@@ -349,10 +347,9 @@ namespace SpaceInvaders.Model
         /// Precondition: background != null
         /// Post-condition: the bullets fired should be added to the background
         /// </summary>
-        /// <param name="background">The canvas background</param>
-        public void GetEnemyBulletsFired(Canvas background)
+        public void GetEnemyBulletsFired()
         {
-            this.shipsManager.GetEnemyBulletsFired(background);
+            this.shipsManager.GetEnemyBulletsFired(this.background);
             this.enemyBullets = this.shipsManager.EnemyBullets;
             this.enemyFired = this.shipsManager.EnemyFired;
         }
@@ -383,10 +380,9 @@ namespace SpaceInvaders.Model
         /// Precondition: background != null
         /// Post-condition: player ship should be removed if hit
         /// </summary>
-        /// <param name="background">the background canvas</param>
-        public void PlayerDied(Canvas background)
+        public void PlayerDied()
         {
-            this.lives = this.shipsManager.PlayerDied(background);
+            this.lives = this.shipsManager.PlayerDied(this.background);
             this.OnLivesCountUpdated();
             
             this.playerShip = this.shipsManager.PlayerShip;
@@ -398,11 +394,10 @@ namespace SpaceInvaders.Model
         /// Precondition: background != null
         /// Post-condition: the enemy and bullet should be removed if the ship is hit
         /// </summary>
-        /// <param name="background">The canvas background</param>
-        public void EnemyDestroyed(Canvas background)
+        public void EnemyDestroyed()
         {
-            EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed(background);
-            this.bulletFired = this.shipsManager.BulletFired;
+            EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed(this.background);
+            //this.bulletFired = this.shipsManager.BulletFired;
             this.enemyShips = this.shipsManager.EnemyShips;
 
             if (destroyedShip != null)
@@ -410,7 +405,7 @@ namespace SpaceInvaders.Model
                 this.updateScore(destroyedShip);
             }
 
-            this.gameOver(background);
+            this.gameOver();
         }
 
         private void updateScore(EnemyShip destroyedShip)
@@ -420,27 +415,27 @@ namespace SpaceInvaders.Model
             this.OnScoreCountUpdated();
         }
 
-        private void gameOver(Canvas background)
+        private void gameOver()
         {
 
             if (this.enemyShips.Count == 0)
             {
-                this.title = "Congratulations, you won!";
-                this.content = "Score: " + this.Score; 
-                this.Result();
+                this.Title = "Congratulations, you won!";
+                this.Content = "Score: " + this.Score; 
+                this.result();
                 this.OnGameOverUpdated();
             }
 
-            else if (!background.Children.Contains(this.playerShip.Sprite))
+            else if (!this.background.Children.Contains(this.playerShip.Sprite))
             {
-                this.title = "GameOver";
-                this.content = "You Died";
-                this.Result();
+                this.Title = "GameOver";
+                this.Content = "You Died";
+                this.result();
                 this.OnGameOverUpdated();
             }
         }
 
-        private void Result()
+        private void result()
         {
             this.timer.Stop();
             this.bulletTimer.Stop();
