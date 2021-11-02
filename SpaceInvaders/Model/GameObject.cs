@@ -173,6 +173,16 @@ namespace SpaceInvaders.Model
             this.SpeedY = speedY;
         }
 
+        public bool withinObjectHeight(GameObject object1, GameObject object2)
+        {
+            return object2.Y <= object1.Y + object1.Height && object2.Y >= object1.Y;
+        }
+
+        public bool withinObjectWidth(GameObject object1, GameObject object2)
+        {
+            return object2.X <= object1.X + object1.Width / 2 && object2.X >= object1.X - object1.Width / 2;
+        }
+
         #endregion
     }
 }

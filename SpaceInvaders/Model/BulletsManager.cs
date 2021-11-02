@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
+using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
 {
@@ -10,6 +11,10 @@ namespace SpaceInvaders.Model
 
         private double backgroundHeight;
         private double backgroundWidth;
+
+        private const int MaxLives = 3;
+
+        private int enemyShipsPerRow = 8;
 
         #endregion
 
@@ -21,7 +26,7 @@ namespace SpaceInvaders.Model
         /// <value>
         ///     The player bullet.
         /// </value>
-        public ShipBullet PlayerBullet { get; set; }
+        public IList<ShipBullet> PlayerBullet { get; set; }
 
         /// <summary>
         ///     Gets or sets the enemy bullets.
@@ -82,20 +87,74 @@ namespace SpaceInvaders.Model
         /// post-condition: bullet has been placed on the canvas or bullet already exists.
         /// </summary>
         /// <param name="background"></param>
-        public void CreateAndPlacePlayerShipBullet(Canvas background)
+        /// <param name="playerShip"></param>
+        public void CreateAndPlacePlayerShipBullet(Canvas background, GameObject playerShip)
         {
-            if (!background.Children.Contains(this.PlayerBullet.Sprite))
+            ShipBullet bullet = new ShipBullet();
+
+            if (this.PlayerBullet.Count < MaxLives)
             {
-                background.Children.Add(this.PlayerBullet.Sprite);
-                this.placePlayerBullet();
+                this.PlayerBullet.Add(bullet);
+                background.Children.Add(bullet.Sprite);
+                this.placePlayerBullet(bullet, playerShip);
                 this.BulletFired = true;
             }
         }
 
-        private void placePlayerBullet()
+        private void placePlayerBullet(GameObject ship, GameObject bullet)
         {
-            //this.PlayerBullet.X = this.PlayerShip.X + 1; //(this.playerShip.Width / 2);
-            //this.PlayerBullet.Y = this.PlayerShip.Y - 15;
+            bullet.X = ship.X + 1;
+            bullet.Y = ship.Y - 15;
+        }
+
+        private void placeEnemyShips(int count, GameObject ship)
+        {
+            var offset = (this.backgroundWidth - this.enemyShipsPerRow * ship.Width) / (this.enemyShipsPerRow + 1);
+            ship.X = offset * (count + 1) + count * ship.Width;
+            if (ship.Sprite is Level1EnemySprite)
+            {
+                ship.Y = 224;
+            }
+            else if (ship.Sprite is Level2EnemySprite)
+            {
+                ship.Y = 166;
+            }
+            else if (ship.Sprite is Level3EnemySprite)
+            {
+                ship.Y = 108;
+            }
+            else if (ship.Sprite is Level4EnemySprite)
+            {
+                ship.Y = 50;
+            }
+        }
+
+        private void createAndPlaceEnemyBullets(Random random, GameObject ship, Canvas background)
+        {
+            var value = random.Next(0, 10);
+            if (value == 0)
+            {
+                GameObject bullet = new ShipBullet();
+                this.placeBulletsBellowEnemies(ship, bullet);
+
+                background.Children.Add(bullet.Sprite);
+                this.EnemyBullets.Add(bullet);
+
+                if (this.EnemyBullets.Count == 0)
+                {
+                    this.EnemyFired = false;
+                }
+                else
+                {
+                    this.EnemyFired = true;
+                }
+            }
+        }
+
+        private void placeBulletsBellowEnemies(GameObject ship, GameObject bullet)
+        {
+            bullet.X = ship.X;
+            bullet.Y = ship.Y + 18;
         }
 
         #endregion
