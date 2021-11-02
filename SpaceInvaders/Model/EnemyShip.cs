@@ -1,10 +1,9 @@
-﻿using Windows.Media.Streaming.Adaptive;
-using SpaceInvaders.View.Sprites;
+﻿using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
 {
     /// <summary>
-    ///     Manages the level 1 enemy ship.
+    ///     Manages the enemy ships.
     /// </summary>
     /// <seealso cref="SpaceInvaders.Model.GameObject" />
     internal class EnemyShip : GameObject
@@ -17,7 +16,13 @@ namespace SpaceInvaders.Model
         private const int EnemyLevel3Score = 30;
         private const int EnemyLevel4Score = 40;
 
-        public int Score { get; private set; }
+        /// <summary>
+        /// Gets the score.
+        /// </summary>
+        /// <value>
+        /// The score.
+        /// </value>
+        public int Score { get; }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="EnemyShip" /> class.
@@ -29,19 +34,19 @@ namespace SpaceInvaders.Model
 
             if (Sprite is Level1EnemySprite)
             {
-                Score = EnemyLevel1Score;
+                this.Score = EnemyLevel1Score;
             }
             else if (Sprite is Level2EnemySprite)
             {
-                Score = EnemyLevel2Score;
+                this.Score = EnemyLevel2Score;
             }
             else if (Sprite is Level3EnemySprite)
             {
-                Score = EnemyLevel3Score;
+                this.Score = EnemyLevel3Score;
             }
-            else 
+            else
             {
-                Score = EnemyLevel4Score;
+                this.Score = EnemyLevel4Score;
             }
         }
     }

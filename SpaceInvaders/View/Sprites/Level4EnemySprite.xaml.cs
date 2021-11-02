@@ -1,36 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
+﻿using Windows.UI;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace SpaceInvaders.View.Sprites
 {
-    public sealed partial class Level4EnemySprite : BaseSprite
+    /// <summary>
+    ///     Draws a level 4 enemy ship.
+    /// </summary>
+    /// <seealso cref="Windows.UI.Xaml.Controls.UserControl" />
+    public sealed partial class Level4EnemySprite
     {
         #region DataMembers
 
         private bool hasMoved;
 
         #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Level4EnemySprite" /> class.
+        ///     Precondition: none
+        ///     Post-condition: Sprite created.
+        /// </summary>
         public Level4EnemySprite()
         {
             this.InitializeComponent();
             this.hasMoved = true;
         }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Changes the color of the ships lights.
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
         public override void ChangeLightsColors()
         {
             if (this.hasMoved)
@@ -46,5 +54,7 @@ namespace SpaceInvaders.View.Sprites
                 this.hasMoved = true;
             }
         }
+
+        #endregion
     }
 }

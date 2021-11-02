@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SpaceInvaders.View.Sprites;
+using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
-using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
 {
@@ -159,10 +159,10 @@ namespace SpaceInvaders.Model
 
                 else if (index < 6)
                 {
-                    
+
                     //this.enemyShipsPerRow = 4;
                     this.placeEnemyShips(count - 4, this.EnemyShips[index]);
-                    
+
 
                 }
 
@@ -170,13 +170,13 @@ namespace SpaceInvaders.Model
                 {
                     //this.enemyShipsPerRow = 6;
                     this.placeEnemyShips(count - 9, this.EnemyShips[index]);
-                    
+
                 }
                 else
                 {
                     //this.enemyShipsPerRow = 8;
                     this.placeEnemyShips(count - 16, this.EnemyShips[index]);
-                    
+
                 }
 
                 count++;
@@ -406,7 +406,7 @@ namespace SpaceInvaders.Model
 
         private bool WithinShipWidth(GameObject ship, GameObject bullet)
         {
-            return bullet.X <= ship.X + ship.Width/2 && bullet.X >= ship.X - ship.Width/2;
+            return bullet.X <= ship.X + ship.Width / 2 && bullet.X >= ship.X - ship.Width / 2;
         }
         #endregion
     }

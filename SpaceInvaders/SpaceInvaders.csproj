@@ -99,6 +99,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <DocumentationFile>bin\x64\Debug\SpaceInvaders.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -124,8 +125,6 @@
     <Compile Include="Model\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\EnemyShip.cs" />
-    <Compile Include="Model\Level2EnemyShip.cs" />
-    <Compile Include="Model\Level3EnemyShip.cs" />
     <Compile Include="Model\PlayerShip.cs" />
     <Compile Include="Model\ShipBullet.cs" />
     <Compile Include="Model\ShipsManager.cs" />

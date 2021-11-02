@@ -1,5 +1,5 @@
-﻿using System;
-using SpaceInvaders.Model;
+﻿using SpaceInvaders.Model;
+using System;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
@@ -78,7 +78,7 @@ namespace SpaceInvaders.View
                 Content = content,
                 PrimaryButtonText = "Ok"
             };
-            
+
             await playerLostDialog.ShowAsync();
         }
 
@@ -93,7 +93,7 @@ namespace SpaceInvaders.View
                     this.gameManager.MovePlayerShipRight();
                     break;
                 case VirtualKey.Space:
-                    this.gameManager.CreateAndPlacePlayerShipBullet(this.theCanvas);
+                    this.gameManager.CreateAndPlacePlayerShipBullet();
                     break;
             }
         }

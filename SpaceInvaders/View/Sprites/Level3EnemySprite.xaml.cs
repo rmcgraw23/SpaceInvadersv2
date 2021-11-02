@@ -1,9 +1,7 @@
 ﻿// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-using System.Runtime.CompilerServices;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
-using SpaceInvaders.Model;
 
 namespace SpaceInvaders.View.Sprites
 {
@@ -26,12 +24,21 @@ namespace SpaceInvaders.View.Sprites
         ///     Precondition: none
         ///     Post-condition: Sprite created.
         /// </summary>
-        public Level3EnemySprite() : base()
+        public Level3EnemySprite()
         {
-         this.InitializeComponent();
-         this.hasMoved = true;
+            this.InitializeComponent();
+            this.hasMoved = true;
         }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Changes the color of the ships lights.
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
         public override void ChangeLightsColors()
         {
             if (this.hasMoved)
@@ -45,7 +52,6 @@ namespace SpaceInvaders.View.Sprites
                 this.hasMoved = true;
             }
         }
-
 
         #endregion
     }

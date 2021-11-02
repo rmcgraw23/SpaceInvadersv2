@@ -1,10 +1,7 @@
 ﻿// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 using Windows.UI;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using SpaceInvaders.Model;
-using Color = System.Drawing.Color;
 
 namespace SpaceInvaders.View.Sprites
 {
@@ -40,9 +37,14 @@ namespace SpaceInvaders.View.Sprites
 
         #region Methods
 
+        /// <summary>
+        /// Changes the color of the ships lights.
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
         public override void ChangeLightsColors()
         {
-            
+
             if (this.hasMoved)
             {
                 this.LeftLight.Fill = new SolidColorBrush(color: Colors.Green);
@@ -55,7 +57,7 @@ namespace SpaceInvaders.View.Sprites
                 this.RightLight.Fill = new SolidColorBrush(color: Colors.Red);
                 this.hasMoved = true;
             }
-            
+
             //hasMoved = false;
         }
 

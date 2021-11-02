@@ -13,16 +13,25 @@ namespace SpaceInvaders.View.Sprites
         /// <summary>
         ///     Initializes a new instance of the <see cref="PlayerShipSprite" /> class.
         ///     Precondition: none
-        ///     Postcondition: Sprite created.
+        ///     Post-condition: Sprite created.
         /// </summary>
         public PlayerShipSprite()
         {
             this.InitializeComponent();
         }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Changes the color of the ships lights.
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
         public override void ChangeLightsColors()
         {
-            
+
         }
 
         #endregion

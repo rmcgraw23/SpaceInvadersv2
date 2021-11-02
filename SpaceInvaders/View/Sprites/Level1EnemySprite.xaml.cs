@@ -20,9 +20,18 @@ namespace SpaceInvaders.View.Sprites
             this.InitializeComponent();
         }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Changes the color of the ships lights.
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
         public override void ChangeLightsColors()
         {
-            
+
         }
 
         #endregion

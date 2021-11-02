@@ -12,12 +12,36 @@ namespace SpaceInvaders.Model
     {
         #region Types and Delegates
 
+        /// <summary>
+        /// Creates the score event handler.
+        /// precondition: none
+        /// post-condition: none
+        /// </summary>
+        /// <param name="count">The count.</param>
         public delegate void ScoreCountHandler(int count);
 
+        /// <summary>
+        /// Creates the game over event handler.
+        /// precondition: none
+        /// post-condition: none
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="title">The title.</param>
         public delegate void GameOverHandler(string content, string title);
 
+        /// <summary>
+        /// Creates the animation event handler.
+        /// precondition: none
+        /// post-condition: none
+        /// </summary>
         public delegate void AnimationHandler();
 
+        /// <summary>
+        /// Creates the lives event handler.
+        /// precondition: none
+        /// post-condition: none
+        /// </summary>
+        /// <param name="lives">The lives.</param>
         public delegate void LivesCountHandler(int lives);
 
         #endregion
@@ -42,7 +66,7 @@ namespace SpaceInvaders.Model
 
         private int move;
 
-        private Canvas background;
+        private Canvas gameBackground;
 
         private readonly ShipsManager shipsManager;
 
@@ -60,8 +84,20 @@ namespace SpaceInvaders.Model
         /// </value>
         public int Score { get; set; }
 
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        /// <value>
+        /// The title.
+        /// </value>
         public string Title { get; set; }
 
+        /// <summary>
+        /// Gets or sets the content.
+        /// </summary>
+        /// <value>
+        /// The content.
+        /// </value>
         public string Content { get; set; }
 
         #endregion
@@ -109,7 +145,7 @@ namespace SpaceInvaders.Model
             }
 
             this.shipsManager.InitializeShips();
-            this.background = background;
+            this.gameBackground = background;
             //this.bulletFired = false;
             this.enemyFired = false;
             this.enemyBullets = new List<GameObject>();
@@ -145,7 +181,7 @@ namespace SpaceInvaders.Model
                 this.MoveBulletDown();
                 this.PlayerDied();
             }
-        
+
         }
 
         private void timerTick(object sender, object e)
@@ -194,16 +230,16 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Creates the handler to handle the score change
+        /// Creates the handler to handle the lives change
         /// Precondition: none
         /// Post-condition: none
         /// </summary>
         public event LivesCountHandler LivesCountUpdated;
 
         /// <summary>
-        /// Defines what is handled when the score is changed.
+        /// Defines what is handled when the lives is changed.
         /// Precondition: none
-        /// Post-condition: the score on screen should be updated if score is changed.
+        /// Post-condition: the lives on screen should be updated if lives is changed.
         /// </summary>
         public void OnLivesCountUpdated()
         {
@@ -228,15 +264,35 @@ namespace SpaceInvaders.Model
             this.ScoreCountUpdated?.Invoke(this.Score);
         }
 
+        /// <summary>
+        /// Creates the handler to handle game over
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
         public event GameOverHandler GameOverUpdated;
 
+        /// <summary>
+        /// Defines what is handled when the game is over.
+        /// Precondition: none
+        /// Post-condition: A dialog box should appear with the content for the game over condition.
+        /// </summary>
         public void OnGameOverUpdated()
         {
             this.GameOverUpdated?.Invoke(this.Title, this.Content);
         }
 
+        /// <summary>
+        /// Creates the handler to handle the animation change
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
         public event AnimationHandler AnimationUpdated;
 
+        /// <summary>
+        /// Defines what is handled when the animation is changed.
+        /// Precondition: none
+        /// Post-condition: the animation for each ship on screen should be updated if animation is changed.
+        /// </summary>
         public void OnAnimationUpdated()
         {
             this.AnimationUpdated?.Invoke();
@@ -244,7 +300,7 @@ namespace SpaceInvaders.Model
 
         private void createAndPlacePlayerShip()
         {
-            this.shipsManager.CreateAndPlacePlayerShip(this.background);
+            this.shipsManager.CreateAndPlacePlayerShip(this.gameBackground);
             this.playerShip = this.shipsManager.PlayerShip;
         }
 
@@ -276,7 +332,7 @@ namespace SpaceInvaders.Model
         }
         private void createAndPlaceEnemyShips()
         {
-            this.shipsManager.CreateAndPlaceEnemyShips(this.background);
+            this.shipsManager.CreateAndPlaceEnemyShips(this.gameBackground);
             this.enemyShips = this.shipsManager.EnemyShips;
         }
 
@@ -314,12 +370,12 @@ namespace SpaceInvaders.Model
 
         /// <summary>
         /// Creates and places a bullet as long as there isn't another on the screen.
-        /// Precondition: background != null
+        /// Precondition: none
         /// post-condition: bullet has been placed on the canvas or bullet already exists.
         /// </summary>
         public void CreateAndPlacePlayerShipBullet()
         {
-            this.shipsManager.CreateAndPlacePlayerShipBullet(this.background);
+            this.shipsManager.CreateAndPlacePlayerShipBullet(this.gameBackground);
             this.playerBullet = this.shipsManager.PlayerBullet;
 
         }
@@ -335,7 +391,7 @@ namespace SpaceInvaders.Model
             {
                 if (bullet.Y + bullet.SpeedY < 0)
                 {
-                    this.background.Children.Remove(bullet.Sprite);
+                    this.gameBackground.Children.Remove(bullet.Sprite);
                 }
 
                 bullet.MoveUp();
@@ -344,12 +400,12 @@ namespace SpaceInvaders.Model
 
         /// <summary>
         /// Adds the enemy bullets fired to the canvas and list of bullets
-        /// Precondition: background != null
+        /// Precondition: none
         /// Post-condition: the bullets fired should be added to the background
         /// </summary>
         public void GetEnemyBulletsFired()
         {
-            this.shipsManager.GetEnemyBulletsFired(this.background);
+            this.shipsManager.GetEnemyBulletsFired(this.gameBackground);
             this.enemyBullets = this.shipsManager.EnemyBullets;
             this.enemyFired = this.shipsManager.EnemyFired;
         }
@@ -377,26 +433,26 @@ namespace SpaceInvaders.Model
 
         /// <summary>
         /// Checks if the player was hit by a bullet.
-        /// Precondition: background != null
+        /// Precondition: none
         /// Post-condition: player ship should be removed if hit
         /// </summary>
         public void PlayerDied()
         {
-            this.lives = this.shipsManager.PlayerDied(this.background);
+            this.lives = this.shipsManager.PlayerDied(this.gameBackground);
             this.OnLivesCountUpdated();
-            
+
             this.playerShip = this.shipsManager.PlayerShip;
-            //this.gameOver(background);
+            //this.gameOver(gameBackground);
         }
 
         /// <summary>
         /// Checks if an enemy ship is hit by a bullet
-        /// Precondition: background != null
+        /// Precondition: none
         /// Post-condition: the enemy and bullet should be removed if the ship is hit
         /// </summary>
         public void EnemyDestroyed()
         {
-            EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed(this.background);
+            EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed(this.gameBackground);
             //this.bulletFired = this.shipsManager.BulletFired;
             this.enemyShips = this.shipsManager.EnemyShips;
 
@@ -421,12 +477,12 @@ namespace SpaceInvaders.Model
             if (this.enemyShips.Count == 0)
             {
                 this.Title = "Congratulations, you won!";
-                this.Content = "Score: " + this.Score; 
+                this.Content = "Score: " + this.Score;
                 this.result();
                 this.OnGameOverUpdated();
             }
 
-            else if (!this.background.Children.Contains(this.playerShip.Sprite))
+            else if (!this.gameBackground.Children.Contains(this.playerShip.Sprite))
             {
                 this.Title = "GameOver";
                 this.Content = "You Died";
@@ -441,20 +497,6 @@ namespace SpaceInvaders.Model
             this.bulletTimer.Stop();
 
         }
-
-        /*private async void PlayerWon()
-        {
-            var playerWonDialog = new ContentDialog
-            {
-                Title = "Congratulations you won!",
-
-                Content = "Score: " + this.Score,
-                PrimaryButtonText = "Ok"
-            };
-            this.timer.Stop();
-            this.bulletTimer.Stop();
-            await playerWonDialog.ShowAsync();
-        }*/
 
         #endregion
     }
