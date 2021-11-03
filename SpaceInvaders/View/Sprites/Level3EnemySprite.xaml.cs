@@ -43,12 +43,12 @@ namespace SpaceInvaders.View.Sprites
         {
             if (this.hasMoved)
             {
-                this.Window.Fill = new SolidColorBrush(color: Colors.Black);
+                this.window.Fill = new SolidColorBrush(color: Colors.Black);
                 this.hasMoved = false;
             }
             else
             {
-                this.Window.Fill = new SolidColorBrush(color: Colors.YellowGreen);
+                this.window.Fill = new SolidColorBrush(color: Colors.YellowGreen);
                 this.hasMoved = true;
             }
         }

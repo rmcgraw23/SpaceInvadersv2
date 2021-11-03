@@ -61,12 +61,12 @@ namespace SpaceInvaders.View
 
         private void ScoreOnScoreCountUpdated(int score)
         {
-            this.ScoreTextBlock.Text = "Score: " + score.ToString();
+            this.scoreTextBlock.Text = "Score: " + score.ToString();
         }
 
         private void LivesOnLivesCountUpdated(int lives)
         {
-            this.LivesTextBlock.Text = "Lives: " + lives.ToString();
+            this.livesTextBlock.Text = "Lives: " + lives.ToString();
         }
 
         private async void GameOnGameOverUpdated(string title, string content)

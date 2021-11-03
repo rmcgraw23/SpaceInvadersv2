@@ -24,8 +24,6 @@ namespace SpaceInvaders.Model
         private const int OutOfLives = 0;
         private const int OneLifeLeft = 1;
 
-        private readonly BulletsManager bulletsManager;
-
         #endregion
 
         #region Properties
@@ -104,7 +102,6 @@ namespace SpaceInvaders.Model
 
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
-            this.bulletsManager = new BulletsManager(backgroundHeight, backgroundWidth);
         }
 
 
@@ -159,32 +156,23 @@ namespace SpaceInvaders.Model
             for (var index = 0; index < this.EnemyShips.Count; index++)
             {
                 this.gameBackground.Children.Add(this.EnemyShips[index].Sprite);
-                if (index < 2)
+                if (index < (int)EnemyAmounts.Level1EnemyCount)
                 {
                     this.placeEnemyShips(count - 1, this.EnemyShips[index]);
-                    //this.enemyShipsPerRow = 2;
                 }
 
-                else if (index < 6)
+                else if (index < (int)EnemyAmounts.Level2EnemyCount)
                 {
-
-                    //this.enemyShipsPerRow = 4;
                     this.placeEnemyShips(count - 4, this.EnemyShips[index]);
-
-
                 }
 
-                else if (index < 12)
+                else if (index < (int)EnemyAmounts.Level3EnemyCount)
                 {
-                    //this.enemyShipsPerRow = 6;
                     this.placeEnemyShips(count - 9, this.EnemyShips[index]);
-
                 }
                 else
                 {
-                    //this.enemyShipsPerRow = 8;
                     this.placeEnemyShips(count - 16, this.EnemyShips[index]);
-
                 }
 
                 count++;
@@ -236,9 +224,6 @@ namespace SpaceInvaders.Model
                 this.placePlayerBullet(bullet);
                 this.BulletFired = true;
             }
-
-            /*this.bulletsManager.CreateAndPlacePlayerShipBullet(this.gameBackground, this.PlayerShip);
-            this.PlayerBullet = this.bulletsManager.PlayerBullet;*/
         }
 
         private void placePlayerBullet(ShipBullet bullet)
@@ -401,13 +386,11 @@ namespace SpaceInvaders.Model
         private bool WithinShipHeight(GameObject ship, GameObject bullet)
         {
             return bullet.withinObjectHeight(ship, bullet);
-            //bullet.Y <= ship.Y + ship.Height && bullet.Y >= ship.Y;
         }
 
         private bool WithinShipWidth(GameObject ship, GameObject bullet)
         {
             return bullet.withinObjectWidth(ship, bullet);
-            //bullet.X <= ship.X + ship.Width / 2 && bullet.X >= ship.X - ship.Width / 2;
         }
         #endregion
     }

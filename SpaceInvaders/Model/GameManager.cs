@@ -48,7 +48,6 @@ namespace SpaceInvaders.Model
 
         #region Data members
 
-        //private const int EnemyShipsPerRow = 4;
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
 
@@ -57,9 +56,6 @@ namespace SpaceInvaders.Model
 
         private IList<ShipBullet> playerBullet;
         private IList<GameObject> enemyBullets;
-
-        //private bool bulletFired;
-        private bool enemyFired;
 
         private DispatcherTimer timer;
         private DispatcherTimer bulletTimer;
@@ -145,8 +141,6 @@ namespace SpaceInvaders.Model
 
             this.shipsManager.InitializeShips(background);
             this.gameBackground = background;
-            //this.bulletFired = false;
-            this.enemyFired = false;
             this.enemyBullets = new List<GameObject>();
             this.playerBullet = new List<ShipBullet>();
             this.lives = 3;
@@ -174,18 +168,13 @@ namespace SpaceInvaders.Model
 
         private void bulletTimerTick(object sender, object e)
         {
-            //if (this.bulletFired)
-            //{
             this.MoveBulletUp();
             this.EnemyDestroyed();
-            //}
-
-            if (this.enemyFired && this.enemyShips.Count != 0)
-            {
-                this.MoveBulletDown();
-                this.PlayerDied();
-            }
-
+            
+            this.MoveBulletDown();
+            this.PlayerDied();
+            
+            this.gameOver();
         }
 
         private void timerTick(object sender, object e)
@@ -222,7 +211,6 @@ namespace SpaceInvaders.Model
 
             this.GetEnemyBulletsFired();
 
-            //this.bulletFired = this.shipsManager.BulletFired;
         }
 
         private void changeShipLights()
@@ -415,7 +403,6 @@ namespace SpaceInvaders.Model
         {
             this.shipsManager.GetEnemyBulletsFired();
             this.enemyBullets = this.shipsManager.EnemyBullets;
-            this.enemyFired = this.shipsManager.EnemyFired;
         }
 
         /// <summary>
@@ -450,7 +437,7 @@ namespace SpaceInvaders.Model
             this.OnLivesCountUpdated();
 
             this.playerShip = this.shipsManager.PlayerShip;
-            this.gameOver();
+            
         }
 
         /// <summary>
@@ -461,7 +448,6 @@ namespace SpaceInvaders.Model
         public void EnemyDestroyed()
         {
             EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed();
-            //this.bulletFired = this.shipsManager.BulletFired;
             this.enemyShips = this.shipsManager.EnemyShips;
 
             if (destroyedShip != null)
@@ -469,7 +455,6 @@ namespace SpaceInvaders.Model
                 this.updateScore(destroyedShip);
             }
 
-            this.gameOver();
         }
 
         private void updateScore(EnemyShip destroyedShip)
