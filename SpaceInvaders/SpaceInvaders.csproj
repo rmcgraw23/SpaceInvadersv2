@@ -122,10 +122,12 @@
     </Compile>
     <Compile Include="Model\EnemyAmounts.cs" />
     <Compile Include="Model\EnemyMoves.cs" />
+    <Compile Include="Model\EnemyShipManager.cs" />
     <Compile Include="Model\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\EnemyShip.cs" />
     <Compile Include="Model\PlayerShip.cs" />
+    <Compile Include="Model\PlayerShipManager.cs" />
     <Compile Include="Model\ShipBullet.cs" />
     <Compile Include="Model\ShipsManager.cs" />
     <Compile Include="View\MainPage.xaml.cs">

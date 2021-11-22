@@ -54,15 +54,16 @@ namespace SpaceInvaders.Model
         private PlayerShip playerShip;
         private IList<EnemyShip> enemyShips;
 
-        private IList<ShipBullet> playerBullet;
-        private IList<GameObject> enemyBullets;
+        //private IList<ShipBullet> playerBullet;
+        //private IList<GameObject> enemyBullets;
 
         private DispatcherTimer timer;
         private DispatcherTimer bulletTimer;
 
         private Canvas gameBackground;
 
-        private readonly ShipsManager shipsManager;
+        private EnemyShipManager enemyShipManger;
+        private PlayerShipManager playerShipManager;
 
         private int move;
         private int lives;
@@ -119,7 +120,6 @@ namespace SpaceInvaders.Model
 
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
-            this.shipsManager = new ShipsManager(this.backgroundHeight, this.backgroundWidth);
         }
 
         #endregion
@@ -134,16 +134,15 @@ namespace SpaceInvaders.Model
         /// <param name="background">The background canvas.</param>
         public void InitializeGame(Canvas background)
         {
-            if (background == null)
-            {
-                throw new ArgumentNullException(nameof(background));
-            }
-
-            this.shipsManager.InitializeShips(background);
-            this.gameBackground = background;
-            this.enemyBullets = new List<GameObject>();
-            this.playerBullet = new List<ShipBullet>();
+            this.gameBackground = background ?? throw new ArgumentNullException(nameof(this.gameBackground));
+            this.playerShipManager = new PlayerShipManager(this.gameBackground);
+            this.enemyShipManger = new EnemyShipManager(this.gameBackground);
+            this.playerShipManager.InitializeShips();
+            this.enemyShipManger.InitializeShips();
+            //this.enemyBullets = new List<GameObject>();
+            //this.playerBullet = new List<ShipBullet>();
             this.lives = 3;
+
             this.createAndPlacePlayerShip();
 
             this.createAndPlaceEnemyShips();
@@ -170,10 +169,10 @@ namespace SpaceInvaders.Model
         {
             this.MoveBulletUp();
             this.EnemyDestroyed();
-            
+
             this.MoveBulletDown();
             this.PlayerDied();
-            
+
             this.gameOver();
         }
 
@@ -291,8 +290,8 @@ namespace SpaceInvaders.Model
 
         private void createAndPlacePlayerShip()
         {
-            this.shipsManager.CreateAndPlacePlayerShip();
-            this.playerShip = this.shipsManager.PlayerShip;
+            this.playerShipManager.CreateAndPlacePlayerShip();
+            this.playerShip = this.playerShipManager.PlayerShip;
         }
 
 
@@ -323,8 +322,8 @@ namespace SpaceInvaders.Model
         }
         private void createAndPlaceEnemyShips()
         {
-            this.shipsManager.CreateAndPlaceEnemyShips();
-            this.enemyShips = this.shipsManager.EnemyShips;
+            this.enemyShipManger.CreateAndPlaceEnemyShips();
+            this.enemyShips = this.enemyShipManger.EnemyShips;
         }
 
         /// <summary>
@@ -366,8 +365,8 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void CreateAndPlacePlayerShipBullet()
         {
-            this.shipsManager.CreateAndPlacePlayerShipBullet();
-            this.playerBullet = this.shipsManager.PlayerBullet;
+            this.playerShipManager.CreateAndPlacePlayerShipBullet();
+            //this.playerBullet = this.playerShipManager.PlayerBullets;
 
         }
 
@@ -379,7 +378,7 @@ namespace SpaceInvaders.Model
         public void MoveBulletUp()
         {
             ShipBullet shipBullet = null;
-            foreach (var bullet in this.playerBullet)
+            foreach (var bullet in this.playerShipManager.PlayerBullets)
             {
                 if (bullet.Y + bullet.SpeedY < 0)
                 {
@@ -390,8 +389,8 @@ namespace SpaceInvaders.Model
                 bullet.MoveUp();
             }
 
-            this.playerBullet.Remove(shipBullet);
-            this.shipsManager.PlayerBullet = this.playerBullet;
+            this.playerShipManager.PlayerBullets.Remove(shipBullet);
+            this.playerShipManager.PlayerBullets = this.playerShipManager.PlayerBullets;
         }
 
         /// <summary>
@@ -401,8 +400,8 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void GetEnemyBulletsFired()
         {
-            this.shipsManager.GetEnemyBulletsFired();
-            this.enemyBullets = this.shipsManager.EnemyBullets;
+            this.enemyShipManger.GetEnemyBulletsFired();
+            //this.enemyBullets = this.enemyShipManger.EnemyBullets;
         }
 
         /// <summary>
@@ -412,16 +411,16 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void MoveBulletDown()
         {
-            for (int index = 0; index < this.enemyBullets.Count; index++)
+            for (int index = 0; index < this.enemyShipManger.EnemyBullets.Count; index++)
             {
-                if (this.enemyBullets[index].Y + this.enemyBullets[index].SpeedY > this.backgroundHeight)
+                if (this.enemyShipManger.EnemyBullets[index].Y + this.enemyShipManger.EnemyBullets[index].SpeedY > this.backgroundHeight)
                 {
-                    this.enemyBullets.Remove(this.enemyBullets[index]);
+                    this.enemyShipManger.EnemyBullets.Remove(this.enemyShipManger.EnemyBullets[index]);
                 }
 
-                if (this.enemyBullets.Count > 0)
+                if (this.enemyShipManger.EnemyBullets.Count > 0)
                 {
-                    this.enemyBullets[index].MoveDown();
+                    this.enemyShipManger.EnemyBullets[index].MoveDown();
                 }
             }
         }
@@ -433,11 +432,12 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void PlayerDied()
         {
-            this.lives = this.shipsManager.PlayerDied();
+            //this.lives = this.shipsManager.PlayerDied();
+            this.lives = this.playerShipManager.PlayerDied(this.enemyShipManger.EnemyBullets);
             this.OnLivesCountUpdated();
 
-            this.playerShip = this.shipsManager.PlayerShip;
-            
+            //this.playerShip = this.shipsManager.PlayerShip;
+            this.playerShip = this.playerShipManager.PlayerShip;
         }
 
         /// <summary>
@@ -447,8 +447,10 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void EnemyDestroyed()
         {
-            EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed();
-            this.enemyShips = this.shipsManager.EnemyShips;
+            //EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed();
+            EnemyShip destroyedShip = this.enemyShipManger.EnemyDestroyed(this.playerShipManager.PlayerBullets);
+            //this.enemyShips = this.shipsManager.EnemyShips;
+            this.enemyShips = this.enemyShipManger.EnemyShips;
 
             if (destroyedShip != null)
             {
