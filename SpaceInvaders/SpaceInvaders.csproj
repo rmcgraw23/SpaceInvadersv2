@@ -129,7 +129,6 @@
     <Compile Include="Model\PlayerShip.cs" />
     <Compile Include="Model\PlayerShipManager.cs" />
     <Compile Include="Model\ShipBullet.cs" />
-    <Compile Include="Model\ShipsManager.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

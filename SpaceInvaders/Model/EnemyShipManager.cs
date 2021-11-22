@@ -236,6 +236,7 @@ namespace SpaceInvaders.Model
             }
 
             this.EnemyShips.Remove(destroyedShip);
+            //TODO: Fix line below
             // this.PlayerBullet.Remove(hitBullet);
             return destroyedShip;
         }
