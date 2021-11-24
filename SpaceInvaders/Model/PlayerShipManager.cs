@@ -18,6 +18,7 @@ namespace SpaceInvaders.Model
         private const int OneLifeLeft = 1;
 
         private Canvas gameBackground;
+        private BulletManager manager;
 
         #endregion
 
@@ -78,6 +79,7 @@ namespace SpaceInvaders.Model
             this.BulletFired = false;
             this.PlayerBullets = new List<ShipBullet>();
             this.Lives = 3;
+            this.manager = new BulletManager(this.gameBackground);
         }
 
         /// <summary>
@@ -106,15 +108,17 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void CreateAndPlacePlayerShipBullet()
         {
-            ShipBullet bullet = new ShipBullet();
+            this.PlayerBullets = this.manager.CreateAndPlacePlayerShipBullet(this.gameBackground, this.PlayerShip);
+            /*ShipBullet bullet = new ShipBullet();
 
             if (this.PlayerBullets.Count < MaxLives)
             {
-                this.PlayerBullets.Add(bullet);
+                this.PlayerBullets = this.manager.AddPlayerBullet(bullet);
                 this.gameBackground.Children.Add(bullet.Sprite);
                 this.placePlayerBullet(bullet);
                 this.BulletFired = true;
-            }
+            }*/
+            
         }
 
         private void placePlayerBullet(ShipBullet bullet)
@@ -128,9 +132,9 @@ namespace SpaceInvaders.Model
         /// Precondition: background != null
         /// Post-condition: player ship should be removed if hit
         /// </summary>
-        public int PlayerDied(IList<GameObject> enemyBullets)
+        public int PlayerDied(IList<ShipBullet> enemyBullets)
         {
-            GameObject hitBullet = null;
+            ShipBullet hitBullet = null;
             foreach (var bullet in enemyBullets)
             {
                 this.playerDestroyed(bullet, ref hitBullet);
@@ -138,10 +142,11 @@ namespace SpaceInvaders.Model
 
             //TODO: Fix line below
             //this.EnemyBullets.Remove(hitBullet);
+            enemyBullets = this.manager.RemoveEnemyBullet(hitBullet);
             return this.Lives;
         }
 
-        private void playerDestroyed(GameObject bullet, ref GameObject hitBullet)
+        private void playerDestroyed(ShipBullet bullet, ref ShipBullet hitBullet)
         {
             if (this.WithinShipHeight(this.PlayerShip, bullet) && this.WithinShipWidth(this.PlayerShip, bullet))
             {

@@ -16,6 +16,8 @@ namespace SpaceInvaders.Model
         private int enemyShipsPerRow;
         private Canvas gameBackground;
 
+        private BulletManager manager;
+
         #endregion
 
         #region Properties
@@ -34,7 +36,7 @@ namespace SpaceInvaders.Model
         /// <value>
         ///     The enemy bullets.
         /// </value>
-        public IList<GameObject> EnemyBullets { get; set; }
+        public IList<ShipBullet> EnemyBullets { get; set; }
 
         /// <summary>
         ///     Gets or sets whether a bullet was fired.
@@ -59,7 +61,7 @@ namespace SpaceInvaders.Model
         public EnemyShipManager(Canvas background)
         {
             this.gameBackground = background;
-            this.EnemyBullets = new List<GameObject>();
+            this.EnemyBullets = new List<ShipBullet>();
         }
 
         #endregion
@@ -76,7 +78,8 @@ namespace SpaceInvaders.Model
             this.enemyShipsPerRow = 8;
             this.EnemyFired = false;
             this.BulletFired = false;
-            this.EnemyBullets = new List<GameObject>();
+            this.EnemyBullets = new List<ShipBullet>();
+            this.manager = new BulletManager(this.gameBackground);
         }
 
         /// <summary>
@@ -182,13 +185,14 @@ namespace SpaceInvaders.Model
         private void createAndPlaceEnemyBullets(Random random, GameObject ship)
         {
             var value = random.Next(0, 10);
-            if (value == 0)
+            this.EnemyBullets = this.manager.createAndPlaceEnemyBullets(random, ship);
+            /*if (value == 0)
             {
-                GameObject bullet = new ShipBullet();
+                ShipBullet bullet = new ShipBullet();
                 this.placeBulletsBellowEnemies(ship, bullet);
 
                 this.gameBackground.Children.Add(bullet.Sprite);
-                this.EnemyBullets.Add(bullet);
+                this.EnemyBullets = this.manager.AddEnemyBullet(bullet);
 
                 if (this.EnemyBullets.Count == 0)
                 {
@@ -198,7 +202,7 @@ namespace SpaceInvaders.Model
                 {
                     this.EnemyFired = true;
                 }
-            }
+            }*/
         }
 
         private IList<GameObject> getLevel3Enemies()
@@ -238,6 +242,8 @@ namespace SpaceInvaders.Model
             this.EnemyShips.Remove(destroyedShip);
             //TODO: Fix line below
             // this.PlayerBullet.Remove(hitBullet);
+            playerBullets = this.manager.RemovePlayerBullet(hitBullet);
+            
             return destroyedShip;
         }
 
