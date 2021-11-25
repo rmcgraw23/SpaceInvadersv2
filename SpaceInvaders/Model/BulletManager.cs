@@ -16,8 +16,8 @@ namespace SpaceInvaders.Model
     {
         #region DataMembers
 
-        private IList<ShipBullet> playerBullets;
-        private IList<ShipBullet> enemyBullets;
+        public IList<ShipBullet> playerBullets;
+        public IList<ShipBullet> enemyBullets;
 
         private Canvas gameBackground;
 
@@ -62,8 +62,21 @@ namespace SpaceInvaders.Model
             this.playerBullets.Remove(bullet);
             return this.playerBullets;
         }
+        /// <summary>
+        /// Adds the enemy bullets fired to the canvas and list of bullets
+        /// Precondition: none
+        /// Post-condition: the bullets fired should be added to the background
+        /// </summary>
+        public void GetEnemyBulletsFired(IList<GameObject> firingEnemies)
+        {
+            var random = new Random();
+            foreach (var ship in firingEnemies)
+            {
+                this.createAndPlaceEnemyBullets(random, ship);
+            }
+        }
 
-        public IList<ShipBullet> createAndPlaceEnemyBullets(Random random, GameObject ship)
+        private IList<ShipBullet> createAndPlaceEnemyBullets(Random random, GameObject ship)
         {
             var value = random.Next(0, 10);
             if (value == 0)
@@ -112,6 +125,50 @@ namespace SpaceInvaders.Model
         {
             bullet.X = playerShip.X + 1;
             bullet.Y = playerShip.Y - 15;
+        }
+
+        /// <summary>
+        /// Moves the player bullet up or remove if off screen
+        /// Precondition: none
+        /// Post-condition: The player bullet has moved up or has been removed
+        /// </summary>
+        public void MoveBulletUp()
+        {
+            ShipBullet shipBullet = null;
+            foreach (var bullet in this.playerBullets)
+            {
+                if (bullet.Y + bullet.SpeedY < 0)
+                {
+                    this.gameBackground.Children.Remove(bullet.Sprite);
+                    shipBullet = bullet;
+                }
+
+                bullet.MoveUp();
+            }
+
+            this.RemoveEnemyBullet(shipBullet);
+            //this.playerShipManager.PlayerBullets = this.playerShipManager.PlayerBullets;
+        }
+
+        /// <summary>
+        /// Moves each player bullet in the list down
+        /// Precondition: none
+        /// Post-condition: each bullet should be moved down
+        /// </summary>
+        public void MoveBulletDown()
+        {
+            for (int index = 0; index < this.enemyBullets.Count; index++)
+            {
+                if (this.enemyBullets[index].Y + this.enemyBullets[index].SpeedY > this.gameBackground.Height)
+                {
+                    this.enemyBullets.Remove(this.enemyBullets[index]);
+                }
+
+                if (this.enemyBullets.Count > 0)
+                {
+                    this.enemyBullets[index].MoveDown();
+                }
+            }
         }
 
         #endregion

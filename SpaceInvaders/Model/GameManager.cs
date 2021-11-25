@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -64,6 +65,7 @@ namespace SpaceInvaders.Model
 
         private EnemyShipManager enemyShipManger;
         private PlayerShipManager playerShipManager;
+        private BulletManager bulletManager;
 
         private int move;
         private int lives;
@@ -137,6 +139,7 @@ namespace SpaceInvaders.Model
             this.gameBackground = background ?? throw new ArgumentNullException(nameof(this.gameBackground));
             this.playerShipManager = new PlayerShipManager(this.gameBackground);
             this.enemyShipManger = new EnemyShipManager(this.gameBackground);
+            this.bulletManager = new BulletManager(this.gameBackground);
             this.playerShipManager.InitializeShips();
             this.enemyShipManger.InitializeShips();
             //this.enemyBullets = new List<GameObject>();
@@ -167,10 +170,10 @@ namespace SpaceInvaders.Model
 
         private void bulletTimerTick(object sender, object e)
         {
-            this.MoveBulletUp();
+            this.bulletManager.MoveBulletUp();
             this.EnemyDestroyed();
 
-            this.MoveBulletDown();
+            this.bulletManager.MoveBulletDown();
             this.PlayerDied();
 
             this.gameOver();
@@ -180,27 +183,27 @@ namespace SpaceInvaders.Model
         {
             if (this.move == (int)EnemyMoves.EnemyMove1)
             {
-                this.MoveEnemyShipsLeft();
+                this.enemyShipManger.MoveEnemyShipsLeft();
                 this.changeShipLights();
             }
 
             if (this.move == (int)EnemyMoves.EnemyMove2)
             {
-                this.MoveEnemyShipsRight();
+                this.enemyShipManger.MoveEnemyShipsRight();
                 this.changeShipLights();
                 this.OnAnimationUpdated();
             }
 
             if (this.move == (int)EnemyMoves.EnemyMove3)
             {
-                this.MoveEnemyShipsRight();
+                this.enemyShipManger.MoveEnemyShipsRight();
                 this.changeShipLights();
                 this.OnAnimationUpdated();
             }
 
             if (this.move == (int)EnemyMoves.EnemyMove4)
             {
-                this.MoveEnemyShipsLeft();
+                this.enemyShipManger.MoveEnemyShipsLeft();
                 this.changeShipLights();
                 this.OnAnimationUpdated();
                 this.move = 0;
@@ -302,10 +305,11 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void MovePlayerShipLeft()
         {
-            if (this.playerShip.X - this.playerShip.SpeedX > 0)
+            this.playerShipManager.MovePlayerShipLeft();
+            /*if (this.playerShip.X - this.playerShip.SpeedX > 0)
             {
                 this.playerShip.MoveLeft();
-            }
+            }*/
         }
 
         /// <summary>
@@ -315,47 +319,16 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void MovePlayerShipRight()
         {
-            if (this.playerShip.X + this.playerShip.Width + this.playerShip.SpeedX < this.backgroundWidth)
+            this.playerShipManager.MovePlayerShipRight();
+            /*if (this.playerShip.X + this.playerShip.Width + this.playerShip.SpeedX < this.backgroundWidth)
             {
                 this.playerShip.MoveRight();
-            }
+            }*/
         }
         private void createAndPlaceEnemyShips()
         {
             this.enemyShipManger.CreateAndPlaceEnemyShips();
             this.enemyShips = this.enemyShipManger.EnemyShips;
-        }
-
-        /// <summary>
-        /// Moves the enemy ships to the left.
-        /// Precondition: none
-        /// Post-condition: The enemy ships have moved left.
-        /// </summary>
-        public void MoveEnemyShipsLeft()
-        {
-            foreach (var ship in this.enemyShips)
-            {
-                if (this.enemyShips.Count > 0)
-                {
-                    ship.MoveLeft();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Moves the enemy ships to the right.
-        /// Precondition: none
-        /// Post-condition: The enemy ship have moved right.
-        /// </summary>
-        public void MoveEnemyShipsRight()
-        {
-            foreach (var ship in this.enemyShips)
-            {
-                if (this.enemyShips.Count > 0)
-                {
-                    ship.MoveRight();
-                }
-            }
         }
 
         /// <summary>
@@ -365,32 +338,9 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void CreateAndPlacePlayerShipBullet()
         {
-            this.playerShipManager.CreateAndPlacePlayerShipBullet();
+            this.bulletManager.CreateAndPlacePlayerShipBullet(this.gameBackground, playerShip);
             //this.playerBullet = this.playerShipManager.PlayerBullets;
 
-        }
-
-        /// <summary>
-        /// Moves the player bullet up or remove if off screen
-        /// Precondition: none
-        /// Post-condition: The player bullet has moved up or has been removed
-        /// </summary>
-        public void MoveBulletUp()
-        {
-            ShipBullet shipBullet = null;
-            foreach (var bullet in this.playerShipManager.PlayerBullets)
-            {
-                if (bullet.Y + bullet.SpeedY < 0)
-                {
-                    this.gameBackground.Children.Remove(bullet.Sprite);
-                    shipBullet = bullet;
-                }
-
-                bullet.MoveUp();
-            }
-
-            this.playerShipManager.PlayerBullets.Remove(shipBullet);
-            this.playerShipManager.PlayerBullets = this.playerShipManager.PlayerBullets;
         }
 
         /// <summary>
@@ -400,29 +350,8 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void GetEnemyBulletsFired()
         {
-            this.enemyShipManger.GetEnemyBulletsFired();
+            this.bulletManager.GetEnemyBulletsFired(this.enemyShipManger.getFiringEnemies());
             //this.enemyBullets = this.enemyShipManger.EnemyBullets;
-        }
-
-        /// <summary>
-        /// Moves each player bullet in the list down
-        /// Precondition: none
-        /// Post-condition: each bullet should be moved down
-        /// </summary>
-        public void MoveBulletDown()
-        {
-            for (int index = 0; index < this.enemyShipManger.EnemyBullets.Count; index++)
-            {
-                if (this.enemyShipManger.EnemyBullets[index].Y + this.enemyShipManger.EnemyBullets[index].SpeedY > this.backgroundHeight)
-                {
-                    this.enemyShipManger.EnemyBullets.Remove(this.enemyShipManger.EnemyBullets[index]);
-                }
-
-                if (this.enemyShipManger.EnemyBullets.Count > 0)
-                {
-                    this.enemyShipManger.EnemyBullets[index].MoveDown();
-                }
-            }
         }
 
         /// <summary>
@@ -433,7 +362,16 @@ namespace SpaceInvaders.Model
         public void PlayerDied()
         {
             //this.lives = this.shipsManager.PlayerDied();
-            this.lives = this.playerShipManager.PlayerDied(this.enemyShipManger.EnemyBullets);
+            IDictionary<ShipBullet, int> result = this.playerShipManager.PlayerDied(this.bulletManager.enemyBullets);
+            foreach (var bullet in result.Keys)
+            {
+                this.bulletManager.RemoveEnemyBullet(bullet);
+            }
+
+            foreach (var liveValue in result.Values)
+            {
+                this.lives = liveValue;
+            }
             this.OnLivesCountUpdated();
 
             //this.playerShip = this.shipsManager.PlayerShip;
@@ -448,13 +386,20 @@ namespace SpaceInvaders.Model
         public void EnemyDestroyed()
         {
             //EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed();
-            EnemyShip destroyedShip = this.enemyShipManger.EnemyDestroyed(this.playerShipManager.PlayerBullets);
+            IDictionary<ShipBullet, EnemyShip> result = this.enemyShipManger.EnemyDestroyed(this.bulletManager.playerBullets);
             //this.enemyShips = this.shipsManager.EnemyShips;
             this.enemyShips = this.enemyShipManger.EnemyShips;
-
-            if (destroyedShip != null)
+            foreach (var bullet in result.Keys)
             {
-                this.updateScore(destroyedShip);
+                this.bulletManager.RemovePlayerBullet(bullet);
+            }
+
+            foreach (var destroyedShip in result.Values)
+            {
+                if (destroyedShip != null)
+                {
+                    this.updateScore(destroyedShip);
+                }
             }
 
         }

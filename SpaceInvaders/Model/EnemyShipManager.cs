@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace SpaceInvaders.Model
         private int enemyShipsPerRow;
         private Canvas gameBackground;
 
-        private BulletManager manager;
+        //private BulletManager manager;
 
         #endregion
 
@@ -36,7 +37,7 @@ namespace SpaceInvaders.Model
         /// <value>
         ///     The enemy bullets.
         /// </value>
-        public IList<ShipBullet> EnemyBullets { get; set; }
+        //public IList<ShipBullet> EnemyBullets { get; set; }
 
         /// <summary>
         ///     Gets or sets whether a bullet was fired.
@@ -61,7 +62,7 @@ namespace SpaceInvaders.Model
         public EnemyShipManager(Canvas background)
         {
             this.gameBackground = background;
-            this.EnemyBullets = new List<ShipBullet>();
+            //this.EnemyBullets = new List<ShipBullet>();
         }
 
         #endregion
@@ -78,8 +79,8 @@ namespace SpaceInvaders.Model
             this.enemyShipsPerRow = 8;
             this.EnemyFired = false;
             this.BulletFired = false;
-            this.EnemyBullets = new List<ShipBullet>();
-            this.manager = new BulletManager(this.gameBackground);
+            //this.EnemyBullets = new List<ShipBullet>();
+            //this.manager = new BulletManager(this.gameBackground);
         }
 
         /// <summary>
@@ -168,44 +169,7 @@ namespace SpaceInvaders.Model
             }
         }
 
-        /// <summary>
-        /// Adds the enemy bullets fired to the canvas and list of bullets
-        /// Precondition: none
-        /// Post-condition: the bullets fired should be added to the background
-        /// </summary>
-        public void GetEnemyBulletsFired()
-        {
-            var random = new Random();
-            foreach (var ship in this.getLevel3Enemies())
-            {
-                this.createAndPlaceEnemyBullets(random, ship);
-            }
-        }
-
-        private void createAndPlaceEnemyBullets(Random random, GameObject ship)
-        {
-            var value = random.Next(0, 10);
-            this.EnemyBullets = this.manager.createAndPlaceEnemyBullets(random, ship);
-            /*if (value == 0)
-            {
-                ShipBullet bullet = new ShipBullet();
-                this.placeBulletsBellowEnemies(ship, bullet);
-
-                this.gameBackground.Children.Add(bullet.Sprite);
-                this.EnemyBullets = this.manager.AddEnemyBullet(bullet);
-
-                if (this.EnemyBullets.Count == 0)
-                {
-                    this.EnemyFired = false;
-                }
-                else
-                {
-                    this.EnemyFired = true;
-                }
-            }*/
-        }
-
-        private IList<GameObject> getLevel3Enemies()
+        public IList<GameObject> getFiringEnemies()
         {
             IList<GameObject> firingEnemies = new List<GameObject>();
             foreach (var ship in this.EnemyShips)
@@ -219,19 +183,20 @@ namespace SpaceInvaders.Model
             return firingEnemies;
         }
 
-        private void placeBulletsBellowEnemies(GameObject ship, GameObject bullet)
+        /*private void placeBulletsBellowEnemies(GameObject ship, GameObject bullet)
         {
             bullet.X = ship.X;
             bullet.Y = ship.Y + 18;
-        }
+        }*/
 
         /// <summary>
         /// Checks if an enemy ship is hit by a bullet
         /// Precondition: none
         /// Post-condition: the enemy and bullet should be removed if the ship is hit
         /// </summary>
-        public EnemyShip EnemyDestroyed(IList<ShipBullet> playerBullets)
+        public IDictionary<ShipBullet, EnemyShip> EnemyDestroyed(IList<ShipBullet> playerBullets)
         {
+            IDictionary<ShipBullet, EnemyShip> result = new Dictionary<ShipBullet, EnemyShip>();
             EnemyShip destroyedShip = null;
             ShipBullet hitBullet = null;
             foreach (var ship in this.EnemyShips)
@@ -242,9 +207,13 @@ namespace SpaceInvaders.Model
             this.EnemyShips.Remove(destroyedShip);
             //TODO: Fix line below
             // this.PlayerBullet.Remove(hitBullet);
-            playerBullets = this.manager.RemovePlayerBullet(hitBullet);
-            
-            return destroyedShip;
+            //playerBullets = this.manager.RemovePlayerBullet(hitBullet);
+            if (hitBullet != null)
+            {
+                result.Add(hitBullet, destroyedShip);
+            }
+
+            return result;
         }
 
         private EnemyShip shipDestroyed(EnemyShip ship, EnemyShip destroyedShip, ref ShipBullet hitBullet, IList<ShipBullet> playerBullets)
@@ -272,6 +241,38 @@ namespace SpaceInvaders.Model
         private bool WithinShipWidth(GameObject ship, GameObject bullet)
         {
             return bullet.withinObjectWidth(ship, bullet);
+        }
+
+        /// <summary>
+        /// Moves the enemy ships to the left.
+        /// Precondition: none
+        /// Post-condition: The enemy ships have moved left.
+        /// </summary>
+        public void MoveEnemyShipsLeft()
+        {
+            foreach (var ship in this.EnemyShips)
+            {
+                if (this.EnemyShips.Count > 0)
+                {
+                    ship.MoveLeft();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Moves the enemy ships to the right.
+        /// Precondition: none
+        /// Post-condition: The enemy ship have moved right.
+        /// </summary>
+        public void MoveEnemyShipsRight()
+        {
+            foreach (var ship in this.EnemyShips)
+            {
+                if (this.EnemyShips.Count > 0)
+                {
+                    ship.MoveRight();
+                }
+            }
         }
 
         #endregion

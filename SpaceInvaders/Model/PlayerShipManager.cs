@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace SpaceInvaders.Model
         private const int OneLifeLeft = 1;
 
         private Canvas gameBackground;
-        private BulletManager manager;
+        //private BulletManager manager;
 
         #endregion
 
@@ -38,7 +39,7 @@ namespace SpaceInvaders.Model
         /// <value>
         ///     The player bullet.
         /// </value>
-        public IList<ShipBullet> PlayerBullets { get; set; }
+        //public IList<ShipBullet> PlayerBullets { get; set; }
 
         /// <summary>
         ///     Gets or sets whether a bullet was fired.
@@ -77,9 +78,9 @@ namespace SpaceInvaders.Model
         public void InitializeShips()
         {
             this.BulletFired = false;
-            this.PlayerBullets = new List<ShipBullet>();
+            //this.PlayerBullets = new List<ShipBullet>();
             this.Lives = 3;
-            this.manager = new BulletManager(this.gameBackground);
+            //this.manager = new BulletManager(this.gameBackground);
         }
 
         /// <summary>
@@ -102,38 +103,13 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Creates and places a bullet as long as there isn't another on the screen.
-        /// Precondition: none
-        /// post-condition: bullet has been placed on the canvas or bullet already exists.
-        /// </summary>
-        public void CreateAndPlacePlayerShipBullet()
-        {
-            this.PlayerBullets = this.manager.CreateAndPlacePlayerShipBullet(this.gameBackground, this.PlayerShip);
-            /*ShipBullet bullet = new ShipBullet();
-
-            if (this.PlayerBullets.Count < MaxLives)
-            {
-                this.PlayerBullets = this.manager.AddPlayerBullet(bullet);
-                this.gameBackground.Children.Add(bullet.Sprite);
-                this.placePlayerBullet(bullet);
-                this.BulletFired = true;
-            }*/
-            
-        }
-
-        private void placePlayerBullet(ShipBullet bullet)
-        {
-            bullet.X = this.PlayerShip.X + 1;
-            bullet.Y = this.PlayerShip.Y - 15;
-        }
-
-        /// <summary>
         /// Checks if the player was hit by a bullet.
         /// Precondition: background != null
         /// Post-condition: player ship should be removed if hit
         /// </summary>
-        public int PlayerDied(IList<ShipBullet> enemyBullets)
+        public IDictionary<ShipBullet, int> PlayerDied(IList<ShipBullet> enemyBullets)
         {
+            IDictionary<ShipBullet, int> result = new Dictionary<ShipBullet, int>();
             ShipBullet hitBullet = null;
             foreach (var bullet in enemyBullets)
             {
@@ -142,8 +118,13 @@ namespace SpaceInvaders.Model
 
             //TODO: Fix line below
             //this.EnemyBullets.Remove(hitBullet);
-            enemyBullets = this.manager.RemoveEnemyBullet(hitBullet);
-            return this.Lives;
+            //enemyBullets = this.manager.RemoveEnemyBullet(hitBullet);
+            if (hitBullet != null)
+            {
+                result.Add(hitBullet, Lives);
+            }
+
+            return result;
         }
 
         private void playerDestroyed(ShipBullet bullet, ref ShipBullet hitBullet)
@@ -174,6 +155,32 @@ namespace SpaceInvaders.Model
         private bool WithinShipWidth(GameObject ship, GameObject bullet)
         {
             return bullet.withinObjectWidth(ship, bullet);
+        }
+
+        /// <summary>
+        ///     Moves the player ship to the left.
+        ///     Precondition: none
+        ///     Post-condition: The player ship has moved left.
+        /// </summary>
+        public void MovePlayerShipLeft()
+        {
+            if (this.PlayerShip.X - this.PlayerShip.SpeedX > 0)
+            {
+                this.PlayerShip.MoveLeft();
+            }
+        }
+
+        /// <summary>
+        ///     Moves the player ship to the right.
+        ///     Precondition: none
+        ///     Post-condition: The player ship has moved right.
+        /// </summary>
+        public void MovePlayerShipRight()
+        {
+            if (this.PlayerShip.X + this.PlayerShip.Width + this.PlayerShip.SpeedX < this.gameBackground.Width)
+            {
+                this.PlayerShip.MoveRight();
+            }
         }
 
         #endregion
