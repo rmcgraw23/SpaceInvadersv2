@@ -157,9 +157,9 @@ namespace SpaceInvaders.Model
         {
             this.timer = new DispatcherTimer();
             this.timer.Tick += this.timerTick;
-            this.timer.Interval = new TimeSpan(0, 0, 0, 0, 800);
+            this.timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             this.timer.Start();
-            this.move = 1;
+            this.move = 0;
 
             this.bulletTimer = new DispatcherTimer();
             this.bulletTimer.Tick += this.bulletTimerTick;
@@ -170,6 +170,42 @@ namespace SpaceInvaders.Model
 
         private void bulletTimerTick(object sender, object e)
         {
+            /*this.bulletManager.MoveBulletUp();
+            this.EnemyDestroyed();
+
+            this.bulletManager.MoveBulletDown();
+            this.PlayerDied();
+
+            this.gameOver();*/
+        }
+
+        private void timerTick(object sender, object e)
+        {
+            //ToDo fix timer to run task at different intervals
+            if (timer.Interval.Duration().TotalMilliseconds % 800 == 0)
+            {
+                IList<int> moves = new List<int> { 1, 2, 2, 1 };
+                if (moves[move] % 2 != 0)
+                {
+                    this.enemyShipManger.MoveEnemyShipsLeft();
+
+                }
+                else
+                {
+                    this.enemyShipManger.MoveEnemyShipsRight();
+                }
+
+                this.changeShipLights();
+                this.OnAnimationUpdated();
+
+                this.move++;
+                if (this.move >= moves.Count)
+                {
+                    this.move = 0;
+                }
+
+                this.GetEnemyBulletsFired();
+            }
             this.bulletManager.MoveBulletUp();
             this.EnemyDestroyed();
 
@@ -177,42 +213,6 @@ namespace SpaceInvaders.Model
             this.PlayerDied();
 
             this.gameOver();
-        }
-
-        private void timerTick(object sender, object e)
-        {
-            if (this.move == (int)EnemyMoves.EnemyMove1)
-            {
-                this.enemyShipManger.MoveEnemyShipsLeft();
-                this.changeShipLights();
-            }
-
-            if (this.move == (int)EnemyMoves.EnemyMove2)
-            {
-                this.enemyShipManger.MoveEnemyShipsRight();
-                this.changeShipLights();
-                this.OnAnimationUpdated();
-            }
-
-            if (this.move == (int)EnemyMoves.EnemyMove3)
-            {
-                this.enemyShipManger.MoveEnemyShipsRight();
-                this.changeShipLights();
-                this.OnAnimationUpdated();
-            }
-
-            if (this.move == (int)EnemyMoves.EnemyMove4)
-            {
-                this.enemyShipManger.MoveEnemyShipsLeft();
-                this.changeShipLights();
-                this.OnAnimationUpdated();
-                this.move = 0;
-            }
-
-            this.move++;
-
-            this.GetEnemyBulletsFired();
-
         }
 
         private void changeShipLights()
