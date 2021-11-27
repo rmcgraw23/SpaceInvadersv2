@@ -306,6 +306,7 @@ namespace SpaceInvaders.Model
         public void MovePlayerShipLeft()
         {
             this.playerShipManager.MovePlayerShipLeft();
+
             /*if (this.playerShip.X - this.playerShip.SpeedX > 0)
             {
                 this.playerShip.MoveLeft();
@@ -320,6 +321,7 @@ namespace SpaceInvaders.Model
         public void MovePlayerShipRight()
         {
             this.playerShipManager.MovePlayerShipRight();
+
             /*if (this.playerShip.X + this.playerShip.Width + this.playerShip.SpeedX < this.backgroundWidth)
             {
                 this.playerShip.MoveRight();

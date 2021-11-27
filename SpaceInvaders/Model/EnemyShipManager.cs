@@ -125,23 +125,21 @@ namespace SpaceInvaders.Model
 
             for (var ship = 0; ship < 20; ship++)
             {
-
-                if (ship < (int)EnemyAmounts.Level1EnemyCount)
+                if (ship < (int) EnemyAmounts.Level1EnemyCount)
                 {
-                    this.EnemyShips.Add(new EnemyShip(new Level1EnemySprite()));
+                    this.EnemyShips.Add(new EnemyShip(EnemyShipLevels.LevelOne));
                 }
-
-                else if (ship < (int)EnemyAmounts.Level2EnemyCount)
+                else if (ship < (int) EnemyAmounts.Level2EnemyCount)
                 {
-                    this.EnemyShips.Add(new EnemyShip(new Level2EnemySprite()));
+                    this.EnemyShips.Add(new EnemyShip(EnemyShipLevels.LevelTwo));
                 }
-                else if (ship < (int)EnemyAmounts.Level3EnemyCount)
+                else if (ship < (int) EnemyAmounts.Level3EnemyCount)
                 {
-                    this.EnemyShips.Add(new EnemyShip(new Level3EnemySprite()));
+                    this.EnemyShips.Add(new EnemyShip(EnemyShipLevels.LevelThree));
                 }
                 else
                 {
-                    this.EnemyShips.Add(new EnemyShip(new Level4EnemySprite()));
+                    this.EnemyShips.Add(new EnemyShip(EnemyShipLevels.LevelFour));
                 }
 
             }

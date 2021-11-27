@@ -96,6 +96,20 @@ namespace SpaceInvaders.View
                     this.gameManager.CreateAndPlacePlayerShipBullet();
                     break;
             }
+
+        }
+
+        private void coreWindowOnKeyUp(CoreWindow sender, KeyEventArgs args)
+        {
+            switch (args.VirtualKey)
+            {
+                case VirtualKey.Left:
+                    this.gameManager.MovePlayerShipLeft();
+                    break;
+                case VirtualKey.Right:
+                    this.gameManager.MovePlayerShipRight();
+                    break;
+            }
         }
 
         #endregion
