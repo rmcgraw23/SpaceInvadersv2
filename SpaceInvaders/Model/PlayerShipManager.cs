@@ -129,7 +129,7 @@ namespace SpaceInvaders.Model
 
         private void playerDestroyed(ShipBullet bullet, ref ShipBullet hitBullet)
         {
-            if (this.WithinShipHeight(this.PlayerShip, bullet) && this.WithinShipWidth(this.PlayerShip, bullet))
+            if (CollisionDetector.detectCollision(this.PlayerShip, bullet))
             {
                 this.gameBackground.Children.Remove(this.PlayerShip.Sprite);
                 this.gameBackground.Children.Remove(bullet.Sprite);
@@ -145,16 +145,6 @@ namespace SpaceInvaders.Model
                     this.Lives = OutOfLives;
                 }
             }
-        }
-
-        private bool WithinShipHeight(GameObject ship, GameObject bullet)
-        {
-            return bullet.withinObjectHeight(ship, bullet);
-        }
-
-        private bool WithinShipWidth(GameObject ship, GameObject bullet)
-        {
-            return bullet.withinObjectWidth(ship, bullet);
         }
 
         /// <summary>
