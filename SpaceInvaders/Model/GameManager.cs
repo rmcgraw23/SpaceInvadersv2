@@ -413,9 +413,9 @@ namespace SpaceInvaders.Model
 
         private void gameOver()
         {
-
             if (this.enemyShips.Count == 0)
             {
+                SoundPlayer.PlaySound("gameOver.wav");
                 this.Title = "Congratulations, you won!";
                 this.Content = "Score: " + this.Score;
                 this.result();
@@ -424,6 +424,7 @@ namespace SpaceInvaders.Model
 
             else if (!this.gameBackground.Children.Contains(this.playerShip.Sprite))
             {
+                SoundPlayer.PlaySound("gameOver.wav");
                 this.Title = "GameOver";
                 this.Content = "You Died";
                 this.result();

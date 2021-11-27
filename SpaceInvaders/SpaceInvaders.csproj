@@ -131,6 +131,7 @@
     <Compile Include="Model\PlayerShip.cs" />
     <Compile Include="Model\PlayerShipManager.cs" />
     <Compile Include="Model\ShipBullet.cs" />
+    <Compile Include="Model\SoundPlayer.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -164,6 +165,10 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\cannonFire.wav" />
+    <Content Include="Assets\explosion.wav" />
+    <Content Include="Assets\gameOver.wav" />
+    <Content Include="Assets\laser.wav" />
     <Content Include="Notes.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

@@ -19,6 +19,7 @@ namespace SpaceInvaders.Model
         private const int OneLifeLeft = 1;
 
         private Canvas gameBackground;
+
         //private BulletManager manager;
 
         #endregion
@@ -134,6 +135,7 @@ namespace SpaceInvaders.Model
                 this.gameBackground.Children.Remove(this.PlayerShip.Sprite);
                 this.gameBackground.Children.Remove(bullet.Sprite);
                 hitBullet = bullet;
+                SoundPlayer.PlaySound("explosion.wav");
 
                 if (this.Lives > OneLifeLeft)
                 {

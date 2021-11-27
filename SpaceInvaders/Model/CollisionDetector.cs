@@ -10,7 +10,7 @@ namespace SpaceInvaders.Model
     /// <summary>
     /// The Collision Detector class.
     /// </summary>
-    class CollisionDetector
+    public static class CollisionDetector
     {
 
         #region Methods

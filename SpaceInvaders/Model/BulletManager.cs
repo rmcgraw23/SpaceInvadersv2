@@ -5,6 +5,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.PointOfService.Provider;
+using Windows.UI.Xaml;
+using Windows.Media.Playback;
+using Windows.Media.Core;
 using Windows.UI.Xaml.Controls;
 
 namespace SpaceInvaders.Model
@@ -86,6 +89,7 @@ namespace SpaceInvaders.Model
 
                 this.gameBackground.Children.Add(bullet.Sprite);
                 this.AddEnemyBullet(bullet);
+                SoundPlayer.PlaySound("laser.wav");
 
                 /*if (this.EnemyBullets.Count == 0)
                 {
@@ -116,6 +120,8 @@ namespace SpaceInvaders.Model
                     gameBackground.Children.Add(bullet.Sprite);
                     this.placePlayerBullet(bullet, playerShip);
                     //this.BulletFired = true;
+                    SoundPlayer.PlaySound("cannonFire.wav");
+                    
                 }
 
                 return this.playerBullets;

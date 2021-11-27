@@ -224,6 +224,7 @@ namespace SpaceInvaders.Model
                 {
                     this.gameBackground.Children.Remove(ship.Sprite);
                     this.gameBackground.Children.Remove(bullet.Sprite);
+                    SoundPlayer.PlaySound("explosion.wav");
                     destroyedShip = ship;
                     hitBullet = bullet;
                     this.BulletFired = false;
