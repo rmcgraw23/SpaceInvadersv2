@@ -140,6 +140,9 @@
     <Compile Include="View\Sprites\BaseSprite.xaml.cs">
       <DependentUpon>BaseSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Sprites\BonusEnemySprite.xaml.cs">
+      <DependentUpon>BonusEnemySprite.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Sprites\ISpriteRender.cs" />
     <Compile Include="View\Sprites\Level1EnemySprite.xaml.cs">
       <DependentUpon>Level1EnemySprite.xaml</DependentUpon>
@@ -166,6 +169,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\bonusShip.wav" />
     <Content Include="Assets\cannonFire.wav" />
     <Content Include="Assets\destroyed.wav" />
     <Content Include="Assets\explosion.wav" />
@@ -191,6 +195,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Sprites\BaseSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\BonusEnemySprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -14,6 +14,7 @@ namespace SpaceInvaders.Model
         LevelOne,
         LevelTwo,
         LevelThree,
-        LevelFour
+        LevelFour,
+        Bonus
     }
 }

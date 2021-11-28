@@ -16,6 +16,7 @@ namespace SpaceInvaders.Model
         private const int EnemyLevel2Score = 20;
         private const int EnemyLevel3Score = 30;
         private const int EnemyLevel4Score = 40;
+        private const int EnemyBonusScore = 100;
 
         /// <summary>
         /// Gets the score.
@@ -49,6 +50,9 @@ namespace SpaceInvaders.Model
                 case EnemyShipLevels.LevelFour:
                     Sprite = new Level4EnemySprite();
                     this.Score = EnemyLevel4Score;
+                    break;
+                case EnemyShipLevels.Bonus:
+                    this.Score = EnemyBonusScore;
                     break;
 
                 default:
