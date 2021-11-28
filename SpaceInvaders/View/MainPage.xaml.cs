@@ -6,6 +6,7 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using VirtualKey = Windows.System.VirtualKey;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -46,6 +47,7 @@ namespace SpaceInvaders.View
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(ApplicationWidth, ApplicationHeight));
 
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
+            Window.Current.CoreWindow.KeyUp += this.coreWindowOnKeyUp;
 
             this.gameManager = new GameManager(ApplicationHeight, ApplicationWidth);
             this.gameManager.InitializeGame(this.theCanvas);
@@ -87,10 +89,10 @@ namespace SpaceInvaders.View
             switch (args.VirtualKey)
             {
                 case VirtualKey.Left:
-                    this.gameManager.MovePlayerShipLeft();
+                    this.gameManager.LeftKeyDown = true;
                     break;
                 case VirtualKey.Right:
-                    this.gameManager.MovePlayerShipRight();
+                    this.gameManager.RightKeyDown = true;
                     break;
                 case VirtualKey.Space:
                     this.gameManager.CreateAndPlacePlayerShipBullet();
@@ -104,10 +106,10 @@ namespace SpaceInvaders.View
             switch (args.VirtualKey)
             {
                 case VirtualKey.Left:
-                    this.gameManager.MovePlayerShipLeft();
+                    this.gameManager.LeftKeyDown = false;
                     break;
                 case VirtualKey.Right:
-                    this.gameManager.MovePlayerShipRight();
+                    this.gameManager.RightKeyDown = false;
                     break;
             }
         }

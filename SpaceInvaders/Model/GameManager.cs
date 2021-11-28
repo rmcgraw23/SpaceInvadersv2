@@ -98,6 +98,22 @@ namespace SpaceInvaders.Model
         /// </value>
         public string Content { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [right key down].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [right key down]; otherwise, <c>false</c>.
+        /// </value>
+        public bool RightKeyDown { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [left key down].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [left key down]; otherwise, <c>false</c>.
+        /// </value>
+        public bool LeftKeyDown { get; set; }
+
         #endregion
 
         #region Constructors
@@ -122,6 +138,8 @@ namespace SpaceInvaders.Model
 
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
+            this.LeftKeyDown = false;
+            this.RightKeyDown = false;
         }
 
         #endregion
@@ -213,6 +231,16 @@ namespace SpaceInvaders.Model
             this.PlayerDied();
 
             this.gameOver();
+
+            if (this.LeftKeyDown)
+            {
+                this.MovePlayerShipLeft();
+            }
+
+            if (this.RightKeyDown)
+            {
+                this.MovePlayerShipRight();
+            }
         }
 
         private void changeShipLights()
@@ -307,6 +335,8 @@ namespace SpaceInvaders.Model
         {
             this.playerShipManager.MovePlayerShipLeft();
 
+            //this.playerShipManager.MovePlayerShipLeft();
+
             /*if (this.playerShip.X - this.playerShip.SpeedX > 0)
             {
                 this.playerShip.MoveLeft();
@@ -321,6 +351,8 @@ namespace SpaceInvaders.Model
         public void MovePlayerShipRight()
         {
             this.playerShipManager.MovePlayerShipRight();
+
+            //this.playerShipManager.MovePlayerShipRight();
 
             /*if (this.playerShip.X + this.playerShip.Width + this.playerShip.SpeedX < this.backgroundWidth)
             {
