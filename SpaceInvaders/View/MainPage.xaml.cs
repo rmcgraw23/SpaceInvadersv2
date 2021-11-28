@@ -22,12 +22,12 @@ namespace SpaceInvaders.View
         /// <summary>
         ///     The application height
         /// </summary>
-        public const double ApplicationHeight = 480;
+        public const double ApplicationHeight = 580;
 
         /// <summary>
         ///     The application width
         /// </summary>
-        public const double ApplicationWidth = 640;
+        public const double ApplicationWidth = 840;
 
         private readonly GameManager gameManager;
 

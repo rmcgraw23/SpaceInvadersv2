@@ -7,7 +7,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Canvas x:Name="theCanvas" Width="640" Height="480" Background="Black">
+    <Canvas x:Name="theCanvas" Width="840" Height="580" Background="Black">
         <TextBlock x:Name="scoreTextBlock" Canvas.Left="10" Canvas.Top="10" Text="Score: 0" TextWrapping="Wrap"
                    Height="21" Width="79" Foreground="White" />
         <TextBlock x:Name="livesTextBlock" Canvas.Left="82" Canvas.Top="10" Text="Lives: 3" TextWrapping="Wrap" 
