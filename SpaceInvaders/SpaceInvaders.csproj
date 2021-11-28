@@ -122,15 +122,19 @@
     </Compile>
     <Compile Include="Model\BulletManager.cs" />
     <Compile Include="Model\CollisionDetector.cs" />
-    <Compile Include="Model\EnemyAmounts.cs" />
-    <Compile Include="Model\EnemyMoves.cs" />
-    <Compile Include="Model\EnemyShipLevels.cs" />
-    <Compile Include="Model\EnemyShipManager.cs" />
+    <Compile Include="Model\Enemies\EnemyAmounts.cs" />
+    <Compile Include="Model\Enemies\EnemyMoves.cs" />
+    <Compile Include="Model\Enemies\EnemyShipLevels.cs" />
+    <Compile Include="Model\Enemies\EnemyShipManager.cs" />
     <Compile Include="Model\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />
-    <Compile Include="Model\EnemyShip.cs" />
-    <Compile Include="Model\PlayerShip.cs" />
-    <Compile Include="Model\PlayerShipManager.cs" />
+    <Compile Include="Model\Enemies\EnemyShip.cs" />
+    <Compile Include="Model\HighScoreBoard\HighScore.cs" />
+    <Compile Include="Model\HighScoreBoard\HighScoreBoard.cs" />
+    <Compile Include="Model\HighScoreBoard\LevelScoreNameComparer.cs" />
+    <Compile Include="Model\HighScoreBoard\NameScoreLevelComparer.cs" />
+    <Compile Include="Model\Player\PlayerShip.cs" />
+    <Compile Include="Model\Player\PlayerShipManager.cs" />
     <Compile Include="Model\ShipBullet.cs" />
     <Compile Include="Model\SoundPlayer.cs" />
     <Compile Include="View\MainPage.xaml.cs">
