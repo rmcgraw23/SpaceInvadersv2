@@ -69,6 +69,9 @@ namespace SpaceInvaders.Model
 
         private int move;
         private int lives;
+        private int currentRound;
+
+        private const int finalRound = 3;
 
         #endregion
 
@@ -140,6 +143,7 @@ namespace SpaceInvaders.Model
             this.backgroundWidth = backgroundWidth;
             this.LeftKeyDown = false;
             this.RightKeyDown = false;
+            this.currentRound = 1;
         }
 
         #endregion
@@ -447,13 +451,20 @@ namespace SpaceInvaders.Model
 
         private void gameOver()
         {
-            if (this.enemyShips.Count == 0)
+            if (this.enemyShips.Count == 0 && this.currentRound == finalRound)
             {
                 SoundPlayer.PlaySound("gameOver.wav");
                 this.Title = "Congratulations, you won!";
                 this.Content = "Score: " + this.Score;
                 this.result();
                 this.OnGameOverUpdated();
+            }
+
+            else if (this.enemyShips.Count == 0 && this.currentRound != finalRound)
+            {
+                this.currentRound++;
+                this.gameBackground.Children.Remove(this.playerShip.Sprite);
+                this.InitializeGame(this.gameBackground);
             }
 
             else if (!this.gameBackground.Children.Contains(this.playerShip.Sprite))
