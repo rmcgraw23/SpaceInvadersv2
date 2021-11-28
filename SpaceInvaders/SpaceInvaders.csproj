@@ -137,6 +137,10 @@
     <Compile Include="Model\Player\PlayerShipManager.cs" />
     <Compile Include="Model\ShipBullet.cs" />
     <Compile Include="Model\SoundPlayer.cs" />
+    <Compile Include="ViewModel\HighScoreBoardViewModel.cs" />
+    <Compile Include="View\HighScoreBoardView.xaml.cs">
+      <DependentUpon>HighScoreBoardView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -194,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\HighScoreBoardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
