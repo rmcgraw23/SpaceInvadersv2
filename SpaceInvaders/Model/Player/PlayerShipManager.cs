@@ -58,6 +58,14 @@ namespace SpaceInvaders.Model
         /// </value>
         public int Lives { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the powerUp.
+        /// </summary>
+        /// <value>
+        ///     The powerUp.
+        /// </value>
+        public PowerUp PowerUp { get; set; }
+
         #endregion
 
         #region Constructors
@@ -174,6 +182,7 @@ namespace SpaceInvaders.Model
                 this.PlayerShip.MoveRight();
             }
         }
+
 
         #endregion
 

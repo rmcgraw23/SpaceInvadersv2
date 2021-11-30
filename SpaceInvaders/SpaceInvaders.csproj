@@ -135,6 +135,7 @@
     <Compile Include="Model\HighScoreBoard\NameScoreLevelComparer.cs" />
     <Compile Include="Model\Player\PlayerShip.cs" />
     <Compile Include="Model\Player\PlayerShipManager.cs" />
+    <Compile Include="Model\PowerUp.cs" />
     <Compile Include="Model\ShipBullet.cs" />
     <Compile Include="Model\SoundPlayer.cs" />
     <Compile Include="ViewModel\HighScoreBoardViewModel.cs" />
@@ -166,6 +167,9 @@
     </Compile>
     <Compile Include="View\Sprites\PlayerShipSprite.xaml.cs">
       <DependentUpon>PlayerShipSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\PowerUpSprite.xaml.cs">
+      <DependentUpon>PowerUpSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\ShipBulletSprite.xaml.cs">
       <DependentUpon>ShipBulletSprite.xaml</DependentUpon>
@@ -231,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\PlayerShipSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\PowerUpSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

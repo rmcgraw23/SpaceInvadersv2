@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.Media.Playback;
 using Windows.Media.Core;
 using Windows.UI.Xaml.Controls;
+using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
 {
@@ -21,6 +22,7 @@ namespace SpaceInvaders.Model
 
         public IList<ShipBullet> playerBullets;
         public IList<ShipBullet> enemyBullets;
+        public IList<PowerUp> powerUps;
 
         private Canvas gameBackground;
 
@@ -34,6 +36,7 @@ namespace SpaceInvaders.Model
         {
             this.playerBullets = new List<ShipBullet>();
             this.enemyBullets = new List<ShipBullet>();
+            this.powerUps = new List<PowerUp>();
 
             this.gameBackground = gameBackground;
         }
@@ -51,6 +54,8 @@ namespace SpaceInvaders.Model
         public IList<ShipBullet> AddPlayerBullet(ShipBullet bullet)
         {
             this.playerBullets.Add(bullet);
+            
+            this.placePowerUp();
             return this.playerBullets;
         }
 
@@ -176,6 +181,14 @@ namespace SpaceInvaders.Model
                 }
             }
         }
+
+        private void placePowerUp()
+        {
+            this.gameBackground.Children.Add(new PowerUp().Sprite);
+            this.powerUps.Add(new PowerUp());
+        }
+
+
 
         #endregion
     }

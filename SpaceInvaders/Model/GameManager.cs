@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
 {
@@ -72,6 +73,8 @@ namespace SpaceInvaders.Model
 
         private const int finalRound = 3;
         private int count;
+
+        private bool gotPowerUp;
 
         #endregion
 
@@ -167,6 +170,7 @@ namespace SpaceInvaders.Model
             //this.enemyBullets = new List<GameObject>();
             //this.playerBullet = new List<ShipBullet>();
             this.lives = 3;
+            this.gotPowerUp = false;
 
             this.createAndPlacePlayerShip();
 
@@ -188,7 +192,6 @@ namespace SpaceInvaders.Model
 
         private void timerTick(object sender, object e)
         {
-            //ToDo fix timer to run task at different intervals
             if (count % 4 == 0)
             {
                 IList<int> moves = new List<int> { 1, 2, 2, 1 };
@@ -213,6 +216,8 @@ namespace SpaceInvaders.Model
 
                 this.GetEnemyBulletsFired();
             }
+
+            this.enemyShipManger.placeBonusShip();
 
             count += 1;
             this.bulletManager.MoveBulletUp();
@@ -424,6 +429,10 @@ namespace SpaceInvaders.Model
                 if (destroyedShip != null)
                 {
                     this.updateScore(destroyedShip);
+                    if (destroyedShip.Sprite is BonusEnemySprite)
+                    {
+                        this.gotPowerUp = true;
+                    }
                 }
             }
 

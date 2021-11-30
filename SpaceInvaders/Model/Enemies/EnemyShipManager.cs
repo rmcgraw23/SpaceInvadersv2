@@ -172,19 +172,33 @@ namespace SpaceInvaders.Model
         {
             Random random = new Random();
             random.Next(0, 100);
+            if (!this.ContainsBonusShip())
+            {
+                if (random.Next(0, 100) > 50)
+                {
+                    this.EnemyShips.Add(new EnemyShip(EnemyShipLevels.Bonus));
+                    this.gameBackground.Children.Add(this.EnemyShips[this.EnemyShips.Count - 1].Sprite);
+                    this.EnemyShips[this.EnemyShips.Count - 1].X = 25;
+                    this.EnemyShips[this.EnemyShips.Count - 1].Y = 5;
+                }
+            }
+            else
+            {
+                this.EnemyShips[this.EnemyShips.Count -1].MoveRight();
+            }
+        }
+
+        private bool ContainsBonusShip()
+        {
             foreach (var ship in EnemyShips)
             {
                 if (ship.Sprite is BonusEnemySprite)
                 {
-                    if (random.Next(0, 100) > 50)
-                    {
-                        this.EnemyShips.Add(new EnemyShip(EnemyShipLevels.Bonus));
-                        this.gameBackground.Children.Add(this.EnemyShips[20].Sprite);
-                        this.EnemyShips[-1].X = 100;
-                        this.EnemyShips[-1].Y = 250;
-                    }
+                    return true;
                 }
             }
+
+            return false;
         }
 
         public IList<GameObject> getFiringEnemies()
