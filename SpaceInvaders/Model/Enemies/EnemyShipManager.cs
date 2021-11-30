@@ -117,6 +117,7 @@ namespace SpaceInvaders.Model
                 count++;
 
             }
+            //this.placeBonusShip();
         }
 
         private void getEnemyShips()
@@ -164,6 +165,25 @@ namespace SpaceInvaders.Model
             else if (ship.Sprite is Level4EnemySprite)
             {
                 ship.Y = 50;
+            }
+        }
+
+        public void placeBonusShip()
+        {
+            Random random = new Random();
+            random.Next(0, 100);
+            foreach (var ship in EnemyShips)
+            {
+                if (ship.Sprite is BonusEnemySprite)
+                {
+                    if (random.Next(0, 100) > 50)
+                    {
+                        this.EnemyShips.Add(new EnemyShip(EnemyShipLevels.Bonus));
+                        this.gameBackground.Children.Add(this.EnemyShips[20].Sprite);
+                        this.EnemyShips[-1].X = 100;
+                        this.EnemyShips[-1].Y = 250;
+                    }
+                }
             }
         }
 

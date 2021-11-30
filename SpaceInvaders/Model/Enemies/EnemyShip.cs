@@ -53,6 +53,7 @@ namespace SpaceInvaders.Model
                     this.Score = EnemyLevel4Score;
                     break;
                 case EnemyShipLevels.Bonus:
+                    Sprite = new BonusEnemySprite();
                     this.Score = EnemyBonusScore;
                     break;
 
