@@ -59,7 +59,6 @@ namespace SpaceInvaders.Model
         //private IList<GameObject> enemyBullets;
 
         private DispatcherTimer timer;
-        private DispatcherTimer bulletTimer;
 
         private Canvas gameBackground;
 
@@ -72,6 +71,7 @@ namespace SpaceInvaders.Model
         private int currentRound;
 
         private const int finalRound = 3;
+        private int count;
 
         #endregion
 
@@ -182,29 +182,14 @@ namespace SpaceInvaders.Model
             this.timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             this.timer.Start();
             this.move = 0;
-
-            this.bulletTimer = new DispatcherTimer();
-            this.bulletTimer.Tick += this.bulletTimerTick;
-            var rand = new Random();
-            this.bulletTimer.Interval = new TimeSpan(0, 0, 0, 0, rand.Next(150, 250));
-            this.bulletTimer.Start();
+            this.count = 1;
         }
 
-        private void bulletTimerTick(object sender, object e)
-        {
-            /*this.bulletManager.MoveBulletUp();
-            this.EnemyDestroyed();
-
-            this.bulletManager.MoveBulletDown();
-            this.PlayerDied();
-
-            this.gameOver();*/
-        }
 
         private void timerTick(object sender, object e)
         {
             //ToDo fix timer to run task at different intervals
-            if (timer.Interval.Duration().TotalMilliseconds % 800 == 0)
+            if (count % 4 == 0)
             {
                 IList<int> moves = new List<int> { 1, 2, 2, 1 };
                 if (moves[move] % 2 != 0)
@@ -228,6 +213,8 @@ namespace SpaceInvaders.Model
 
                 this.GetEnemyBulletsFired();
             }
+
+            count += 1;
             this.bulletManager.MoveBulletUp();
             this.EnemyDestroyed();
 
@@ -480,7 +467,6 @@ namespace SpaceInvaders.Model
         private void result()
         {
             this.timer.Stop();
-            this.bulletTimer.Stop();
 
         }
 

@@ -33,6 +33,7 @@ namespace SpaceInvaders.Model
         /// <exception cref="System.ArgumentOutOfRangeException">level - null</exception>
         public EnemyShip(EnemyShipLevels level)
         {
+            SetSpeed(SpeedXDirection, SpeedYDirection);
             switch (level)
             {
                 case EnemyShipLevels.LevelOne:
