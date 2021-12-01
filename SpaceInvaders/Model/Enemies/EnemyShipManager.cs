@@ -16,6 +16,12 @@ namespace SpaceInvaders.Model
 
         private int enemyShipsPerRow;
         private Canvas gameBackground;
+        private int level2StepCounter;
+        private bool level2FirstStep;
+        private int level2FirstStepCounter;
+        private int level3StepCounter;
+        private bool level3FirstStep;
+        private int level3FirstStepCounter;
 
         //private BulletManager manager;
 
@@ -79,6 +85,12 @@ namespace SpaceInvaders.Model
             this.enemyShipsPerRow = 8;
             this.EnemyFired = false;
             this.BulletFired = false;
+            this.level2StepCounter = 0;
+            this.level2FirstStep = true;
+            this.level2FirstStepCounter = 0;
+            this.level3StepCounter = 0;
+            this.level3FirstStep = true;
+            this.level3FirstStepCounter = 0;
             //this.EnemyBullets = new List<ShipBullet>();
             //this.manager = new BulletManager(this.gameBackground);
         }
@@ -301,6 +313,118 @@ namespace SpaceInvaders.Model
                     ship.MoveRight();
                 }
             }
+        }
+
+        public void MoveEnemySnipsLevel2()
+        {
+            foreach (var currentShip in this.EnemyShips)
+            {
+                if (this.EnemyShips.Count > 0)
+                {
+                    if (currentShip.Sprite is Level1EnemySprite || currentShip.Sprite is Level3EnemySprite)
+                    {
+                        if (this.level2FirstStep)
+                        {
+                            currentShip.MoveRight();
+                        }
+                        else if (this.level2StepCounter <= 3)
+                        {
+                            currentShip.MoveLeft();
+                        }
+                        else if (this.level2StepCounter <= 7)
+                        {
+                            currentShip.MoveRight();
+                        }
+
+                    }
+                    else if (currentShip.Sprite is Level2EnemySprite || currentShip.Sprite is Level4EnemySprite)
+                    {
+                        if (this.level2FirstStep)
+                        {
+                            currentShip.MoveLeft();
+                        }
+                        else if (this.level2StepCounter <= 3)
+                        {
+                            currentShip.MoveRight();
+                        }
+                        else if (this.level2StepCounter <= 7)
+                        {
+                            currentShip.MoveLeft();
+                        }
+
+                    }
+                }
+            }
+            if (this.level2StepCounter == 7)
+            {
+                this.level2StepCounter = 0;
+            }
+            else if (!this.level2FirstStep)
+            {
+                this.level2StepCounter++;
+            }
+
+            if (this.level2FirstStep && this.level2FirstStepCounter == 1)
+            {
+                this.level2FirstStep = false;
+            }
+            else if (this.level2FirstStep && this.level2FirstStepCounter == 0)
+            {
+                this.level2FirstStepCounter++;
+            }
+
+        }
+
+        public void MoveEnemyShipsLevel3()
+        {
+            foreach (var currentShip in this.EnemyShips)
+            {
+                if (this.EnemyShips.Count > 0)
+                {
+                    if (this.level3FirstStep)
+                    {
+                        currentShip.MoveRight();
+                    }
+
+                    if (this.level3StepCounter < 1)
+                    {
+                        //currentShip.MoveDown();
+                        currentShip.Y = currentShip.Y + 10;
+                    }
+                    else if (this.level3StepCounter < 5)
+                    {
+                        currentShip.MoveLeft();
+                    }
+                    else if (this.level3StepCounter < 6)
+                    {
+                        //currentShip.MoveUp();
+                        currentShip.Y = currentShip.Y - 10;
+                    }
+                    else if (this.level3StepCounter < 10)
+                    {
+                        currentShip.MoveRight();
+                    }
+                }
+            }
+
+            if (this.level3StepCounter == 9)
+            {
+                this.level3StepCounter = 0;
+            }
+            else
+            {
+                this.level3StepCounter++;
+            }
+
+            if (this.level3FirstStep && this.level3FirstStepCounter == 1)
+            {
+                this.level3FirstStep = false;
+            }
+            else if (this.level3FirstStep && this.level3FirstStepCounter == 0)
+            {
+                this.level3FirstStepCounter++;
+            }
+
         }
 
         #endregion

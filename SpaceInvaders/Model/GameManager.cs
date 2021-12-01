@@ -194,24 +194,42 @@ namespace SpaceInvaders.Model
         {
             if (count % 4 == 0)
             {
-                IList<int> moves = new List<int> { 1, 2, 2, 1 };
-                if (moves[move] % 2 != 0)
+                IList<int> moves = null;
+                if (this.currentRound == 1)
                 {
-                    this.enemyShipManger.MoveEnemyShipsLeft();
+                    moves = new List<int> {1, 2, 2, 1};
+                    if (moves[move] % 2 != 0)
+                    {
+                        this.enemyShipManger.MoveEnemyShipsLeft();
+
+                    }
+                    else
+                    {
+                        this.enemyShipManger.MoveEnemyShipsRight();
+                    }
+                }
+                else if (this.currentRound == 2)
+                {
+                    this.enemyShipManger.MoveEnemySnipsLevel2();
 
                 }
-                else
+                else if (this.currentRound == 3)
                 {
-                    this.enemyShipManger.MoveEnemyShipsRight();
+                    this.enemyShipManger.MoveEnemyShipsLevel3();
                 }
+
+                
 
                 this.changeShipLights();
                 this.OnAnimationUpdated();
 
-                this.move++;
-                if (this.move >= moves.Count)
+                if (this.currentRound == 1)
                 {
-                    this.move = 0;
+                    this.move++;
+                    if (this.move >= moves.Count)
+                    {
+                        this.move = 0;
+                    }
                 }
 
                 this.GetEnemyBulletsFired();
