@@ -180,11 +180,16 @@ namespace SpaceInvaders.Model
                     this.gameBackground.Children.Add(this.EnemyShips[this.EnemyShips.Count - 1].Sprite);
                     this.EnemyShips[this.EnemyShips.Count - 1].X = 25;
                     this.EnemyShips[this.EnemyShips.Count - 1].Y = 5;
+                    SoundPlayer.PlaySound("bonusShip.wav");
                 }
+            }
+            else if (this.EnemyShips[this.EnemyShips.Count - 1].X + this.EnemyShips[this.EnemyShips.Count - 1].SpeedX + this.EnemyShips[this.EnemyShips.Count - 1].Width< this.gameBackground.Width)
+            {
+                this.EnemyShips[this.EnemyShips.Count -1].MoveRight();
             }
             else
             {
-                this.EnemyShips[this.EnemyShips.Count -1].MoveRight();
+                this.gameBackground.Children.Remove(this.EnemyShips[this.EnemyShips.Count - 1].Sprite);
             }
         }
 
