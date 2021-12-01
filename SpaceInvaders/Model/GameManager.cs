@@ -75,6 +75,7 @@ namespace SpaceInvaders.Model
         private int count;
 
         private bool gotPowerUp;
+        private IList<Shield> shields;
 
         #endregion
 
@@ -171,12 +172,15 @@ namespace SpaceInvaders.Model
             //this.playerBullet = new List<ShipBullet>();
             this.lives = 3;
             this.gotPowerUp = false;
+            this.shields = new List<Shield>();
 
             this.createAndPlacePlayerShip();
 
             this.createAndPlaceEnemyShips();
 
             this.initializeTimers();
+
+            this.placeShields();
         }
 
         private void initializeTimers()
@@ -255,6 +259,8 @@ namespace SpaceInvaders.Model
             {
                 this.MovePlayerShipRight();
             }
+
+            this.checkForShieldCollisions();
         }
 
         private void changeShipLights()
@@ -495,6 +501,91 @@ namespace SpaceInvaders.Model
         {
             this.timer.Stop();
 
+        }
+
+        private void placeShields()
+        {
+            double shieldX = 172.5;
+            for (int i = 0; i <= 2; i++)
+            {
+                Shield shield = new Shield();
+                shield.Y = 450;
+                shield.X = shieldX;
+                this.shields.Add(shield);
+                shieldX += 222.5;
+                this.gameBackground.Children.Add(shield.Sprite);
+            }
+            
+        }
+
+        private void checkForShieldCollisions()
+        {
+            IList<ShipBullet> playerBulletsToRemove = new List<ShipBullet>();
+            IList<ShipBullet> enemyBulletsToRemove = new List<ShipBullet>();
+            IList<Shield> shieldsToRemove = new List<Shield>();
+
+            foreach (var currentBullet in this.bulletManager.playerBullets)
+            {
+                foreach (var currentShield in this.shields)
+                {
+                    if (CollisionDetector.detectCollision(currentShield, currentBullet))
+                    {
+                        if (currentShield.HitsRemaining != 0)
+                        {
+                            currentShield.HitsRemaining--;
+                            currentShield.Sprite.Opacity -= .25;
+                            this.gameBackground.Children.Remove(currentBullet.Sprite);
+                            playerBulletsToRemove.Add(currentBullet);
+                        }
+                        else
+                        {
+                            this.gameBackground.Children.Remove(currentShield.Sprite);
+                            this.gameBackground.Children.Remove(currentBullet.Sprite);
+                            shieldsToRemove.Add(currentShield);
+                            playerBulletsToRemove.Add(currentBullet);
+                        }
+                    }
+                }
+            }
+
+            foreach (var currentBullet in this.bulletManager.enemyBullets)
+            {
+                foreach (var currentShield in this.shields)
+                {
+                    if (CollisionDetector.detectCollision(currentShield, currentBullet))
+                    {
+                        if (currentShield.HitsRemaining != 0)
+                        {
+                            currentShield.HitsRemaining--;
+                            currentShield.Sprite.Opacity -= .25;
+                            this.gameBackground.Children.Remove(currentBullet.Sprite);
+                            enemyBulletsToRemove.Add(currentBullet);
+                        }
+                        else
+                        {
+                            this.gameBackground.Children.Remove(currentShield.Sprite);
+                            this.gameBackground.Children.Remove(currentBullet.Sprite);
+                            shieldsToRemove.Add(currentShield);
+                            enemyBulletsToRemove.Add(currentBullet);
+                        }
+                    }
+                }
+            }
+
+            foreach (var currentBullet in playerBulletsToRemove)
+            {
+                this.bulletManager.playerBullets.Remove(currentBullet);
+            }
+
+            foreach (var currentBullet in enemyBulletsToRemove)
+            {
+                this.bulletManager.enemyBullets.Remove(currentBullet);
+            }
+
+            foreach (var currentShield in shieldsToRemove)
+            {
+                this.shields.Remove(currentShield);
+            }
         }
 
         #endregion
