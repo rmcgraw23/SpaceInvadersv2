@@ -92,7 +92,7 @@ namespace SpaceInvaders.Model
                 ShipBullet bullet = new ShipBullet();
                 this.placeBulletsBellowEnemies(ship, bullet);
 
-                this.gameBackground.Children.Add(bullet.Sprite);
+               this.gameBackground.Children.Add(bullet.Sprite);
                 this.AddEnemyBullet(bullet);
                 SoundPlayer.PlaySound("laser.wav");
 

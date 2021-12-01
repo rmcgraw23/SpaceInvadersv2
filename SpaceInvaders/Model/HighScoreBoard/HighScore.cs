@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceInvaders.Model
 {
-    class HighScore : IComparable
+    public class HighScore : IComparable
     {
 
         #region Properties

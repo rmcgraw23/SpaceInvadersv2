@@ -368,7 +368,7 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void CreateAndPlacePlayerShipBullet()
         {
-            this.bulletManager.CreateAndPlacePlayerShipBullet(this.gameBackground, playerShip);
+            this.bulletManager.CreateAndPlacePlayerShipBullet(this.gameBackground, this.playerShip);
             //this.playerBullet = this.playerShipManager.PlayerBullets;
 
         }
