@@ -6,13 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="33"
-    d:DesignWidth="50"
-    Height="33"
-    Width="50">
+    d:DesignHeight="5"
+    d:DesignWidth="4"
+    Height="5"
+    Width="4">
 
     <Canvas>
-        <Rectangle Height="5" Canvas.Left="23" Fill="White" Canvas.Top="14" Width="4" />
+        <Rectangle Height="5" Fill="White" Width="4" RenderTransformOrigin="-2.047,-1.375" />
 
     </Canvas>
 </local:BaseSprite>
