@@ -98,7 +98,7 @@ namespace SpaceInvaders.Model
         /// <value>
         /// The title.
         /// </value>
-        public string Title { get; set; }
+        public string Result { get; set; }
 
         /// <summary>
         /// Gets or sets the content.
@@ -106,7 +106,7 @@ namespace SpaceInvaders.Model
         /// <value>
         /// The content.
         /// </value>
-        public string Content { get; set; }
+        public bool OnTheBoard { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [right key down].
@@ -314,7 +314,7 @@ namespace SpaceInvaders.Model
         /// Precondition: none
         /// Post-condition: none
         /// </summary>
-        public event GameOverHandler GameOverUpdated;
+        public event EventHandler GameOverUpdated;
 
         /// <summary>
         /// Defines what is handled when the game is over.
@@ -323,7 +323,7 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void OnGameOverUpdated()
         {
-            this.GameOverUpdated?.Invoke(this.Title, this.Content);
+            this.GameOverUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -475,11 +475,11 @@ namespace SpaceInvaders.Model
 
         private void gameOver()
         {
+            this.OnTheBoard = this.highScoreBoard.WithinTopTen(this.Score);
             if (this.enemyShips.Count == 0 && this.currentRound == finalRound)
             {
                 SoundPlayer.PlaySound("gameOver.wav");
-                this.Title = "Congratulations, you won!";
-                this.Content = "Score: " + this.Score;
+                this.Result = "win";
                 this.result();
                 this.OnGameOverUpdated();
             }
@@ -497,8 +497,7 @@ namespace SpaceInvaders.Model
             else if (!this.gameBackground.Children.Contains(this.playerShip.Sprite))
             {
                 SoundPlayer.PlaySound("gameOver.wav");
-                this.Title = "GameOver";
-                this.Content = "You Died";
+                this.Result = "lose";
                 this.result();
                 this.OnGameOverUpdated();
             }

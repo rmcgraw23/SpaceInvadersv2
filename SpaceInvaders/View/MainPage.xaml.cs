@@ -11,6 +11,7 @@ using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
+using SpaceInvaders.Annotations;
 using VirtualKey = Windows.System.VirtualKey;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -77,16 +78,22 @@ namespace SpaceInvaders.View
             this.livesTextBlock.Text = "Lives: " + lives.ToString();
         }
 
-        private async void GameOnGameOverUpdated(string title, string contents)
+        private async void GameOnGameOverUpdated(object self, EventArgs e)
         {
-            string content = "";
-            //if (newHighScore)
+            string title = "";
+            string content = "Score: " + this.gameManager.Score;
+            if (this.gameManager.Result == "win")
             {
-                content += "Add your name to the board.";
-            }
-            var playerLostDialog = new  ContentDialog
-            {
+                title = "Congratulation you won!";
                 
+            }
+            else
+            {
+                title = "GameOver, You Lose!";
+            }
+            
+            var playerLostDialog = new ContentDialog
+            {
                 Title = title,
 
                 Content = content,
@@ -94,6 +101,7 @@ namespace SpaceInvaders.View
             };
 
             await playerLostDialog.ShowAsync();
+
         }
 
         private void coreWindowOnKeyDown(CoreWindow sender, KeyEventArgs args)

@@ -140,6 +140,9 @@
     <Compile Include="Model\Shield.cs" />
     <Compile Include="Model\ShipBullet.cs" />
     <Compile Include="Model\SoundPlayer.cs" />
+    <Compile Include="NameInputDialog.xaml.cs">
+      <DependentUpon>NameInputDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Utility\RelayCommand.cs" />
     <Compile Include="ViewModel\HighScoreBoardViewModel.cs" />
@@ -213,6 +216,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="NameInputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\HighScoreBoardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

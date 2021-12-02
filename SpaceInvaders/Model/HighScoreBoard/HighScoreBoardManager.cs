@@ -14,7 +14,6 @@ namespace SpaceInvaders.Model
     {
         #region DataMembers
 
-        private bool OnTheBoard;
 
         #endregion
         #region Properties
@@ -28,7 +27,6 @@ namespace SpaceInvaders.Model
         public HighScoreBoardManager()
         {
             this.HighScores = new List<HighScore>();
-            this.OnTheBoard = false;
             this.SetHighScoreBoard();
             
         }
@@ -75,17 +73,16 @@ namespace SpaceInvaders.Model
 
         }
 
-        public void WithinTopTen(int score)
+        public bool WithinTopTen(int score)
         {
             foreach (var highScore in this.HighScores)
             {
                 if (score > highScore.score)
                 {
-                    this.OnTheBoard = true;
+                    return true;
                     this.OnHighScoreUpdated();
                 }
-            } 
-            this.OnTheBoard = false;
+            } return false;
         }
 
         public void SetHighScoreBoard()

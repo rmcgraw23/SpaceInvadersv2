@@ -13,12 +13,21 @@ namespace SpaceInvaders.View
 
         public HighScoreBoardView()
         {
-
+            this.AskForNameAsync();
         }
 
         #endregion
 
         #region Methods
+
+        public async Task AskForNameAsync()
+        {
+            //if (this.gameManager.OnTheBoard)
+            {
+                var nameInputDialog = new NameInputDialog();
+                await nameInputDialog.ShowAsync();
+            }
+        }
 
         private void sortByNameFirst(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
