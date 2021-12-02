@@ -76,6 +76,7 @@ namespace SpaceInvaders.Model
         private int count;
 
         private bool gotPowerUp;
+        private IList<Shield> shields;
 
         private HighScoreBoardManager highScoreBoard;
 
@@ -175,12 +176,15 @@ namespace SpaceInvaders.Model
             //this.playerBullet = new List<ShipBullet>();
             this.lives = 3;
             this.gotPowerUp = false;
+            this.shields = new List<Shield>();
 
             this.createAndPlacePlayerShip();
 
             this.createAndPlaceEnemyShips();
 
             this.initializeTimers();
+
+            this.placeShields();
         }
 
         private void initializeTimers()
@@ -198,24 +202,42 @@ namespace SpaceInvaders.Model
         {
             if (count % 4 == 0)
             {
-                IList<int> moves = new List<int> { 1, 2, 2, 1 };
-                if (moves[move] % 2 != 0)
+                IList<int> moves = null;
+                if (this.currentRound == 1)
                 {
-                    this.enemyShipManger.MoveEnemyShipsLeft();
+                    moves = new List<int> {1, 2, 2, 1};
+                    if (moves[move] % 2 != 0)
+                    {
+                        this.enemyShipManger.MoveEnemyShipsLeft();
+
+                    }
+                    else
+                    {
+                        this.enemyShipManger.MoveEnemyShipsRight();
+                    }
+                }
+                else if (this.currentRound == 2)
+                {
+                    this.enemyShipManger.MoveEnemySnipsLevel2();
 
                 }
-                else
+                else if (this.currentRound == 3)
                 {
-                    this.enemyShipManger.MoveEnemyShipsRight();
+                    this.enemyShipManger.MoveEnemyShipsLevel3();
                 }
+
+                
 
                 this.changeShipLights();
                 this.OnAnimationUpdated();
 
-                this.move++;
-                if (this.move >= moves.Count)
+                if (this.currentRound == 1)
                 {
-                    this.move = 0;
+                    this.move++;
+                    if (this.move >= moves.Count)
+                    {
+                        this.move = 0;
+                    }
                 }
 
                 this.GetEnemyBulletsFired();
@@ -241,6 +263,8 @@ namespace SpaceInvaders.Model
             {
                 this.MovePlayerShipRight();
             }
+
+            this.checkForShieldCollisions();
         }
 
         private void changeShipLights()
@@ -464,7 +488,10 @@ namespace SpaceInvaders.Model
             {
                 this.currentRound++;
                 this.gameBackground.Children.Remove(this.playerShip.Sprite);
+                this.clearBulletsFromGameBoard();
+                this.timer.Stop();
                 this.InitializeGame(this.gameBackground);
+                this.setTimerIntervalForRound();
             }
 
             else if (!this.gameBackground.Children.Contains(this.playerShip.Sprite))
@@ -478,10 +505,129 @@ namespace SpaceInvaders.Model
 
         }
 
+        private void setTimerIntervalForRound()
+        {
+            if (this.currentRound == 2)
+            {
+                this.timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            }
+            else if (this.currentRound == 3)
+            {
+                this.timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+            }
+        }
+
+        private void clearBulletsFromGameBoard()
+        {
+            foreach (var currentBullet in this.bulletManager.playerBullets)
+            {
+                this.gameBackground.Children.Remove(currentBullet.Sprite);
+            }
+
+            foreach (var currentBullet in this.bulletManager.enemyBullets)
+            {
+                this.gameBackground.Children.Remove(currentBullet.Sprite);
+            }
+        }
+
         private void result()
         {
             this.timer.Stop();
 
+        }
+
+        private void placeShields()
+        {
+            double shieldX = 172.5;
+            for (int i = 0; i <= 2; i++)
+            {
+                Shield shield = new Shield();
+                shield.Y = 450;
+                shield.X = shieldX;
+                this.shields.Add(shield);
+                shieldX += 222.5;
+                this.gameBackground.Children.Add(shield.Sprite);
+            }
+            
+        }
+
+        private void checkForShieldCollisions()
+        {
+            IList<ShipBullet> playerBulletsToRemove = new List<ShipBullet>();
+            IList<ShipBullet> enemyBulletsToRemove = new List<ShipBullet>();
+            IList<Shield> shieldsToRemove = new List<Shield>();
+
+            this.checkForPlayerBulletShieldCollision(playerBulletsToRemove, shieldsToRemove);
+            this.checkForEnemyBulletShieldCollision(enemyBulletsToRemove, shieldsToRemove);
+
+            foreach (var currentBullet in playerBulletsToRemove)
+            {
+                this.bulletManager.playerBullets.Remove(currentBullet);
+            }
+
+            foreach (var currentBullet in enemyBulletsToRemove)
+            {
+                this.bulletManager.enemyBullets.Remove(currentBullet);
+            }
+
+            foreach (var currentShield in shieldsToRemove)
+            {
+                this.shields.Remove(currentShield);
+            }
+        }
+
+        private void checkForEnemyBulletShieldCollision(IList<ShipBullet> enemyBulletsToRemove, IList<Shield> shieldsToRemove)
+        {
+            foreach (var currentBullet in this.bulletManager.enemyBullets)
+            {
+                foreach (var currentShield in this.shields)
+                {
+                    if (CollisionDetector.detectCollision(currentShield, currentBullet))
+                    {
+                        if (currentShield.HitsRemaining != 0)
+                        {
+                            currentShield.HitsRemaining--;
+                            currentShield.Sprite.Opacity -= .25;
+                            this.gameBackground.Children.Remove(currentBullet.Sprite);
+                            enemyBulletsToRemove.Add(currentBullet);
+                        }
+                        else
+                        {
+                            this.gameBackground.Children.Remove(currentShield.Sprite);
+                            this.gameBackground.Children.Remove(currentBullet.Sprite);
+                            shieldsToRemove.Add(currentShield);
+                            enemyBulletsToRemove.Add(currentBullet);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void checkForPlayerBulletShieldCollision(IList<ShipBullet> playerBulletsToRemove, IList<Shield> shieldsToRemove)
+        {
+            foreach (var currentBullet in this.bulletManager.playerBullets)
+            {
+                foreach (var currentShield in this.shields)
+                {
+                    if (CollisionDetector.detectCollision(currentShield, currentBullet))
+                    {
+                        if (currentShield.HitsRemaining != 0)
+                        {
+                            currentShield.HitsRemaining--;
+                            currentShield.Sprite.Opacity -= .25;
+                            this.gameBackground.Children.Remove(currentBullet.Sprite);
+                            playerBulletsToRemove.Add(currentBullet);
+                        }
+                        else
+                        {
+                            this.gameBackground.Children.Remove(currentShield.Sprite);
+                            this.gameBackground.Children.Remove(currentBullet.Sprite);
+                            shieldsToRemove.Add(currentShield);
+                            playerBulletsToRemove.Add(currentBullet);
+                        }
+                    }
+                }
+            }
         }
 
         #endregion

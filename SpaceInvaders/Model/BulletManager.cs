@@ -20,13 +20,17 @@ namespace SpaceInvaders.Model
     {
         #region DataMembers
 
-        public IList<ShipBullet> playerBullets;
-        public IList<ShipBullet> enemyBullets;
-        public IList<PowerUp> powerUps;
-
         private Canvas gameBackground;
 
         private const int MaxLives = 3;
+
+        #endregion
+
+        #region Properties
+
+        public IList<ShipBullet> playerBullets { get; set; }
+        public IList<ShipBullet> enemyBullets { get; set; }
+        public IList<PowerUp> powerUps { get; set; }
 
         #endregion
 
@@ -157,7 +161,7 @@ namespace SpaceInvaders.Model
                 bullet.MoveUp();
             }
 
-            this.RemoveEnemyBullet(shipBullet);
+            this.RemovePlayerBullet(shipBullet);
             //this.playerShipManager.PlayerBullets = this.playerShipManager.PlayerBullets;
         }
 
@@ -168,18 +172,26 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void MoveBulletDown()
         {
-            for (int index = 0; index < this.enemyBullets.Count; index++)
+            IList<ShipBullet> bulletsToRemove = new List<ShipBullet>();
+            foreach (var currentBullet in this.enemyBullets)
             {
-                if (this.enemyBullets[index].Y + this.enemyBullets[index].SpeedY > this.gameBackground.Height)
+                if (currentBullet.Y + currentBullet.SpeedY > this.gameBackground.Height)
                 {
-                    this.enemyBullets.Remove(this.enemyBullets[index]);
+                    bulletsToRemove.Add(currentBullet);
+                    this.gameBackground.Children.Remove(currentBullet.Sprite);
                 }
 
                 if (this.enemyBullets.Count > 0)
                 {
-                    this.enemyBullets[index].MoveDown();
+                    currentBullet.MoveDown();
                 }
             }
+
+            foreach (var currentBullet in bulletsToRemove)
+            {
+                this.enemyBullets.Remove(currentBullet);
+            }
+
         }
 
         private void placePowerUp()

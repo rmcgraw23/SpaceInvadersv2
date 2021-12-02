@@ -1,11 +1,16 @@
 ﻿using SpaceInvaders.Model;
 using System;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
+using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Hosting;
 using VirtualKey = Windows.System.VirtualKey;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -55,6 +60,7 @@ namespace SpaceInvaders.View
             this.gameManager.ScoreCountUpdated += this.ScoreOnScoreCountUpdated;
             this.gameManager.GameOverUpdated += this.GameOnGameOverUpdated;
             this.gameManager.LivesCountUpdated += this.LivesOnLivesCountUpdated;
+
         }
 
         #endregion
@@ -96,9 +102,11 @@ namespace SpaceInvaders.View
             {
                 case VirtualKey.Left:
                     this.gameManager.LeftKeyDown = true;
+                    this.gameManager.MovePlayerShipLeft();
                     break;
                 case VirtualKey.Right:
                     this.gameManager.RightKeyDown = true;
+                    this.gameManager.MovePlayerShipRight();
                     break;
                 case VirtualKey.Space:
                     this.gameManager.CreateAndPlacePlayerShipBullet();

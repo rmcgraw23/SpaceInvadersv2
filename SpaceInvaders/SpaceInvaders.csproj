@@ -137,6 +137,7 @@
     <Compile Include="Model\Player\PlayerShip.cs" />
     <Compile Include="Model\Player\PlayerShipManager.cs" />
     <Compile Include="Model\PowerUp.cs" />
+    <Compile Include="Model\Shield.cs" />
     <Compile Include="Model\ShipBullet.cs" />
     <Compile Include="Model\SoundPlayer.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -174,8 +175,14 @@
     <Compile Include="View\Sprites\PowerUpSprite.xaml.cs">
       <DependentUpon>PowerUpSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Sprites\ShieldSprite.xaml.cs">
+      <DependentUpon>ShieldSprite.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Sprites\ShipBulletSprite.xaml.cs">
       <DependentUpon>ShipBulletSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StartScreen.xaml.cs">
+      <DependentUpon>StartScreen.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -245,7 +252,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Sprites\ShieldSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Sprites\ShipBulletSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StartScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
