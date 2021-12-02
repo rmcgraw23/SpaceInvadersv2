@@ -484,7 +484,17 @@ namespace SpaceInvaders.Model
             {
                 this.currentRound++;
                 this.gameBackground.Children.Remove(this.playerShip.Sprite);
-                this.gameBackground.Children.Clear();
+
+                foreach (var currentBullet in this.bulletManager.playerBullets)
+                {
+                    this.gameBackground.Children.Remove(currentBullet.Sprite);
+                }
+
+                foreach (var currentBullet in this.bulletManager.enemyBullets)
+                {
+                    this.gameBackground.Children.Remove(currentBullet.Sprite);
+                }
+
                 this.timer.Stop();
                 this.InitializeGame(this.gameBackground);
 
