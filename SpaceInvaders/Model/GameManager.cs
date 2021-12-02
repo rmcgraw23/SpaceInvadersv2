@@ -485,6 +485,7 @@ namespace SpaceInvaders.Model
                 this.currentRound++;
                 this.gameBackground.Children.Remove(this.playerShip.Sprite);
                 this.gameBackground.Children.Clear();
+                this.timer.Stop();
                 this.InitializeGame(this.gameBackground);
             }
 
