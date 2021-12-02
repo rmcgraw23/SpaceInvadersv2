@@ -168,12 +168,12 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void MoveBulletDown()
         {
-            ShipBullet shipBullet = null;
+            IList<ShipBullet> bulletsToRemove = new List<ShipBullet>();
             foreach (var currentBullet in this.enemyBullets)
             {
                 if (currentBullet.Y + currentBullet.SpeedY > this.gameBackground.Height)
                 {
-                    shipBullet = currentBullet;
+                    bulletsToRemove.Add(currentBullet);
                     this.gameBackground.Children.Remove(currentBullet.Sprite);
                 }
 
@@ -183,7 +183,10 @@ namespace SpaceInvaders.Model
                 }
             }
 
-            this.enemyBullets.Remove(shipBullet);
+            foreach (var currentBullet in bulletsToRemove)
+            {
+                this.enemyBullets.Remove(currentBullet);
+            }
 
         }
 

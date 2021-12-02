@@ -186,7 +186,7 @@ namespace SpaceInvaders.Model
             random.Next(0, 100);
             if (!this.ContainsBonusShip())
             {
-                if (random.Next(0, 100) > 50)
+                if (random.Next(0, 100) > 98)
                 {
                     this.EnemyShips.Add(new EnemyShip(EnemyShipLevels.Bonus));
                     this.gameBackground.Children.Add(this.EnemyShips[this.EnemyShips.Count - 1].Sprite);
@@ -202,6 +202,7 @@ namespace SpaceInvaders.Model
             else
             {
                 this.gameBackground.Children.Remove(this.EnemyShips[this.EnemyShips.Count - 1].Sprite);
+                this.EnemyShips.Remove(this.EnemyShips[this.EnemyShips.Count - 1]);
             }
         }
 
