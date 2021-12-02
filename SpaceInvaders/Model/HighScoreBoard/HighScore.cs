@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpaceInvaders.Model
+namespace SpaceInvaders.Model.HighScoreBoard
 {
     public class HighScore : IComparable
     {

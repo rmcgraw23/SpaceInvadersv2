@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using SpaceInvaders.Model.Enemies;
 using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
@@ -75,6 +76,8 @@ namespace SpaceInvaders.Model
         private int count;
 
         private bool gotPowerUp;
+
+        private HighScoreBoardManager highScoreBoard;
 
         #endregion
 
@@ -167,6 +170,7 @@ namespace SpaceInvaders.Model
             this.bulletManager = new BulletManager(this.gameBackground);
             this.playerShipManager.InitializeShips();
             this.enemyShipManger.InitializeShips();
+            this.highScoreBoard = new HighScoreBoardManager();
             //this.enemyBullets = new List<GameObject>();
             //this.playerBullet = new List<ShipBullet>();
             this.lives = 3;
@@ -471,6 +475,7 @@ namespace SpaceInvaders.Model
                 this.result();
                 this.OnGameOverUpdated();
             }
+
         }
 
         private void result()

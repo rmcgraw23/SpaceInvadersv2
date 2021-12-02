@@ -30,6 +30,12 @@ namespace SpaceInvaders.View
 
         }
 
+        private void SubmitButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
+
         #endregion
+
     }
 }

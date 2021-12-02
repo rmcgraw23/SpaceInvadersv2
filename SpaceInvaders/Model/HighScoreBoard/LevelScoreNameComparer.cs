@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpaceInvaders.Model.HighScoreBoard;
 
-namespace SpaceInvaders.Model
+namespace SpaceInvaders.Model.HighScoreBoard
 {
     public class LevelScoreNameComparer : IComparer<HighScore>
     {

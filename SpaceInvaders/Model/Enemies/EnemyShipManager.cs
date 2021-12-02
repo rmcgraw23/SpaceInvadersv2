@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using SpaceInvaders.View.Sprites;
 
-namespace SpaceInvaders.Model
+namespace SpaceInvaders.Model.Enemies
 {
     class EnemyShipManager
     {

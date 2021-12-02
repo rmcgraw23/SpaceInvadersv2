@@ -71,10 +71,16 @@ namespace SpaceInvaders.View
             this.livesTextBlock.Text = "Lives: " + lives.ToString();
         }
 
-        private async void GameOnGameOverUpdated(string title, string content)
+        private async void GameOnGameOverUpdated(string title, string contents)
         {
-            var playerLostDialog = new ContentDialog
+            string content = "";
+            //if (newHighScore)
             {
+                content += "Add your name to the board.";
+            }
+            var playerLostDialog = new  ContentDialog
+            {
+                
                 Title = title,
 
                 Content = content,
