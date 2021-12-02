@@ -487,6 +487,16 @@ namespace SpaceInvaders.Model
                 this.gameBackground.Children.Clear();
                 this.timer.Stop();
                 this.InitializeGame(this.gameBackground);
+
+                if (this.currentRound == 2)
+                {
+                    this.timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+                }
+                else if (this.currentRound == 3)
+                {
+                    this.timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+                }
+
             }
 
             else if (!this.gameBackground.Children.Contains(this.playerShip.Sprite))
