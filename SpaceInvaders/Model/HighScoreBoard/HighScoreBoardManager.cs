@@ -97,7 +97,7 @@ namespace SpaceInvaders.Model
                 foreach (var line in lines)
                 {
                     string [] score = line.Split(" ");
-                    this.HighScores.Add(new HighScore(score[0], Int32.Parse(score[2]), Int32.Parse(score[2])));
+                    this.HighScores.Add(new HighScore(score[0], Int32.Parse(score[1]), Int32.Parse(score[2])));
                 }
             }
             catch (Exception e)

@@ -58,6 +58,27 @@ namespace SpaceInvaders.View
 
         private void viewHighScoreBoard_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            this.waitOnScoreBoard();
+            this.Visibility = Visibility.Collapsed;
+        }
+
+        private async void waitOnScoreBoard()
+        {
+            var currentAV = ApplicationView.GetForCurrentView();
+            var newAV = CoreApplication.CreateNewView();
+            await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                var newWindow = Window.Current;
+                var newAppView = ApplicationView.GetForCurrentView();
+
+                var frame = new Frame();
+                frame.Navigate(typeof(HighScoreBoardView), null);
+                newWindow.Content = frame;
+                newWindow.Activate();
+
+                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum,
+                    currentAV.Id, ViewSizePreference.UseMinimum);
+            });
 
         }
 

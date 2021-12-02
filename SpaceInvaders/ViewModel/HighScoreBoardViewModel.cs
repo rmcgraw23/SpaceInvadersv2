@@ -24,6 +24,7 @@ namespace SpaceInvaders.ViewModel
         public RelayCommand sortLevelFirstCommand { get; set; }
 
         #endregion
+
         #region Properties
 
         private HighScoreBoardManager HighScoreBoardManager;
@@ -32,7 +33,7 @@ namespace SpaceInvaders.ViewModel
 
         public ObservableCollection<HighScore> HighScores
         {
-            get { return highScores; }
+            get { return this.highScores; }
             set
             {
                 this.highScores = value;
@@ -50,7 +51,7 @@ namespace SpaceInvaders.ViewModel
         public HighScoreBoardViewModel()
         {
             this.HighScoreBoardManager = new HighScoreBoardManager();
-            this.HighScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
+            this.highScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
             this.addCommand = new RelayCommand(AddScore, CanAddScore);
             this.sortCommand = new RelayCommand(SortScores, CanSortScores);
             this.sortNameFirstCommand = new RelayCommand(SortNameFirstScores, CanSortNameFirstScores);
