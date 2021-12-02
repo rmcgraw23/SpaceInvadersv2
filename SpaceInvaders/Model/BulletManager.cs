@@ -157,7 +157,7 @@ namespace SpaceInvaders.Model
                 bullet.MoveUp();
             }
 
-            this.RemoveEnemyBullet(shipBullet);
+            this.RemovePlayerBullet(shipBullet);
             //this.playerShipManager.PlayerBullets = this.playerShipManager.PlayerBullets;
         }
 
@@ -168,18 +168,23 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void MoveBulletDown()
         {
-            for (int index = 0; index < this.enemyBullets.Count; index++)
+            ShipBullet shipBullet = null;
+            foreach (var currentBullet in this.enemyBullets)
             {
-                if (this.enemyBullets[index].Y + this.enemyBullets[index].SpeedY > this.gameBackground.Height)
+                if (currentBullet.Y + currentBullet.SpeedY > this.gameBackground.Height)
                 {
-                    this.enemyBullets.Remove(this.enemyBullets[index]);
+                    shipBullet = currentBullet;
+                    this.gameBackground.Children.Remove(currentBullet.Sprite);
                 }
 
                 if (this.enemyBullets.Count > 0)
                 {
-                    this.enemyBullets[index].MoveDown();
+                    currentBullet.MoveDown();
                 }
             }
+
+            this.enemyBullets.Remove(shipBullet);
+
         }
 
         private void placePowerUp()
