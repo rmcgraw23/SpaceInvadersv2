@@ -484,29 +484,10 @@ namespace SpaceInvaders.Model
             {
                 this.currentRound++;
                 this.gameBackground.Children.Remove(this.playerShip.Sprite);
-
-                foreach (var currentBullet in this.bulletManager.playerBullets)
-                {
-                    this.gameBackground.Children.Remove(currentBullet.Sprite);
-                }
-
-                foreach (var currentBullet in this.bulletManager.enemyBullets)
-                {
-                    this.gameBackground.Children.Remove(currentBullet.Sprite);
-                }
-
+                this.clearBulletsFromGameBoard();
                 this.timer.Stop();
                 this.InitializeGame(this.gameBackground);
-
-                if (this.currentRound == 2)
-                {
-                    this.timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-                }
-                else if (this.currentRound == 3)
-                {
-                    this.timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
-                }
-
+                this.setTimerIntervalForRound();
             }
 
             else if (!this.gameBackground.Children.Contains(this.playerShip.Sprite))
@@ -516,6 +497,31 @@ namespace SpaceInvaders.Model
                 this.Content = "You Died";
                 this.result();
                 this.OnGameOverUpdated();
+            }
+        }
+
+        private void setTimerIntervalForRound()
+        {
+            if (this.currentRound == 2)
+            {
+                this.timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            }
+            else if (this.currentRound == 3)
+            {
+                this.timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+            }
+        }
+
+        private void clearBulletsFromGameBoard()
+        {
+            foreach (var currentBullet in this.bulletManager.playerBullets)
+            {
+                this.gameBackground.Children.Remove(currentBullet.Sprite);
+            }
+
+            foreach (var currentBullet in this.bulletManager.enemyBullets)
+            {
+                this.gameBackground.Children.Remove(currentBullet.Sprite);
             }
         }
 
