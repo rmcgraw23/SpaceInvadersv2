@@ -20,13 +20,17 @@ namespace SpaceInvaders.Model
     {
         #region DataMembers
 
-        public IList<ShipBullet> playerBullets;
-        public IList<ShipBullet> enemyBullets;
-        public IList<PowerUp> powerUps;
-
         private Canvas gameBackground;
 
         private const int MaxLives = 3;
+
+        #endregion
+
+        #region Properties
+
+        public IList<ShipBullet> playerBullets { get; set; }
+        public IList<ShipBullet> enemyBullets { get; set; }
+        public IList<PowerUp> powerUps { get; set; }
 
         #endregion
 

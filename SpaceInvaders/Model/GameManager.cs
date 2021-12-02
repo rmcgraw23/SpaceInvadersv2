@@ -484,6 +484,7 @@ namespace SpaceInvaders.Model
             {
                 this.currentRound++;
                 this.gameBackground.Children.Remove(this.playerShip.Sprite);
+                this.gameBackground.Children.Clear();
                 this.InitializeGame(this.gameBackground);
             }
 
@@ -524,30 +525,27 @@ namespace SpaceInvaders.Model
             IList<ShipBullet> enemyBulletsToRemove = new List<ShipBullet>();
             IList<Shield> shieldsToRemove = new List<Shield>();
 
-            foreach (var currentBullet in this.bulletManager.playerBullets)
+            this.checkForPlayerBulletShieldCollision(playerBulletsToRemove, shieldsToRemove);
+            this.checkForEnemyBulletShieldCollision(enemyBulletsToRemove, shieldsToRemove);
+
+            foreach (var currentBullet in playerBulletsToRemove)
             {
-                foreach (var currentShield in this.shields)
-                {
-                    if (CollisionDetector.detectCollision(currentShield, currentBullet))
-                    {
-                        if (currentShield.HitsRemaining != 0)
-                        {
-                            currentShield.HitsRemaining--;
-                            currentShield.Sprite.Opacity -= .25;
-                            this.gameBackground.Children.Remove(currentBullet.Sprite);
-                            playerBulletsToRemove.Add(currentBullet);
-                        }
-                        else
-                        {
-                            this.gameBackground.Children.Remove(currentShield.Sprite);
-                            this.gameBackground.Children.Remove(currentBullet.Sprite);
-                            shieldsToRemove.Add(currentShield);
-                            playerBulletsToRemove.Add(currentBullet);
-                        }
-                    }
-                }
+                this.bulletManager.playerBullets.Remove(currentBullet);
             }
 
+            foreach (var currentBullet in enemyBulletsToRemove)
+            {
+                this.bulletManager.enemyBullets.Remove(currentBullet);
+            }
+
+            foreach (var currentShield in shieldsToRemove)
+            {
+                this.shields.Remove(currentShield);
+            }
+        }
+
+        private void checkForEnemyBulletShieldCollision(IList<ShipBullet> enemyBulletsToRemove, IList<Shield> shieldsToRemove)
+        {
             foreach (var currentBullet in this.bulletManager.enemyBullets)
             {
                 foreach (var currentShield in this.shields)
@@ -571,20 +569,32 @@ namespace SpaceInvaders.Model
                     }
                 }
             }
+        }
 
-            foreach (var currentBullet in playerBulletsToRemove)
+        private void checkForPlayerBulletShieldCollision(IList<ShipBullet> playerBulletsToRemove, IList<Shield> shieldsToRemove)
+        {
+            foreach (var currentBullet in this.bulletManager.playerBullets)
             {
-                this.bulletManager.playerBullets.Remove(currentBullet);
-            }
-
-            foreach (var currentBullet in enemyBulletsToRemove)
-            {
-                this.bulletManager.enemyBullets.Remove(currentBullet);
-            }
-
-            foreach (var currentShield in shieldsToRemove)
-            {
-                this.shields.Remove(currentShield);
+                foreach (var currentShield in this.shields)
+                {
+                    if (CollisionDetector.detectCollision(currentShield, currentBullet))
+                    {
+                        if (currentShield.HitsRemaining != 0)
+                        {
+                            currentShield.HitsRemaining--;
+                            currentShield.Sprite.Opacity -= .25;
+                            this.gameBackground.Children.Remove(currentBullet.Sprite);
+                            playerBulletsToRemove.Add(currentBullet);
+                        }
+                        else
+                        {
+                            this.gameBackground.Children.Remove(currentShield.Sprite);
+                            this.gameBackground.Children.Remove(currentBullet.Sprite);
+                            shieldsToRemove.Add(currentShield);
+                            playerBulletsToRemove.Add(currentBullet);
+                        }
+                    }
+                }
             }
         }
 
