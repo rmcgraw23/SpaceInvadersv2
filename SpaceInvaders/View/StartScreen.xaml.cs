@@ -33,7 +33,6 @@ namespace SpaceInvaders.View
         private void startGame_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             this.waitOnStart();
-            this.Visibility = Visibility.Collapsed;
         }
 
         private async void waitOnStart()
