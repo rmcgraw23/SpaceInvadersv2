@@ -489,6 +489,7 @@ namespace SpaceInvaders.Model
                 this.currentRound++;
                 this.gameBackground.Children.Remove(this.playerShip.Sprite);
                 this.clearBulletsFromGameBoard();
+                this.clearShieldsFromGameBoard();
                 this.timer.Stop();
                 this.InitializeGame(this.gameBackground);
                 this.setTimerIntervalForRound();
@@ -502,6 +503,18 @@ namespace SpaceInvaders.Model
                 this.OnGameOverUpdated();
             }
 
+        }
+
+        private void clearShieldsFromGameBoard()
+        {
+            var currentShields = this.shields;
+            if (currentShields != null)
+            {
+                foreach (var currentShield in currentShields)
+                {
+                    this.gameBackground.Children.Remove(currentShield.Sprite);
+                }
+            }
         }
 
         private void setTimerIntervalForRound()
