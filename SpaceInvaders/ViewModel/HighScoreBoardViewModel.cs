@@ -44,6 +44,18 @@ namespace SpaceInvaders.ViewModel
             }
         }
 
+        private string name;
+
+        public string Name
+        {
+            get { return this.name;}
+            set
+            {
+                this.name = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -63,13 +75,13 @@ namespace SpaceInvaders.ViewModel
         #region Methods
         private bool CanAddScore(object obj)
         {
-            return this.CanAddScore(obj);
+            return this.HighScoreBoardManager.WithinTopTen();
         }
 
         private void AddScore(object obj)
         {
-            //this.highScores.Add(obj);
-            //this.Students = this.roster.Students.ToObservableCollection();
+            this.HighScoreBoardManager.AddHighScore();
+            this.Students = this.roster.Students.ToObservableCollection();
 
         }
 

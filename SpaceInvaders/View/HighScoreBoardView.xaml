@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:SpaceInvaders.Model"
     xmlns:viewModel="using:SpaceInvaders.ViewModel"
+    xmlns:spaceInvaders="using:SpaceInvaders"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
@@ -19,11 +20,14 @@
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Left" Margin="0,25,0,0" Text="High Score Board" TextWrapping="Wrap" VerticalAlignment="Top" Width="1485" Height="114" RenderTransformOrigin="0.501,0.148" FontSize="50" FontWeight="Bold" TextAlignment="Center" Grid.Row="1"/>
         <ListView ItemsSource="{Binding Path=HighScores}"
-            x:Name="highScoreListView" RenderTransformOrigin="0.48,0.415" Margin="10,256,0,41" Grid.Row="1"/>
+            x:Name="highScoreListView" RenderTransformOrigin="0.48,0.415" Margin="10,257,0,40" Grid.Row="1"/>
         <Button Command="{Binding Path= sortNameFirstCommand}"
                 x:Name="NameFirstSortButton" Content="Sort by Name First" Margin="205,166,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="205" Click="sortByNameFirst"/>
         <Button Command="{Binding Path=sortLevelFirstCommand}" 
             x:Name="LevelFirstSortButton" Content="Sort by Level First" Margin="1096,166,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="205" Click="sortByLevelFirst"/>
+        <Button Command="{Binding Path=addCommand}"
+            x:Name="SubmitButton" Content="Submit" Margin="468,208,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="111"/>
+        <TextBlock HorizontalAlignment="Left" Margin="697,207,0,0" Grid.Row="1" Text="Add your name to the board!" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="188"/>
 
     </Grid>
 </Page>

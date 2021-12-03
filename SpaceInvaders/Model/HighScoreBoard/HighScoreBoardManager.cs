@@ -14,11 +14,14 @@ namespace SpaceInvaders.Model
     {
         #region DataMembers
 
+        
 
         #endregion
         #region Properties
 
         public List<HighScore> HighScores { get; set; }
+
+        public int Score { get; set; }
 
         #endregion
 
@@ -27,6 +30,7 @@ namespace SpaceInvaders.Model
         public HighScoreBoardManager()
         {
             this.HighScores = new List<HighScore>();
+            this.Score = 0;
             this.SetHighScoreBoard();
             
         }
@@ -73,11 +77,11 @@ namespace SpaceInvaders.Model
 
         }
 
-        public bool WithinTopTen(int score)
+        public bool WithinTopTen()
         {
             foreach (var highScore in this.HighScores)
             {
-                if (score > highScore.score)
+                if (this.Score > highScore.score)
                 {
                     return true;
                     this.OnHighScoreUpdated();

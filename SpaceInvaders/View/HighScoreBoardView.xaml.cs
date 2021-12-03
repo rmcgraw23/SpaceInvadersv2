@@ -8,12 +8,17 @@ namespace SpaceInvaders.View
 {
     public sealed partial class HighScoreBoardView
     {
+        #region DataMemebers
 
+        private string name;
+
+        #endregion
         #region Constructors
 
         public HighScoreBoardView()
         {
             this.AskForNameAsync();
+            this.name = "";
         }
 
         #endregion

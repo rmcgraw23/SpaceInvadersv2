@@ -58,7 +58,6 @@ namespace SpaceInvaders.View
         private void viewHighScoreBoard_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             this.waitOnScoreBoard();
-            this.Visibility = Visibility.Collapsed;
         }
 
         private async void waitOnScoreBoard()

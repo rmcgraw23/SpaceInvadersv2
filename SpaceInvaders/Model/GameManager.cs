@@ -475,7 +475,7 @@ namespace SpaceInvaders.Model
 
         private void gameOver()
         {
-            this.OnTheBoard = this.highScoreBoard.WithinTopTen(this.Score);
+            this.highScoreBoard.Score = this.Score;
             if (this.enemyShips.Count == 0 && this.currentRound == finalRound)
             {
                 SoundPlayer.PlaySound("gameOver.wav");
