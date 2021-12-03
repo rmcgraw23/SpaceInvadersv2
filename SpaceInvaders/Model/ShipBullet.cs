@@ -1,4 +1,5 @@
-﻿using SpaceInvaders.View.Sprites;
+﻿using SpaceInvaders.Model.Enemies;
+using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
 {

@@ -5,13 +5,16 @@ using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model.Enemies
 {
+    /// <summary>
+    ///     Manages the Enemy Ships
+    /// </summary>
     class EnemyShipManager
     {
 
         #region DataMembers
 
         private int enemyShipsPerRow;
-        private Canvas gameBackground;
+        private readonly Canvas gameBackground;
         private int level2StepCounter;
         private bool level2FirstStep;
         private int level2FirstStepCounter;
@@ -61,6 +64,12 @@ namespace SpaceInvaders.Model.Enemies
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnemyShipManager"/> class.
+        /// Precondition: none
+        /// Post-conditon: none
+        /// </summary>
+        /// <param name="background">The background.</param>
         public EnemyShipManager(Canvas background)
         {
             this.gameBackground = background;
@@ -176,11 +185,14 @@ namespace SpaceInvaders.Model.Enemies
             }
         }
 
+        /// <summary>
+        /// Places the bonus ship.
+        /// </summary>
         public void placeBonusShip()
         {
-            Random random = new Random();
+            var random = new Random();
             random.Next(0, 100);
-            if (!this.ContainsBonusShip())
+            if (!this.containsBonusShip())
             {
                 if (random.Next(0, 100) > 98)
                 {
@@ -202,7 +214,7 @@ namespace SpaceInvaders.Model.Enemies
             }
         }
 
-        private bool ContainsBonusShip()
+        private bool containsBonusShip()
         {
             foreach (var ship in EnemyShips)
             {
@@ -215,6 +227,10 @@ namespace SpaceInvaders.Model.Enemies
             return false;
         }
 
+        /// <summary>
+        /// Gets the firing enemies.
+        /// </summary>
+        /// <returns></returns>
         public IList<GameObject> getFiringEnemies()
         {
             IList<GameObject> firingEnemies = new List<GameObject>();
@@ -312,6 +328,11 @@ namespace SpaceInvaders.Model.Enemies
             }
         }
 
+        /// <summary>
+        /// Moves the enemy snips level2.
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
         public void MoveEnemySnipsLevel2()
         {
             foreach (var currentShip in this.EnemyShips)
@@ -372,6 +393,11 @@ namespace SpaceInvaders.Model.Enemies
 
         }
 
+        /// <summary>
+        /// Moves the enemy ships level3.
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
         public void MoveEnemyShipsLevel3()
         {
             foreach (var currentShip in this.EnemyShips)

@@ -420,7 +420,7 @@ namespace SpaceInvaders.Model
         public void PlayerDied()
         {
             //this.lives = this.shipsManager.PlayerDied();
-            IDictionary<ShipBullet, int> result = this.playerShipManager.PlayerDied(this.bulletManager.enemyBullets);
+            IDictionary<ShipBullet, int> result = this.playerShipManager.PlayerDied(this.bulletManager.EnemyBullets);
             foreach (var bullet in result.Keys)
             {
                 this.bulletManager.RemoveEnemyBullet(bullet);
@@ -444,7 +444,7 @@ namespace SpaceInvaders.Model
         public void EnemyDestroyed()
         {
             //EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed();
-            IDictionary<ShipBullet, EnemyShip> result = this.enemyShipManger.EnemyDestroyed(this.bulletManager.playerBullets);
+            IDictionary<ShipBullet, EnemyShip> result = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PlayerBullets);
             //this.enemyShips = this.shipsManager.EnemyShips;
             this.enemyShips = this.enemyShipManger.EnemyShips;
             foreach (var bullet in result.Keys)
@@ -489,6 +489,7 @@ namespace SpaceInvaders.Model
                 this.currentRound++;
                 this.gameBackground.Children.Remove(this.playerShip.Sprite);
                 this.clearBulletsFromGameBoard();
+                this.clearShieldsFromGameBoard();
                 this.timer.Stop();
                 this.InitializeGame(this.gameBackground);
                 this.setTimerIntervalForRound();
@@ -502,6 +503,18 @@ namespace SpaceInvaders.Model
                 this.OnGameOverUpdated();
             }
 
+        }
+
+        private void clearShieldsFromGameBoard()
+        {
+            var currentShields = this.shields;
+            if (currentShields != null)
+            {
+                foreach (var currentShield in currentShields)
+                {
+                    this.gameBackground.Children.Remove(currentShield.Sprite);
+                }
+            }
         }
 
         private void setTimerIntervalForRound()
@@ -518,12 +531,12 @@ namespace SpaceInvaders.Model
 
         private void clearBulletsFromGameBoard()
         {
-            foreach (var currentBullet in this.bulletManager.playerBullets)
+            foreach (var currentBullet in this.bulletManager.PlayerBullets)
             {
                 this.gameBackground.Children.Remove(currentBullet.Sprite);
             }
 
-            foreach (var currentBullet in this.bulletManager.enemyBullets)
+            foreach (var currentBullet in this.bulletManager.EnemyBullets)
             {
                 this.gameBackground.Children.Remove(currentBullet.Sprite);
             }
@@ -561,12 +574,12 @@ namespace SpaceInvaders.Model
 
             foreach (var currentBullet in playerBulletsToRemove)
             {
-                this.bulletManager.playerBullets.Remove(currentBullet);
+                this.bulletManager.PlayerBullets.Remove(currentBullet);
             }
 
             foreach (var currentBullet in enemyBulletsToRemove)
             {
-                this.bulletManager.enemyBullets.Remove(currentBullet);
+                this.bulletManager.EnemyBullets.Remove(currentBullet);
             }
 
             foreach (var currentShield in shieldsToRemove)
@@ -577,7 +590,7 @@ namespace SpaceInvaders.Model
 
         private void checkForEnemyBulletShieldCollision(IList<ShipBullet> enemyBulletsToRemove, IList<Shield> shieldsToRemove)
         {
-            foreach (var currentBullet in this.bulletManager.enemyBullets)
+            foreach (var currentBullet in this.bulletManager.EnemyBullets)
             {
                 foreach (var currentShield in this.shields)
                 {
@@ -604,7 +617,7 @@ namespace SpaceInvaders.Model
 
         private void checkForPlayerBulletShieldCollision(IList<ShipBullet> playerBulletsToRemove, IList<Shield> shieldsToRemove)
         {
-            foreach (var currentBullet in this.bulletManager.playerBullets)
+            foreach (var currentBullet in this.bulletManager.PlayerBullets)
             {
                 foreach (var currentShield in this.shields)
                 {

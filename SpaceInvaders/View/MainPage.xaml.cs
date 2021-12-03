@@ -1,17 +1,10 @@
 ﻿using SpaceInvaders.Model;
 using System;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Foundation;
-using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
-using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Hosting;
-using SpaceInvaders.Annotations;
 using VirtualKey = Windows.System.VirtualKey;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409

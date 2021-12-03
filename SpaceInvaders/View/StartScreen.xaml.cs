@@ -1,25 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Store;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
-using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Hosting;
 
 namespace SpaceInvaders.View
 {
+    /// <summary>
+    ///     The page for the start screen.
+    /// </summary>
+    /// <seealso cref="Windows.UI.Xaml.Controls.Page" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
     public sealed partial class StartScreen
     {
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StartScreen"/> class.
+        /// Precondition: none
+        /// Post-condition: Creates a new start screen.
+        /// </summary>
         public StartScreen()
         {
             this.InitializeComponent();
