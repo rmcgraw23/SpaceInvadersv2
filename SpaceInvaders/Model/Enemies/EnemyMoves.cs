@@ -1,4 +1,4 @@
-﻿namespace SpaceInvaders.Model
+﻿namespace SpaceInvaders.Model.Enemies
 {
     /// <summary>
     /// Defines the enemy moves

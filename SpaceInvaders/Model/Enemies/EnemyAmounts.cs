@@ -1,4 +1,4 @@
-﻿namespace SpaceInvaders.Model
+﻿namespace SpaceInvaders.Model.Enemies
 {
     /// <summary>
     /// Defines the amount of each level enemy

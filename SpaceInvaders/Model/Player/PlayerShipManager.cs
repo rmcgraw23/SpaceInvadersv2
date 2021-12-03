@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 
 namespace SpaceInvaders.Model
 {
+    /// <summary>
+    ///     Manages the Player Ship.
+    /// </summary>
     class PlayerShipManager
     {
 
@@ -18,7 +16,7 @@ namespace SpaceInvaders.Model
         private const int OutOfLives = 0;
         private const int OneLifeLeft = 1;
 
-        private Canvas gameBackground;
+        private readonly Canvas gameBackground;
 
         //private BulletManager manager;
 
@@ -70,6 +68,12 @@ namespace SpaceInvaders.Model
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlayerShipManager"/> class.
+        /// Precondition: none
+        /// Post-condition: gameBackground = background
+        /// </summary>
+        /// <param name="background">The background.</param>
         public PlayerShipManager(Canvas background)
         {
             this.gameBackground = background;

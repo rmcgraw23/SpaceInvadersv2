@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpaceInvaders.Model
+﻿namespace SpaceInvaders.Model
 {
     /// <summary>
     /// The Collision Detector class.

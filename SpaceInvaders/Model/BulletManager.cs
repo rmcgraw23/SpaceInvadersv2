@@ -1,15 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Devices.PointOfService.Provider;
-using Windows.UI.Xaml;
-using Windows.Media.Playback;
-using Windows.Media.Core;
 using Windows.UI.Xaml.Controls;
-using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
 {
@@ -20,7 +11,7 @@ namespace SpaceInvaders.Model
     {
         #region DataMembers
 
-        private Canvas gameBackground;
+        private readonly Canvas gameBackground;
 
         private const int MaxLives = 3;
 
@@ -28,19 +19,45 @@ namespace SpaceInvaders.Model
 
         #region Properties
 
-        public IList<ShipBullet> playerBullets { get; set; }
-        public IList<ShipBullet> enemyBullets { get; set; }
-        public IList<PowerUp> powerUps { get; set; }
+        /// <summary>
+        /// Gets or sets the player bullets.
+        /// </summary>
+        /// <value>
+        /// The player bullets.
+        /// </value>
+        public IList<ShipBullet> PlayerBullets { get; set; }
+
+        /// <summary>
+        /// Gets or sets the enemy bullets.
+        /// </summary>
+        /// <value>
+        /// The enemy bullets.
+        /// </value>
+        public IList<ShipBullet> EnemyBullets { get; set; }
+
+        /// <summary>
+        /// Gets or sets the power ups.
+        /// </summary>
+        /// <value>
+        /// The power ups.
+        /// </value>
+        public IList<PowerUp> PowerUps { get; set; }
 
         #endregion
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BulletManager"/> class.
+        /// Precondition: none
+        /// Post-condition: PlayerBullets.Count() == 0 && EnemyBullets.Count() == 0 && PowerUps.Count() == 0
+        /// </summary>
+        /// <param name="gameBackground">The game background.</param>
         public BulletManager(Canvas gameBackground)
         {
-            this.playerBullets = new List<ShipBullet>();
-            this.enemyBullets = new List<ShipBullet>();
-            this.powerUps = new List<PowerUp>();
+            this.PlayerBullets = new List<ShipBullet>();
+            this.EnemyBullets = new List<ShipBullet>();
+            this.PowerUps = new List<PowerUp>();
 
             this.gameBackground = gameBackground;
         }
@@ -51,28 +68,28 @@ namespace SpaceInvaders.Model
 
         public IList<ShipBullet> AddEnemyBullet(ShipBullet bullet)
         {
-            this.enemyBullets.Add(bullet);
-            return this.enemyBullets;
+            this.EnemyBullets.Add(bullet);
+            return this.EnemyBullets;
         }
 
         public IList<ShipBullet> AddPlayerBullet(ShipBullet bullet)
         {
-            this.playerBullets.Add(bullet);
+            this.PlayerBullets.Add(bullet);
             
             this.placePowerUp();
-            return this.playerBullets;
+            return this.PlayerBullets;
         }
 
         public IList<ShipBullet> RemoveEnemyBullet(ShipBullet bullet)
         {
-            this.enemyBullets.Remove(bullet);
-            return this.enemyBullets;
+            this.EnemyBullets.Remove(bullet);
+            return this.EnemyBullets;
         }
 
         public IList<ShipBullet> RemovePlayerBullet(ShipBullet bullet)
         {
-            this.playerBullets.Remove(bullet);
-            return this.playerBullets;
+            this.PlayerBullets.Remove(bullet);
+            return this.PlayerBullets;
         }
         /// <summary>
         /// Adds the enemy bullets fired to the canvas and list of bullets
@@ -110,7 +127,7 @@ namespace SpaceInvaders.Model
                 }*/
             }
 
-            return this.enemyBullets;
+            return this.EnemyBullets;
         }
 
         private void placeBulletsBellowEnemies(GameObject ship, GameObject bullet)
@@ -123,7 +140,7 @@ namespace SpaceInvaders.Model
             {
                 ShipBullet bullet = new ShipBullet();
 
-                if (this.playerBullets.Count < MaxLives)
+                if (this.PlayerBullets.Count < MaxLives)
                 {
                     this.AddPlayerBullet(bullet);
                     gameBackground.Children.Add(bullet.Sprite);
@@ -133,7 +150,7 @@ namespace SpaceInvaders.Model
                     
                 }
 
-                return this.playerBullets;
+                return this.PlayerBullets;
             }
 
         private void placePlayerBullet(ShipBullet bullet, PlayerShip playerShip)
@@ -150,7 +167,7 @@ namespace SpaceInvaders.Model
         public void MoveBulletUp()
         {
             ShipBullet shipBullet = null;
-            foreach (var bullet in this.playerBullets)
+            foreach (var bullet in this.PlayerBullets)
             {
                 if (bullet.Y + bullet.SpeedY < 0)
                 {
@@ -173,7 +190,7 @@ namespace SpaceInvaders.Model
         public void MoveBulletDown()
         {
             IList<ShipBullet> bulletsToRemove = new List<ShipBullet>();
-            foreach (var currentBullet in this.enemyBullets)
+            foreach (var currentBullet in this.EnemyBullets)
             {
                 if (currentBullet.Y + currentBullet.SpeedY > this.gameBackground.Height)
                 {
@@ -181,7 +198,7 @@ namespace SpaceInvaders.Model
                     this.gameBackground.Children.Remove(currentBullet.Sprite);
                 }
 
-                if (this.enemyBullets.Count > 0)
+                if (this.EnemyBullets.Count > 0)
                 {
                     currentBullet.MoveDown();
                 }
@@ -189,7 +206,7 @@ namespace SpaceInvaders.Model
 
             foreach (var currentBullet in bulletsToRemove)
             {
-                this.enemyBullets.Remove(currentBullet);
+                this.EnemyBullets.Remove(currentBullet);
             }
 
         }
@@ -197,7 +214,7 @@ namespace SpaceInvaders.Model
         private void placePowerUp()
         {
             this.gameBackground.Children.Add(new PowerUp().Sprite);
-            this.powerUps.Add(new PowerUp());
+            this.PowerUps.Add(new PowerUp());
         }
 
 

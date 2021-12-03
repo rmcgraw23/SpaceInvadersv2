@@ -1,7 +1,7 @@
 ﻿using System;
 using SpaceInvaders.View.Sprites;
 
-namespace SpaceInvaders.Model
+namespace SpaceInvaders.Model.Enemies
 {
     /// <summary>
     ///     Creates the enemy ships
