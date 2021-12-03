@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace SpaceInvaders.View
 {
@@ -10,15 +11,16 @@ namespace SpaceInvaders.View
     {
         #region DataMemebers
 
-        private string name;
+        private bool show;
 
         #endregion
         #region Constructors
 
         public HighScoreBoardView()
         {
-            this.AskForNameAsync();
-            this.name = "";
+            //this.AskForNameAsync();
+            //this.name = "";
+            
         }
 
         #endregion

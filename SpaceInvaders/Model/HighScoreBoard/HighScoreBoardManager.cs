@@ -21,7 +21,9 @@ namespace SpaceInvaders.Model
 
         public List<HighScore> HighScores { get; set; }
 
-        public int Score { get; set; }
+        private int Score;
+
+        private int Level;
 
         #endregion
 
@@ -31,6 +33,7 @@ namespace SpaceInvaders.Model
         {
             this.HighScores = new List<HighScore>();
             this.Score = 0;
+            this.Level = 0;
             this.SetHighScoreBoard();
             
         }
@@ -45,9 +48,9 @@ namespace SpaceInvaders.Model
         {
             this.HighScoreUpdated?.Invoke(this, EventArgs.Empty);
         }
-        public void AddHighScore(HighScore score)
+        public void AddHighScore(string name)
         {
-            this.HighScores.Add(score);
+            this.HighScores.Add(new HighScore(name, this.Score, this.Level));
             this.HighScores.Sort();
 
             if (this.HighScores.Count >= 10)
@@ -106,6 +109,12 @@ namespace SpaceInvaders.Model
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        public void getScoreAndLevel(int score, int level)
+        {
+            this.Score = score;
+            this.Level = level;
         }
 
         #endregion

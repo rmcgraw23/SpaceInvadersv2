@@ -56,6 +56,18 @@ namespace SpaceInvaders.ViewModel
             }
         }
 
+        private bool inTopTen;
+
+        public bool InTopTen
+        {
+            get { return this.inTopTen; }
+            set
+            {
+                this.inTopTen = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -68,11 +80,21 @@ namespace SpaceInvaders.ViewModel
             this.sortCommand = new RelayCommand(SortScores, CanSortScores);
             this.sortNameFirstCommand = new RelayCommand(SortNameFirstScores, CanSortNameFirstScores);
             this.sortLevelFirstCommand = new RelayCommand(SortLevelFirstScores, CanSortLevelFirstScores);
+            this.name = "Add your name to the board!";
+            this.inTopTen = false;
+            this.GetStanding();
         }
 
         #endregion
 
         #region Methods
+
+        private void GetStanding()
+        {
+            this.inTopTen = this.HighScoreBoardManager.WithinTopTen();
+
+        }
+
         private bool CanAddScore(object obj)
         {
             return this.HighScoreBoardManager.WithinTopTen();
@@ -80,8 +102,8 @@ namespace SpaceInvaders.ViewModel
 
         private void AddScore(object obj)
         {
-            this.HighScoreBoardManager.AddHighScore();
-            this.Students = this.roster.Students.ToObservableCollection();
+            this.HighScoreBoardManager.AddHighScore(this.name);
+            this.highScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
 
         }
 
