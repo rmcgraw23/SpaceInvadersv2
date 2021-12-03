@@ -18,7 +18,11 @@ namespace SpaceInvaders.Model
         private const int SpeedXDirection = 0;
         private const int SpeedYDirection = 20;
 
+        public int HitCount = 1;
+
         #endregion
+
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PowerUp"/> class.
@@ -28,5 +32,8 @@ namespace SpaceInvaders.Model
             Sprite = new PowerUpSprite();
             SetSpeed(SpeedXDirection, SpeedYDirection);
         }
+
+        #endregion
+
     }
 }

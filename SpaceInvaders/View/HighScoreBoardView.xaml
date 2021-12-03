@@ -27,7 +27,7 @@
             x:Name="LevelFirstSortButton" Content="Sort by Level First" Margin="1096,166,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="205" Click="sortByLevelFirst"/>
         <Button Command="{Binding Path=addCommand}"
             x:Name="SubmitButton" Content="Submit" Margin="468,208,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="111"/>
-        <TextBlock Visibility="{Binding Path=}"
+        <TextBlock Visibility="{Binding Path= InTopTen}"
             x:Name="NameTextBlock" Margin="659,209,653,0" Grid.Row="1" Text="{Binding Path=Name}" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="188"/>
 
     </Grid>

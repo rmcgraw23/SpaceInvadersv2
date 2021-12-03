@@ -256,11 +256,11 @@ namespace SpaceInvaders.Model.Enemies
         /// Precondition: none
         /// Post-condition: the enemy and bullet should be removed if the ship is hit
         /// </summary>
-        public IDictionary<ShipBullet, EnemyShip> EnemyDestroyed(IList<ShipBullet> playerBullets)
+        public IDictionary<GameObject, EnemyShip> EnemyDestroyed(IList<GameObject> playerBullets)
         {
-            IDictionary<ShipBullet, EnemyShip> result = new Dictionary<ShipBullet, EnemyShip>();
+            IDictionary<GameObject, EnemyShip> result = new Dictionary<GameObject, EnemyShip>();
             EnemyShip destroyedShip = null;
-            ShipBullet hitBullet = null;
+            GameObject hitBullet = null;
             foreach (var ship in this.EnemyShips)
             {
                 destroyedShip = this.shipDestroyed(ship, destroyedShip, ref hitBullet, playerBullets);
@@ -278,17 +278,31 @@ namespace SpaceInvaders.Model.Enemies
             return result;
         }
 
-        private EnemyShip shipDestroyed(EnemyShip ship, EnemyShip destroyedShip, ref ShipBullet hitBullet, IList<ShipBullet> playerBullets)
+        private EnemyShip shipDestroyed(EnemyShip ship, EnemyShip destroyedShip, ref GameObject hitBullet, IList<GameObject> playerBullets)
         {
             foreach (var bullet in playerBullets)
             {
                 if (CollisionDetector.detectCollision(ship, bullet))
                 {
                     this.gameBackground.Children.Remove(ship.Sprite);
-                    this.gameBackground.Children.Remove(bullet.Sprite);
+                    if (bullet.Sprite is PowerUpSprite && ((PowerUp)bullet).HitCount == 0)
+                    {
+                        this.gameBackground.Children.Remove(bullet.Sprite);
+                        hitBullet = bullet;
+                    }
+
+                    if (bullet.Sprite is PowerUpSprite && ((PowerUp)bullet).HitCount != 0)
+                    {
+                        ((PowerUp)bullet).HitCount -= 1;
+                    }
+                    else
+                    {
+                        this.gameBackground.Children.Remove(bullet.Sprite);
+                        hitBullet = bullet;
+                    }
+
                     SoundPlayer.PlaySound("explosion.wav");
                     destroyedShip = ship;
-                    hitBullet = bullet;
                     this.BulletFired = false;
                 }
             }

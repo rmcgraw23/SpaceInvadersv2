@@ -74,6 +74,7 @@ namespace SpaceInvaders.Model
 
         private const int finalRound = 3;
         private int count;
+        private int powerUpsRemaining;
 
         private bool gotPowerUp;
         private IList<Shield> shields;
@@ -195,6 +196,7 @@ namespace SpaceInvaders.Model
             this.timer.Start();
             this.move = 0;
             this.count = 1;
+            this.powerUpsRemaining = 0;
         }
 
 
@@ -247,6 +249,7 @@ namespace SpaceInvaders.Model
 
             count += 1;
             this.bulletManager.MoveBulletUp();
+            this.bulletManager.MovePowerUp();
             this.EnemyDestroyed();
 
             this.bulletManager.MoveBulletDown();
@@ -396,7 +399,19 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void CreateAndPlacePlayerShipBullet()
         {
-            this.bulletManager.CreateAndPlacePlayerShipBullet(this.gameBackground, this.playerShip);
+            if (this.gotPowerUp)
+            {
+                this.bulletManager.CreateandPlacePowerUp(this.playerShip);
+                this.powerUpsRemaining -= 1;
+                if (this.powerUpsRemaining == 0)
+                {
+                    this.gotPowerUp = false;
+                }
+            }
+            else
+            {
+                this.bulletManager.CreateAndPlacePlayerShipBullet(this.gameBackground, this.playerShip);
+            }
             //this.playerBullet = this.playerShipManager.PlayerBullets;
 
         }
@@ -444,12 +459,14 @@ namespace SpaceInvaders.Model
         public void EnemyDestroyed()
         {
             //EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed();
-            IDictionary<ShipBullet, EnemyShip> result = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PlayerBullets);
+            IDictionary<GameObject, EnemyShip> result = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PlayerBullets);
+            IDictionary<GameObject, EnemyShip> powerUoResult = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PowerUps);
+
             //this.enemyShips = this.shipsManager.EnemyShips;
             this.enemyShips = this.enemyShipManger.EnemyShips;
             foreach (var bullet in result.Keys)
             {
-                this.bulletManager.RemovePlayerBullet(bullet);
+                this.bulletManager.RemovePlayerBullet((ShipBullet)bullet);
             }
 
             foreach (var destroyedShip in result.Values)
@@ -460,6 +477,7 @@ namespace SpaceInvaders.Model
                     if (destroyedShip.Sprite is BonusEnemySprite)
                     {
                         this.gotPowerUp = true;
+                        this.powerUpsRemaining = 7;
                     }
                 }
             }
@@ -628,14 +646,14 @@ namespace SpaceInvaders.Model
                             currentShield.HitsRemaining--;
                             currentShield.Sprite.Opacity -= .25;
                             this.gameBackground.Children.Remove(currentBullet.Sprite);
-                            playerBulletsToRemove.Add(currentBullet);
+                            playerBulletsToRemove.Add((ShipBullet)currentBullet);
                         }
                         else
                         {
                             this.gameBackground.Children.Remove(currentShield.Sprite);
                             this.gameBackground.Children.Remove(currentBullet.Sprite);
                             shieldsToRemove.Add(currentShield);
-                            playerBulletsToRemove.Add(currentBullet);
+                            playerBulletsToRemove.Add((ShipBullet)currentBullet);
                         }
                     }
                 }

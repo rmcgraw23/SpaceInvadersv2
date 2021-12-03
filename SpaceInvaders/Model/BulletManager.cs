@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
 namespace SpaceInvaders.Model
@@ -25,7 +26,7 @@ namespace SpaceInvaders.Model
         /// <value>
         /// The player bullets.
         /// </value>
-        public IList<ShipBullet> PlayerBullets { get; set; }
+        public IList<GameObject> PlayerBullets { get; set; }
 
         /// <summary>
         /// Gets or sets the enemy bullets.
@@ -41,7 +42,7 @@ namespace SpaceInvaders.Model
         /// <value>
         /// The power ups.
         /// </value>
-        public IList<PowerUp> PowerUps { get; set; }
+        public IList<GameObject> PowerUps { get; set; }
 
         #endregion
 
@@ -55,9 +56,9 @@ namespace SpaceInvaders.Model
         /// <param name="gameBackground">The game background.</param>
         public BulletManager(Canvas gameBackground)
         {
-            this.PlayerBullets = new List<ShipBullet>();
+            this.PlayerBullets = new List<GameObject>();
             this.EnemyBullets = new List<ShipBullet>();
-            this.PowerUps = new List<PowerUp>();
+            this.PowerUps = new List<GameObject>();
 
             this.gameBackground = gameBackground;
         }
@@ -72,11 +73,10 @@ namespace SpaceInvaders.Model
             return this.EnemyBullets;
         }
 
-        public IList<ShipBullet> AddPlayerBullet(ShipBullet bullet)
+        public IList<GameObject> AddPlayerBullet(ShipBullet bullet)
         {
             this.PlayerBullets.Add(bullet);
             
-            this.placePowerUp();
             return this.PlayerBullets;
         }
 
@@ -86,7 +86,7 @@ namespace SpaceInvaders.Model
             return this.EnemyBullets;
         }
 
-        public IList<ShipBullet> RemovePlayerBullet(ShipBullet bullet)
+        public IList<GameObject> RemovePlayerBullet(ShipBullet bullet)
         {
             this.PlayerBullets.Remove(bullet);
             return this.PlayerBullets;
@@ -132,31 +132,48 @@ namespace SpaceInvaders.Model
 
         private void placeBulletsBellowEnemies(GameObject ship, GameObject bullet)
         {
-            bullet.X = ship.X;
+            bullet.X = ship.X + (ship.Width / 2 - 1);
             bullet.Y = ship.Y + 18;
         }
 
-        public IList<ShipBullet> CreateAndPlacePlayerShipBullet(Canvas gameBackground, PlayerShip playerShip)
+        public IList<GameObject> CreateAndPlacePlayerShipBullet(Canvas gameBackground, PlayerShip playerShip)
+        {
+            ShipBullet bullet = new ShipBullet();
+
+            if (this.PlayerBullets.Count < MaxLives)
             {
-                ShipBullet bullet = new ShipBullet();
-
-                if (this.PlayerBullets.Count < MaxLives)
-                {
-                    this.AddPlayerBullet(bullet);
-                    gameBackground.Children.Add(bullet.Sprite);
-                    this.placePlayerBullet(bullet, playerShip);
-                    //this.BulletFired = true;
-                    SoundPlayer.PlaySound("cannonFire.wav");
-                    
-                }
-
-                return this.PlayerBullets;
+                this.AddPlayerBullet(bullet);
+                gameBackground.Children.Add(bullet.Sprite);
+                this.placePlayerBullet(bullet, playerShip);
+                //this.BulletFired = true;
+                SoundPlayer.PlaySound("cannonFire.wav");
+                
             }
+
+            return this.PlayerBullets;
+        }
 
         private void placePlayerBullet(ShipBullet bullet, PlayerShip playerShip)
         {
-            bullet.X = playerShip.X + 1;
+            bullet.X = playerShip.X + (playerShip.Width / 2 - 1);
             bullet.Y = playerShip.Y - 15;
+        }
+
+        public void CreateandPlacePowerUp(PlayerShip playerShip)
+        {
+            PowerUp powerUp = new PowerUp();
+            this.gameBackground.Children.Add(new PowerUp().Sprite);
+            this.PowerUps.Add(powerUp);
+            this.placePowerUp(powerUp, playerShip);
+
+            SoundPlayer.PlaySound("cannonFire.wav");
+
+        }
+
+        private void placePowerUp(PowerUp powerUp, PlayerShip playerShip)
+        {
+            powerUp.X = playerShip.X + playerShip.Width;
+            powerUp.Y = playerShip.Y - 15;
         }
 
         /// <summary>
@@ -166,7 +183,7 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void MoveBulletUp()
         {
-            ShipBullet shipBullet = null;
+            GameObject shipBullet = null;
             foreach (var bullet in this.PlayerBullets)
             {
                 if (bullet.Y + bullet.SpeedY < 0)
@@ -178,7 +195,25 @@ namespace SpaceInvaders.Model
                 bullet.MoveUp();
             }
 
-            this.RemovePlayerBullet(shipBullet);
+            this.RemovePlayerBullet((ShipBullet)shipBullet);
+            //this.playerShipManager.PlayerBullets = this.playerShipManager.PlayerBullets;
+        }
+
+        public void MovePowerUp()
+        {
+            GameObject PowerUp = null;
+            foreach (var powerUp in this.PowerUps)
+            {
+                if (powerUp.Y + powerUp.SpeedY < 0)
+                {
+                    this.gameBackground.Children.Remove(powerUp.Sprite);
+                    PowerUp = powerUp;
+                }
+
+                powerUp.MoveUp();
+            }
+
+            this.PowerUps.Remove(PowerUp);
             //this.playerShipManager.PlayerBullets = this.playerShipManager.PlayerBullets;
         }
 
@@ -210,14 +245,6 @@ namespace SpaceInvaders.Model
             }
 
         }
-
-        private void placePowerUp()
-        {
-            this.gameBackground.Children.Add(new PowerUp().Sprite);
-            this.PowerUps.Add(new PowerUp());
-        }
-
-
 
         #endregion
     }
