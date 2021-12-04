@@ -423,7 +423,7 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void GetEnemyBulletsFired()
         {
-            this.bulletManager.GetEnemyBulletsFired(this.enemyShipManger.getFiringEnemies());
+            this.bulletManager.GetEnemyBulletsFired(this.enemyShipManger.getFiringEnemies(), this.playerShipManager.PlayerShip.X);
             //this.enemyBullets = this.enemyShipManger.EnemyBullets;
         }
 

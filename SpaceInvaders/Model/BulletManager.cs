@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
+using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
 {
@@ -96,21 +97,35 @@ namespace SpaceInvaders.Model
         /// Precondition: none
         /// Post-condition: the bullets fired should be added to the background
         /// </summary>
-        public void GetEnemyBulletsFired(IList<GameObject> firingEnemies)
+        public void GetEnemyBulletsFired(IList<GameObject> firingEnemies, double playerX)
         {
             var random = new Random();
             foreach (var ship in firingEnemies)
             {
-                this.createAndPlaceEnemyBullets(random, ship);
+                this.createAndPlaceEnemyBullets(random, ship, playerX);
             }
         }
 
-        private IList<ShipBullet> createAndPlaceEnemyBullets(Random random, GameObject ship)
+        private IList<ShipBullet> createAndPlaceEnemyBullets(Random random, GameObject ship, double playerX)
         {
             var value = random.Next(0, 10);
             if (value == 0)
             {
                 ShipBullet bullet = new ShipBullet();
+
+                if (ship.Sprite is Level4EnemySprite)
+                {
+                    bullet.EndingX = playerX;
+                    bullet.StartingX = ship.X;
+                    bullet.IsLevel4Enemy = true;
+                }
+                else if (ship.Sprite is BonusEnemySprite)
+                {
+                    bullet.EndingX = playerX;
+                    bullet.StartingX = ship.X;
+                    bullet.IsBonusEnemy = true;
+                }
+
                 this.placeBulletsBellowEnemies(ship, bullet);
 
                this.gameBackground.Children.Add(bullet.Sprite);
@@ -233,7 +248,12 @@ namespace SpaceInvaders.Model
                     this.gameBackground.Children.Remove(currentBullet.Sprite);
                 }
 
-                if (this.EnemyBullets.Count > 0)
+                else if (currentBullet.IsLevel4Enemy || currentBullet.IsBonusEnemy)
+                {
+                    this.moveBulletTowardsPlayer(currentBullet);
+                }
+
+                else if (this.EnemyBullets.Count > 0)
                 {
                     currentBullet.MoveDown();
                 }
@@ -244,6 +264,26 @@ namespace SpaceInvaders.Model
                 this.EnemyBullets.Remove(currentBullet);
             }
 
+        }
+
+        private void moveBulletTowardsPlayer(ShipBullet bullet)
+        {
+            double bulletXMovement = bullet.StartingX - bullet.EndingX;
+
+            if (bulletXMovement < -10 || bulletXMovement > 10)
+            {
+                if (bulletXMovement > 0)
+                {
+                    bullet.MoveLeft();
+                    bullet.StartingX -= 10;
+                    
+                }
+                else if (bulletXMovement < 0)
+                {
+                    bullet.MoveRight();
+                }
+            }
+            bullet.MoveDown();
         }
 
         #endregion
