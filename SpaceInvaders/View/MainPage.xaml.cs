@@ -55,6 +55,7 @@ namespace SpaceInvaders.View
             this.gameManager.ScoreCountUpdated += this.ScoreOnScoreCountUpdated;
             this.gameManager.GameOverUpdated += this.GameOnGameOverUpdated;
             this.gameManager.LivesCountUpdated += this.LivesOnLivesCountUpdated;
+            this.gameManager.PowerUpCountUpdated += this.PowerUpOnPowerUpCountUpdated;
 
         }
 
@@ -72,7 +73,7 @@ namespace SpaceInvaders.View
             this.livesTextBlock.Text = "Lives: " + lives.ToString();
         }
 
-        private void PoerUpOnPowerUpCountUpdated(int lives)
+        private void PowerUpOnPowerUpCountUpdated(int lives)
         {
             this.livesTextBlock.Text = "Lives: " + lives.ToString();
         }
