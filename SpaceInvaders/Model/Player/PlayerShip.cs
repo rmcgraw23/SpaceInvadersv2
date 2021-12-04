@@ -24,7 +24,7 @@ namespace SpaceInvaders.Model.Player
         #region Data members
 
         private const int SpeedXDirection = 15;
-        private const int SpeedYDirection = 0;
+        private const int SpeedYDirection = 10;
 
         #endregion
     }

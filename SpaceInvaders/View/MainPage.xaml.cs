@@ -132,13 +132,20 @@ namespace SpaceInvaders.View
                     this.gameManager.LeftKeyDown = true;
                     this.gameManager.MovePlayerShipLeft();
                     break;
-                case VirtualKey.Down:
+                case VirtualKey.Right:
                     this.gameManager.RightKeyDown = true;
                     this.gameManager.MovePlayerShipRight();
                     break;
                 case VirtualKey.Space:
                     this.gameManager.CreateAndPlacePlayerShipBullet();
                     break;
+                case VirtualKey.Up:
+                    this.gameManager.MovePlayerShipUp();
+                    break;
+                case VirtualKey.Down:
+                    this.gameManager.MovePlayerShipDown();
+                    break;
+
             }
 
         }
