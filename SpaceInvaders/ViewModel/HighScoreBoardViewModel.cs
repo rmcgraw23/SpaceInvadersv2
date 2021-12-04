@@ -15,7 +15,15 @@ namespace SpaceInvaders.ViewModel
     public class HighScoreBoardViewModel : INotifyPropertyChanged
     {
         #region DataMemebrs     
-        
+
+        private HighScoreBoardManager HighScoreBoardManager;
+
+        private ObservableCollection<HighScore> highScores;
+
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// Gets or sets the add command.
         /// </summary>
@@ -48,14 +56,6 @@ namespace SpaceInvaders.ViewModel
         /// </value>
         public RelayCommand SortLevelFirstCommand { get; set; }
 
-        #endregion
-
-        #region Properties
-
-        private HighScoreBoardManager HighScoreBoardManager;
-
-        private ObservableCollection<HighScore> highScores;
-
         /// <summary>
         /// Gets or sets the high scores.
         /// </summary>
@@ -69,7 +69,6 @@ namespace SpaceInvaders.ViewModel
             {
                 this.highScores = value;
                 this.OnPropertyChanged();
-                //this.sortCommand.OnCanExecuteChanged();
                 this.SortNameFirstCommand.OnCanExecuteChanged();
                 this.SortLevelFirstCommand.OnCanExecuteChanged();
             }
@@ -85,7 +84,7 @@ namespace SpaceInvaders.ViewModel
         /// </value>
         public string Name
         {
-            get { return this.name;}
+            get { return this.name; }
             set
             {
                 this.name = value;
@@ -145,13 +144,6 @@ namespace SpaceInvaders.ViewModel
 
         }
 
-        /// <summary>
-        /// Determines whether this instance [can add score] the specified object.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <returns>
-        ///   <c>true</c> if this instance [can add score] the specified object; otherwise, <c>false</c>.
-        /// </returns>
         private bool canAddScore(object obj)
         {
             return this.HighScoreBoardManager.WithinTopTen();

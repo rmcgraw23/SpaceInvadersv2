@@ -70,7 +70,7 @@ namespace SpaceInvaders.Model
         private int lives;
         private int currentRound;
 
-        private const int finalRound = 3;
+        private const int FinalRound = 3;
         private int count;
         private int powerUpsRemaining;
 
@@ -366,13 +366,6 @@ namespace SpaceInvaders.Model
         public void MovePlayerShipLeft()
         {
             this.playerShipManager.MovePlayerShipLeft();
-
-            //this.playerShipManager.MovePlayerShipLeft();
-
-            /*if (this.playerShip.X - this.playerShip.SpeedX > 0)
-            {
-                this.playerShip.MoveLeft();
-            }*/
         }
 
         /// <summary>
@@ -383,14 +376,8 @@ namespace SpaceInvaders.Model
         public void MovePlayerShipRight()
         {
             this.playerShipManager.MovePlayerShipRight();
-
-            //this.playerShipManager.MovePlayerShipRight();
-
-            /*if (this.playerShip.X + this.playerShip.Width + this.playerShip.SpeedX < this.backgroundWidth)
-            {
-                this.playerShip.MoveRight();
-            }*/
         }
+
         private void createAndPlaceEnemyShips()
         {
             this.enemyShipManger.CreateAndPlaceEnemyShips();
@@ -417,7 +404,6 @@ namespace SpaceInvaders.Model
             {
                 this.bulletManager.CreateAndPlacePlayerShipBullet(this.playerShip);
             }
-            //this.playerBullet = this.playerShipManager.PlayerBullets;
 
         }
 
@@ -429,7 +415,6 @@ namespace SpaceInvaders.Model
         public void GetEnemyBulletsFired()
         {
             this.bulletManager.GetEnemyBulletsFired(this.enemyShipManger.GetFiringEnemies(), this.playerShipManager.PlayerShip.X);
-            //this.enemyBullets = this.enemyShipManger.EnemyBullets;
         }
 
         /// <summary>
@@ -439,7 +424,6 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void PlayerDied()
         {
-            //this.lives = this.shipsManager.PlayerDied();
             IDictionary<ShipBullet, int> result = this.playerShipManager.PlayerDied(this.bulletManager.EnemyBullets);
             foreach (var bullet in result.Keys)
             {
@@ -452,7 +436,6 @@ namespace SpaceInvaders.Model
             }
             this.OnLivesCountUpdated();
 
-            //this.playerShip = this.shipsManager.PlayerShip;
             this.playerShip = this.playerShipManager.PlayerShip;
         }
 
@@ -463,11 +446,9 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void EnemyDestroyed()
         {
-            //EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed();
             IDictionary<GameObject, EnemyShip> result = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PlayerBullets);
             IDictionary<GameObject, EnemyShip> powerUpResult = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PowerUps);
 
-            //this.enemyShips = this.shipsManager.EnemyShips;
             this.enemyShips = this.enemyShipManger.EnemyShips;
             foreach (var bullet in result.Keys)
             {
@@ -508,7 +489,7 @@ namespace SpaceInvaders.Model
         private void gameOver()
         {
             this.highScoreBoard.GetScoreAndLevel(this.Score, this.currentRound);
-            if (this.enemyShips.Count == 0 && this.currentRound == finalRound)
+            if (this.enemyShips.Count == 0 && this.currentRound == FinalRound)
             {
                 SoundPlayer.PlaySound("gameOver.wav");
                 this.Result = "win";
@@ -516,7 +497,7 @@ namespace SpaceInvaders.Model
                 this.OnGameOverUpdated();
             }
 
-            else if (this.enemyShips.Count == 0 && this.currentRound != finalRound)
+            else if (this.enemyShips.Count == 0 && this.currentRound != FinalRound)
             {
                 this.currentRound++;
                 this.gameBackground.Children.Remove(this.playerShip.Sprite);

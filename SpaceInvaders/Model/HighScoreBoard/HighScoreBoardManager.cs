@@ -23,6 +23,7 @@ namespace SpaceInvaders.Model.HighScoreBoard
         private int level;
 
         #endregion
+
         #region Properties
 
         /// <summary>

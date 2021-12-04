@@ -22,8 +22,6 @@ namespace SpaceInvaders.Model.Enemies
         private bool level3FirstStep;
         private int level3FirstStepCounter;
 
-        //private BulletManager manager;
-
         #endregion
 
         #region Properties
@@ -59,13 +57,12 @@ namespace SpaceInvaders.Model.Enemies
         /// <summary>
         /// Initializes a new instance of the <see cref="EnemyShipManager"/> class.
         /// Precondition: none
-        /// Post-conditon: none
+        /// Post-condition: none
         /// </summary>
         /// <param name="background">The background.</param>
         public EnemyShipManager(Canvas background)
         {
             this.gameBackground = background;
-            //this.EnemyBullets = new List<ShipBullet>();
         }
 
         #endregion
@@ -88,8 +85,6 @@ namespace SpaceInvaders.Model.Enemies
             this.level3StepCounter = 0;
             this.level3FirstStep = true;
             this.level3FirstStepCounter = 0;
-            //this.EnemyBullets = new List<ShipBullet>();
-            //this.manager = new BulletManager(this.gameBackground);
         }
 
         /// <summary>
@@ -126,7 +121,6 @@ namespace SpaceInvaders.Model.Enemies
                 count++;
 
             }
-            //this.placeBonusShip();
         }
 
         private void getEnemyShips()
@@ -236,12 +230,6 @@ namespace SpaceInvaders.Model.Enemies
 
             return firingEnemies;
         }
-
-        /*private void placeBulletsBellowEnemies(GameObject ship, GameObject bullet)
-        {
-            bullet.X = ship.X;
-            bullet.Y = ship.Y + 18;
-        }*/
 
         /// <summary>
         /// Checks if an enemy ship is hit by a bullet
@@ -415,8 +403,7 @@ namespace SpaceInvaders.Model.Enemies
 
                     if (this.level3StepCounter < 1)
                     {
-                        //currentShip.MoveDown();
-                        currentShip.Y = currentShip.Y + 10;
+                        currentShip.Y += 10;
                     }
                     else if (this.level3StepCounter < 5)
                     {
@@ -424,8 +411,7 @@ namespace SpaceInvaders.Model.Enemies
                     }
                     else if (this.level3StepCounter < 6)
                     {
-                        //currentShip.MoveUp();
-                        currentShip.Y = currentShip.Y - 10;
+                        currentShip.Y -= 10;
                     }
                     else if (this.level3StepCounter < 10)
                     {

@@ -19,6 +19,12 @@ namespace SpaceInvaders.View
     {
         #region Data members
 
+        private readonly GameManager gameManager;
+
+        #endregion
+
+        #region Properties
+
         /// <summary>
         ///     The application height
         /// </summary>
@@ -28,8 +34,6 @@ namespace SpaceInvaders.View
         ///     The application width
         /// </summary>
         public const double ApplicationWidth = 840;
-
-        private readonly GameManager gameManager;
 
         #endregion
 

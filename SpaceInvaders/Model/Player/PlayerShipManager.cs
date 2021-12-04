@@ -12,13 +12,10 @@ namespace SpaceInvaders.Model.Player
         #region DataMembers
 
         private const double PlayerShipBottomOffset = 30;
-        private const int MaxLives = 3;
         private const int OutOfLives = 0;
         private const int OneLifeLeft = 1;
 
         private readonly Canvas gameBackground;
-
-        //private BulletManager manager;
 
         #endregion
 
@@ -75,9 +72,7 @@ namespace SpaceInvaders.Model.Player
         public void InitializeShips()
         {
             this.BulletFired = false;
-            //this.PlayerBullets = new List<ShipBullet>();
             this.Lives = 3;
-            //this.manager = new BulletManager(this.gameBackground);
         }
 
         /// <summary>
