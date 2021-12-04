@@ -9,6 +9,8 @@ namespace SpaceInvaders.Model.Enemies
     /// <seealso cref="SpaceInvaders.Model.GameObject" />
     internal class EnemyShip : GameObject
     {
+        #region Data members
+
         private const int SpeedXDirection = 20;
         private const int SpeedYDirection = 0;
 
@@ -18,16 +20,24 @@ namespace SpaceInvaders.Model.Enemies
         private const int EnemyLevel4Score = 40;
         private const int EnemyBonusScore = 100;
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
-        /// Gets the score.
+        ///     Gets the score.
         /// </summary>
         /// <value>
-        /// The score.
+        ///     The score.
         /// </value>
         public int Score { get; }
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnemyShip"/> class.
+        ///     Initializes a new instance of the <see cref="EnemyShip" /> class.
         /// </summary>
         /// <param name="level">The level.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">level - null</exception>
@@ -61,5 +71,7 @@ namespace SpaceInvaders.Model.Enemies
                     throw new ArgumentOutOfRangeException(nameof(level), level, null);
             }
         }
+
+        #endregion
     }
 }

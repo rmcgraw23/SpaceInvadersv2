@@ -8,25 +8,31 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
-        <viewModel:HighScoreBoardViewModel/>
+        <viewModel:HighScoreBoardViewModel />
     </Page.DataContext>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="23*"/>
-            <RowDefinition Height="477*"/>
+            <RowDefinition Height="23*" />
+            <RowDefinition Height="477*" />
         </Grid.RowDefinitions>
-        <TextBlock HorizontalAlignment="Left" Margin="0,33,0,0" Text="High Score Board" TextWrapping="Wrap" VerticalAlignment="Top" Width="1485" Height="114" RenderTransformOrigin="0.501,0.148" FontSize="50" FontWeight="Bold" TextAlignment="Center" Grid.Row="1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="0,33,0,0" Text="High Score Board" TextWrapping="Wrap"
+                   VerticalAlignment="Top" Width="1485" Height="114" RenderTransformOrigin="0.501,0.148" FontSize="50"
+                   FontWeight="Bold" TextAlignment="Center" Grid.Row="1" />
         <ListView ItemsSource="{Binding Path=HighScores}"
-            x:Name="highScoreListView" RenderTransformOrigin="0.48,0.415" Margin="10,257,0,40" Grid.Row="1"/>
+                  x:Name="highScoreListView" RenderTransformOrigin="0.48,0.415" Margin="10,257,0,40" Grid.Row="1" />
         <Button Command="{Binding Path= SortNameFirstCommand}"
-                x:Name="nameFirstSortButton" Content="Sort by Name First" Margin="205,166,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="205"/>
-        <Button Command="{Binding Path=SortLevelFirstCommand}" 
-            x:Name="levelFirstSortButton" Content="Sort by Level First" Margin="1096,166,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="205"/>
+                x:Name="nameFirstSortButton" Content="Sort by Name First" Margin="205,166,0,0" Grid.Row="1"
+                VerticalAlignment="Top" Height="82" Width="205" />
+        <Button Command="{Binding Path=SortLevelFirstCommand}"
+                x:Name="levelFirstSortButton" Content="Sort by Level First" Margin="1096,166,0,0" Grid.Row="1"
+                VerticalAlignment="Top" Height="82" Width="205" />
         <Button Command="{Binding Path=AddCommand}"
-            x:Name="submitButton" Content="Submit" Margin="468,208,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="111"/>
+                x:Name="submitButton" Content="Submit" Margin="468,208,0,0" Grid.Row="1" VerticalAlignment="Top"
+                Height="40" Width="111" />
         <TextBlock Visibility="{Binding Path= InTopTen}"
-            x:Name="nameTextBlock" Margin="659,209,653,0" Grid.Row="1" Text="{Binding Path=Name}" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="188"/>
+                   x:Name="nameTextBlock" Margin="659,209,653,0" Grid.Row="1" Text="{Binding Path=Name}"
+                   TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="188" />
 
     </Grid>
 </Page>

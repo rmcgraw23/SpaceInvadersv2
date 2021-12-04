@@ -7,52 +7,46 @@ using SpaceInvaders.View.Sprites;
 namespace SpaceInvaders.Model
 {
     /// <summary>
-    /// Manages the bullets.
+    ///     Manages the bullets.
     /// </summary>
     internal class BulletManager
     {
-        #region DataMembers
-
-        private readonly Canvas gameBackground;
-
-        private const int MaxLives = 3;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
-        /// Gets or sets the player bullets.
+        ///     Gets or sets the player bullets.
         /// </summary>
         /// <value>
-        /// The player bullets.
+        ///     The player bullets.
         /// </value>
         public IList<GameObject> PlayerBullets { get; set; }
 
         /// <summary>
-        /// Gets or sets the enemy bullets.
+        ///     Gets or sets the enemy bullets.
         /// </summary>
         /// <value>
-        /// The enemy bullets.
+        ///     The enemy bullets.
         /// </value>
         public IList<ShipBullet> EnemyBullets { get; set; }
 
         /// <summary>
-        /// Gets or sets the power ups.
+        ///     Gets or sets the power ups.
         /// </summary>
         /// <value>
-        /// The power ups.
+        ///     The power ups.
         /// </value>
         public IList<GameObject> PowerUps { get; set; }
 
         #endregion
 
+        #region Constructors
+
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BulletManager"/> class.
-        /// Precondition: none
-        /// Post-condition: PlayerBullets.Count() == 0 and EnemyBullets.Count() == 0 and PowerUps.Count() == 0
+        ///     Initializes a new instance of the <see cref="BulletManager" /> class.
+        ///     Precondition: none
+        ///     Post-condition: PlayerBullets.Count() == 0 and EnemyBullets.Count() == 0 and PowerUps.Count() == 0
         /// </summary>
         /// <param name="gameBackground">The game background.</param>
         public BulletManager(Canvas gameBackground)
@@ -66,10 +60,12 @@ namespace SpaceInvaders.Model
 
         #endregion
 
+        #endregion
+
         #region Methods
 
         /// <summary>
-        /// Adds the enemy bullet.
+        ///     Adds the enemy bullet.
         /// </summary>
         /// <param name="bullet">The bullet.</param>
         /// <returns></returns>
@@ -80,19 +76,19 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Adds the player bullet.
+        ///     Adds the player bullet.
         /// </summary>
         /// <param name="bullet">The bullet.</param>
         /// <returns></returns>
         public IList<GameObject> AddPlayerBullet(ShipBullet bullet)
         {
             this.PlayerBullets.Add(bullet);
-            
+
             return this.PlayerBullets;
         }
 
         /// <summary>
-        /// Removes the enemy bullet.
+        ///     Removes the enemy bullet.
         /// </summary>
         /// <param name="bullet">The bullet.</param>
         /// <returns></returns>
@@ -103,7 +99,7 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Removes the player bullet.
+        ///     Removes the player bullet.
         /// </summary>
         /// <param name="bullet">The bullet.</param>
         /// <returns></returns>
@@ -114,7 +110,7 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Removes the power up.
+        ///     Removes the power up.
         /// </summary>
         /// <param name="powerUp">The power up.</param>
         /// <returns></returns>
@@ -125,9 +121,9 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Adds the enemy bullets fired to the canvas and list of bullets
-        /// Precondition: none
-        /// Post-condition: the bullets fired should be added to the background
+        ///     Adds the enemy bullets fired to the canvas and list of bullets
+        ///     Precondition: none
+        ///     Post-condition: the bullets fired should be added to the background
         /// </summary>
         public void GetEnemyBulletsFired(IList<GameObject> firingEnemies, double playerX)
         {
@@ -174,7 +170,7 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Creates the and place player ship bullet.
+        ///     Creates the and place player ship bullet.
         /// </summary>
         /// <param name="playerShip">The player ship.</param>
         /// <returns></returns>
@@ -188,7 +184,6 @@ namespace SpaceInvaders.Model
                 this.gameBackground.Children.Add(bullet.Sprite);
                 this.placePlayerBullet(bullet, playerShip);
                 SoundPlayer.PlaySound("cannonFire.wav");
-                
             }
 
             return this.PlayerBullets;
@@ -201,7 +196,7 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Creates the and place power up.
+        ///     Creates the and place power up.
         /// </summary>
         /// <param name="playerShip">The player ship.</param>
         public void CreateAndPlacePowerUp(PlayerShip playerShip)
@@ -212,7 +207,6 @@ namespace SpaceInvaders.Model
             this.placePowerUp(powerUp, playerShip);
 
             SoundPlayer.PlaySound("cannonFire.wav");
-
         }
 
         private void placePowerUp(GameObject powerUp, GameObject playerShip)
@@ -222,9 +216,9 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Moves the player bullet up or remove if off screen
-        /// Precondition: none
-        /// Post-condition: The player bullet has moved up or has been removed
+        ///     Moves the player bullet up or remove if off screen
+        ///     Precondition: none
+        ///     Post-condition: The player bullet has moved up or has been removed
         /// </summary>
         public void MoveBulletUp()
         {
@@ -240,11 +234,11 @@ namespace SpaceInvaders.Model
                 bullet.MoveUp();
             }
 
-            this.RemovePlayerBullet((ShipBullet)shipBullet);
+            this.RemovePlayerBullet((ShipBullet) shipBullet);
         }
 
         /// <summary>
-        /// Moves the power up.
+        ///     Moves the power up.
         /// </summary>
         public void MovePowerUp()
         {
@@ -264,9 +258,9 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Moves each player bullet in the list down
-        /// Precondition: none
-        /// Post-condition: each bullet should be moved down
+        ///     Moves each player bullet in the list down
+        ///     Precondition: none
+        ///     Post-condition: each bullet should be moved down
         /// </summary>
         public void MoveBulletDown()
         {
@@ -294,7 +288,6 @@ namespace SpaceInvaders.Model
             {
                 this.EnemyBullets.Remove(currentBullet);
             }
-
         }
 
         private void moveBulletTowardsPlayer(ShipBullet bullet)
@@ -307,15 +300,23 @@ namespace SpaceInvaders.Model
                 {
                     bullet.MoveLeft();
                     bullet.StartingX -= 10;
-                    
                 }
                 else if (bulletXMovement < 0)
                 {
                     bullet.MoveRight();
                 }
             }
+
             bullet.MoveDown();
         }
+
+        #endregion
+
+        #region DataMembers
+
+        private readonly Canvas gameBackground;
+
+        private const int MaxLives = 3;
 
         #endregion
     }

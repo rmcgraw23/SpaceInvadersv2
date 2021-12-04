@@ -11,9 +11,13 @@ namespace SpaceInvaders.View.Sprites
     /// <seealso cref="Windows.UI.Xaml.Controls.UserControl" />
     public sealed partial class Level3EnemySprite
     {
+        #region Data members
+
         #region DataMembers
 
         private bool hasMoved;
+
+        #endregion
 
         #endregion
 
@@ -35,9 +39,9 @@ namespace SpaceInvaders.View.Sprites
         #region Methods
 
         /// <summary>
-        /// Changes the color of the ships lights.
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Changes the color of the ships lights.
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public override void ChangeLightsColors()
         {

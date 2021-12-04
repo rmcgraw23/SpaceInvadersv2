@@ -8,6 +8,13 @@ namespace SpaceInvaders.Model.Player
     /// <seealso cref="SpaceInvaders.Model.GameObject" />
     public class PlayerShip : GameObject
     {
+        #region Data members
+
+        private const int SpeedXDirection = 15;
+        private const int SpeedYDirection = 10;
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -18,13 +25,6 @@ namespace SpaceInvaders.Model.Player
             Sprite = new PlayerShipSprite();
             SetSpeed(SpeedXDirection, SpeedYDirection);
         }
-
-        #endregion
-
-        #region Data members
-
-        private const int SpeedXDirection = 15;
-        private const int SpeedYDirection = 10;
 
         #endregion
     }

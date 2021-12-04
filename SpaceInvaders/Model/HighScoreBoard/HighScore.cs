@@ -3,35 +3,34 @@
 namespace SpaceInvaders.Model.HighScoreBoard
 {
     /// <summary>
-    /// Creates a high score
+    ///     Creates a high score
     /// </summary>
     /// <seealso cref="System.IComparable" />
     public class HighScore : IComparable
     {
-
         #region Properties
 
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the score.
+        ///     Gets or sets the score.
         /// </summary>
         /// <value>
-        /// The score.
+        ///     The score.
         /// </value>
         public int Score { get; set; }
 
         /// <summary>
-        /// Gets or sets the level.
+        ///     Gets or sets the level.
         /// </summary>
         /// <value>
-        /// The level.
+        ///     The level.
         /// </value>
         public int Level { get; set; }
 
@@ -40,7 +39,7 @@ namespace SpaceInvaders.Model.HighScoreBoard
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HighScore"/> class.
+        ///     Initializes a new instance of the <see cref="HighScore" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="score">The score.</param>
@@ -58,7 +57,7 @@ namespace SpaceInvaders.Model.HighScoreBoard
         #region Methods
 
         /// <summary>
-        /// Compares to.
+        ///     Compares to.
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns>either 1 or -1 if score is greater or less than the other score.</returns>
@@ -69,47 +68,45 @@ namespace SpaceInvaders.Model.HighScoreBoard
             {
                 throw new ArgumentNullException();
             }
+
             if (this.Score > score2.Score)
             {
                 return -1;
             }
-            else if (this.Score < score2.Score)
+
+            if (this.Score < score2.Score)
             {
                 return 1;
             }
-            else
+
+            if (string.Compare(this.Name, score2.Name, StringComparison.Ordinal) < 0)
             {
-                if (string.Compare(this.Name, score2.Name, StringComparison.Ordinal) < 0)
-                {
-                    return -1;
-                }
-                else if (string.Compare(this.Name, score2.Name, StringComparison.Ordinal) > 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                    if (this.Level > score2.Level)
-                    {
-                        return -1;
-                    }
-                    else if (this.Level < score2.Level)
-                    {
-                        return 1;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
-                }
+                return -1;
             }
+
+            if (string.Compare(this.Name, score2.Name, StringComparison.Ordinal) > 0)
+            {
+                return 1;
+            }
+
+            if (this.Level > score2.Level)
+            {
+                return -1;
+            }
+
+            if (this.Level < score2.Level)
+            {
+                return 1;
+            }
+
+            return 0;
         }
 
         /// <summary>
-        /// Converts to string.
+        ///     Converts to string.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
+        ///     A <see cref="System.String" /> that represents this instance.
         /// </returns>
         public override string ToString()
         {

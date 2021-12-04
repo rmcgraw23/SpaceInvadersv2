@@ -10,20 +10,6 @@ namespace SpaceInvaders.Model.Enemies
     /// </summary>
     internal class EnemyShipManager
     {
-
-        #region DataMembers
-
-        private int enemyShipsPerRow;
-        private readonly Canvas gameBackground;
-        private int level2StepCounter;
-        private bool level2FirstStep;
-        private int level2FirstStepCounter;
-        private int level3StepCounter;
-        private bool level3FirstStep;
-        private int level3FirstStepCounter;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -55,9 +41,9 @@ namespace SpaceInvaders.Model.Enemies
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnemyShipManager"/> class.
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Initializes a new instance of the <see cref="EnemyShipManager" /> class.
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         /// <param name="background">The background.</param>
         public EnemyShipManager(Canvas background)
@@ -70,9 +56,9 @@ namespace SpaceInvaders.Model.Enemies
         #region Methods
 
         /// <summary>
-        /// Initializes the ships.
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Initializes the ships.
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public void InitializeShips()
         {
@@ -88,9 +74,9 @@ namespace SpaceInvaders.Model.Enemies
         }
 
         /// <summary>
-        /// Creates and places the enemy ships.
-        /// Precondition: none
-        /// Post-condition: enemy ships have been placed on the background.
+        ///     Creates and places the enemy ships.
+        ///     Precondition: none
+        ///     Post-condition: enemy ships have been placed on the background.
         /// </summary>
         public void CreateAndPlaceEnemyShips()
         {
@@ -99,17 +85,17 @@ namespace SpaceInvaders.Model.Enemies
             for (var index = 0; index < this.EnemyShips.Count; index++)
             {
                 this.gameBackground.Children.Add(this.EnemyShips[index].Sprite);
-                if (index < (int)EnemyAmounts.Level1EnemyCount)
+                if (index < (int) EnemyAmounts.Level1EnemyCount)
                 {
                     this.placeEnemyShips(count - 1, this.EnemyShips[index]);
                 }
 
-                else if (index < (int)EnemyAmounts.Level2EnemyCount)
+                else if (index < (int) EnemyAmounts.Level2EnemyCount)
                 {
                     this.placeEnemyShips(count - 4, this.EnemyShips[index]);
                 }
 
-                else if (index < (int)EnemyAmounts.Level3EnemyCount)
+                else if (index < (int) EnemyAmounts.Level3EnemyCount)
                 {
                     this.placeEnemyShips(count - 9, this.EnemyShips[index]);
                 }
@@ -119,7 +105,6 @@ namespace SpaceInvaders.Model.Enemies
                 }
 
                 count++;
-
             }
         }
 
@@ -145,7 +130,6 @@ namespace SpaceInvaders.Model.Enemies
                 {
                     this.EnemyShips.Add(new EnemyShip(EnemyShipLevels.LevelFour));
                 }
-
             }
         }
 
@@ -171,7 +155,7 @@ namespace SpaceInvaders.Model.Enemies
         }
 
         /// <summary>
-        /// Places the bonus ship.
+        ///     Places the bonus ship.
         /// </summary>
         public void PlaceBonusShip()
         {
@@ -188,9 +172,10 @@ namespace SpaceInvaders.Model.Enemies
                     SoundPlayer.PlaySound("bonusShip.wav");
                 }
             }
-            else if (this.EnemyShips[this.EnemyShips.Count - 1].X + this.EnemyShips[this.EnemyShips.Count - 1].SpeedX + this.EnemyShips[this.EnemyShips.Count - 1].Width< this.gameBackground.Width)
+            else if (this.EnemyShips[this.EnemyShips.Count - 1].X + this.EnemyShips[this.EnemyShips.Count - 1].SpeedX +
+                     this.EnemyShips[this.EnemyShips.Count - 1].Width < this.gameBackground.Width)
             {
-                this.EnemyShips[this.EnemyShips.Count -1].MoveRight();
+                this.EnemyShips[this.EnemyShips.Count - 1].MoveRight();
             }
             else
             {
@@ -213,7 +198,7 @@ namespace SpaceInvaders.Model.Enemies
         }
 
         /// <summary>
-        /// Gets the firing enemies.
+        ///     Gets the firing enemies.
         /// </summary>
         /// <returns>the list of enemies that fire.</returns>
         public IList<GameObject> GetFiringEnemies()
@@ -231,9 +216,9 @@ namespace SpaceInvaders.Model.Enemies
         }
 
         /// <summary>
-        /// Checks if an enemy ship is hit by a bullet
-        /// Precondition: none
-        /// Post-condition: the enemy and bullet should be removed if the ship is hit
+        ///     Checks if an enemy ship is hit by a bullet
+        ///     Precondition: none
+        ///     Post-condition: the enemy and bullet should be removed if the ship is hit
         /// </summary>
         public IDictionary<GameObject, EnemyShip> EnemyDestroyed(IList<GameObject> playerBullets)
         {
@@ -246,7 +231,7 @@ namespace SpaceInvaders.Model.Enemies
             }
 
             this.EnemyShips.Remove(destroyedShip);
-            
+
             if (hitBullet != null)
             {
                 result.Add(hitBullet, destroyedShip);
@@ -255,22 +240,23 @@ namespace SpaceInvaders.Model.Enemies
             return result;
         }
 
-        private EnemyShip shipDestroyed(EnemyShip ship, EnemyShip destroyedShip, ref GameObject hitBullet, IList<GameObject> playerBullets)
+        private EnemyShip shipDestroyed(EnemyShip ship, EnemyShip destroyedShip, ref GameObject hitBullet,
+            IList<GameObject> playerBullets)
         {
             foreach (var bullet in playerBullets)
             {
                 if (CollisionDetector.DetectCollision(ship, bullet))
                 {
                     this.gameBackground.Children.Remove(ship.Sprite);
-                    if (bullet.Sprite is PowerUpSprite && ((PowerUp)bullet).HitCount == 0)
+                    if (bullet.Sprite is PowerUpSprite && ((PowerUp) bullet).HitCount == 0)
                     {
                         this.gameBackground.Children.Remove(bullet.Sprite);
                         hitBullet = bullet;
                     }
 
-                    if (bullet.Sprite is PowerUpSprite && ((PowerUp)bullet).HitCount != 0)
+                    if (bullet.Sprite is PowerUpSprite && ((PowerUp) bullet).HitCount != 0)
                     {
-                        ((PowerUp)bullet).HitCount -= 1;
+                        ((PowerUp) bullet).HitCount -= 1;
                     }
                     else
                     {
@@ -288,9 +274,9 @@ namespace SpaceInvaders.Model.Enemies
         }
 
         /// <summary>
-        /// Moves the enemy ships to the left.
-        /// Precondition: none
-        /// Post-condition: The enemy ships have moved left.
+        ///     Moves the enemy ships to the left.
+        ///     Precondition: none
+        ///     Post-condition: The enemy ships have moved left.
         /// </summary>
         public void MoveEnemyShipsLeft()
         {
@@ -304,9 +290,9 @@ namespace SpaceInvaders.Model.Enemies
         }
 
         /// <summary>
-        /// Moves the enemy ships to the right.
-        /// Precondition: none
-        /// Post-condition: The enemy ship have moved right.
+        ///     Moves the enemy ships to the right.
+        ///     Precondition: none
+        ///     Post-condition: The enemy ship have moved right.
         /// </summary>
         public void MoveEnemyShipsRight()
         {
@@ -320,9 +306,9 @@ namespace SpaceInvaders.Model.Enemies
         }
 
         /// <summary>
-        /// Moves the enemy snips level2.
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Moves the enemy snips level2.
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public void MoveEnemySnipsLevel2()
         {
@@ -371,6 +357,7 @@ namespace SpaceInvaders.Model.Enemies
                     }
                 }
             }
+
             if (this.level2StepCounter == 7)
             {
                 this.level2StepCounter = 0;
@@ -388,13 +375,12 @@ namespace SpaceInvaders.Model.Enemies
             {
                 this.level2FirstStepCounter++;
             }
-
         }
 
         /// <summary>
-        /// Moves the enemy ships level3.
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Moves the enemy ships level3.
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public void MoveEnemyShipsLevel3()
         {
@@ -443,10 +429,21 @@ namespace SpaceInvaders.Model.Enemies
             {
                 this.level3FirstStepCounter++;
             }
-
         }
 
         #endregion
 
+        #region DataMembers
+
+        private int enemyShipsPerRow;
+        private readonly Canvas gameBackground;
+        private int level2StepCounter;
+        private bool level2FirstStep;
+        private int level2FirstStepCounter;
+        private int level3StepCounter;
+        private bool level3FirstStep;
+        private int level3FirstStepCounter;
+
+        #endregion
     }
 }

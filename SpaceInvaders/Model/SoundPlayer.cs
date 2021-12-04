@@ -1,20 +1,19 @@
 ﻿using System;
-using Windows.Media.Playback;
+using Windows.ApplicationModel;
 using Windows.Media.Core;
+using Windows.Media.Playback;
 
 namespace SpaceInvaders.Model
 {
     /// <summary>
-    /// The sound player class.
+    ///     The sound player class.
     /// </summary>
     public static class SoundPlayer
     {
-
-
         #region Methods
 
         /// <summary>
-        /// Plays the sound.
+        ///     Plays the sound.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
         public static async void PlaySound(string fileName)
@@ -22,7 +21,7 @@ namespace SpaceInvaders.Model
             var mediaPlayer = new MediaPlayer();
 
             var folder =
-                await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
+                await Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
             var file = await folder.GetFileAsync(fileName);
 
             mediaPlayer.AutoPlay = false;
@@ -32,6 +31,5 @@ namespace SpaceInvaders.Model
         }
 
         #endregion
-
     }
 }

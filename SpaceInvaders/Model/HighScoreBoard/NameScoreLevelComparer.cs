@@ -4,11 +4,13 @@ using System.Collections.Generic;
 namespace SpaceInvaders.Model.HighScoreBoard
 {
     /// <summary>
-    /// Creates a new comparer interface to compare high scores by level first.
+    ///     Creates a new comparer interface to compare high scores by level first.
     /// </summary>
     /// <seealso cref="HighScore" />
-    public class NameScoreLevelComparer: IComparer<HighScore>
+    public class NameScoreLevelComparer : IComparer<HighScore>
     {
+        #region Methods
+
         int IComparer<HighScore>.Compare(HighScore score1, HighScore score2)
         {
             if (score1 == null || score2 == null)
@@ -28,28 +30,27 @@ namespace SpaceInvaders.Model.HighScoreBoard
                     {
                         return -1;
                     }
-                    else if (score1.Score < score2.Score)
+
+                    if (score1.Score < score2.Score)
                     {
                         return 1;
                     }
-                    else
+
+                    if (score1.Level > score2.Level)
                     {
-                        if (score1.Level > score2.Level)
-                        {
-                            return -1;
-                        }
-                        else if (score1.Level < score2.Level)
-                        {
-                            return 1;
-                        }
-                        else
-                        {
-                            return 0;
-                        }
+                        return -1;
                     }
+
+                    if (score1.Level < score2.Level)
+                    {
+                        return 1;
+                    }
+
+                    return 0;
                 }
             }
         }
 
+        #endregion
     }
 }

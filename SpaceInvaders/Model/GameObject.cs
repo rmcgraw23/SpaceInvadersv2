@@ -1,6 +1,6 @@
-﻿using SpaceInvaders.View.Sprites;
-using System;
+﻿using System;
 using Windows.Foundation;
+using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
 {

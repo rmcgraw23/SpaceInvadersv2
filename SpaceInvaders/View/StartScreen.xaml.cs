@@ -15,18 +15,16 @@ namespace SpaceInvaders.View
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
     public sealed partial class StartScreen
     {
-
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StartScreen"/> class.
-        /// Precondition: none
-        /// Post-condition: Creates a new start screen.
+        ///     Initializes a new instance of the <see cref="StartScreen" /> class.
+        ///     Precondition: none
+        ///     Post-condition: Creates a new start screen.
         /// </summary>
         public StartScreen()
         {
             this.InitializeComponent();
-
         }
 
         #endregion
@@ -53,11 +51,11 @@ namespace SpaceInvaders.View
                 newWindow.Content = frame;
                 newWindow.Activate();
 
-                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum, currentAv.Id, ViewSizePreference.UseMinimum);
+                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum,
+                    currentAv.Id, ViewSizePreference.UseMinimum);
             }
 
             await newAv.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, AgileCallback);
-
         }
 
         private void viewHighScoreBoard_Button_Click(object sender, RoutedEventArgs e)
@@ -80,16 +78,15 @@ namespace SpaceInvaders.View
                 newWindow.Content = frame;
                 newWindow.Activate();
 
-                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum, currentAv.Id, ViewSizePreference.UseMinimum);
+                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum,
+                    currentAv.Id, ViewSizePreference.UseMinimum);
             }
 
             await newAv.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, AgileCallback);
-
         }
 
         private void resetHighScoreBoard_Button_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         #endregion

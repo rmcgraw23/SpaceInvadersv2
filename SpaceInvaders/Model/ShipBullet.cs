@@ -9,40 +9,50 @@ namespace SpaceInvaders.Model
     /// <seealso cref="SpaceInvaders.Model.GameObject" />
     internal class ShipBullet : GameObject
     {
+        #region Data members
+
         private const int SpeedXDirection = 10;
         private const int SpeedYDirection = 10;
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
-        /// Gets or sets the starting x.
+        ///     Gets or sets the starting x.
         /// </summary>
         /// <value>
-        /// The starting x.
+        ///     The starting x.
         /// </value>
         public double StartingX { get; set; }
 
         /// <summary>
-        /// Gets or sets the ending x.
+        ///     Gets or sets the ending x.
         /// </summary>
         /// <value>
-        /// The ending x.
+        ///     The ending x.
         /// </value>
         public double EndingX { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is level4 enemy.
+        ///     Gets or sets a value indicating whether this instance is level4 enemy.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is level4 enemy; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is level4 enemy; otherwise, <c>false</c>.
         /// </value>
         public bool IsLevel4Enemy { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is bonus enemy.
+        ///     Gets or sets a value indicating whether this instance is bonus enemy.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is bonus enemy; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is bonus enemy; otherwise, <c>false</c>.
         /// </value>
         public bool IsBonusEnemy { get; set; }
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="EnemyShip" /> class.
@@ -54,5 +64,7 @@ namespace SpaceInvaders.Model
             this.IsLevel4Enemy = false;
             this.IsBonusEnemy = false;
         }
+
+        #endregion
     }
 }

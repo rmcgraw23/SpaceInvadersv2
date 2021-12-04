@@ -1,12 +1,12 @@
-﻿using SpaceInvaders.Model;
-using System;
+﻿using System;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
+using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using VirtualKey = Windows.System.VirtualKey;
+using SpaceInvaders.Model;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -19,12 +19,6 @@ namespace SpaceInvaders.View
     {
         #region Data members
 
-        private readonly GameManager gameManager;
-
-        #endregion
-
-        #region Properties
-
         /// <summary>
         ///     The application height
         /// </summary>
@@ -34,6 +28,8 @@ namespace SpaceInvaders.View
         ///     The application width
         /// </summary>
         public const double ApplicationWidth = 840;
+
+        private readonly GameManager gameManager;
 
         #endregion
 
@@ -46,7 +42,7 @@ namespace SpaceInvaders.View
         {
             this.InitializeComponent();
 
-            ApplicationView.PreferredLaunchViewSize = new Size { Width = ApplicationWidth, Height = ApplicationHeight };
+            ApplicationView.PreferredLaunchViewSize = new Size {Width = ApplicationWidth, Height = ApplicationHeight};
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(ApplicationWidth, ApplicationHeight));
 
@@ -60,7 +56,6 @@ namespace SpaceInvaders.View
             this.gameManager.GameOverUpdated += this.gameOnGameOverUpdated;
             this.gameManager.LivesCountUpdated += this.livesOnLivesCountUpdated;
             this.gameManager.PowerUpCountUpdated += this.powerUpOnPowerUpCountUpdated;
-
         }
 
         #endregion
@@ -69,12 +64,12 @@ namespace SpaceInvaders.View
 
         private void scoreOnScoreCountUpdated(int score)
         {
-            this.scoreTextBlock.Text = "Score: " + score.ToString();
+            this.scoreTextBlock.Text = "Score: " + score;
         }
 
         private void livesOnLivesCountUpdated(int lives)
         {
-            this.livesTextBlock.Text = "Lives: " + lives.ToString();
+            this.livesTextBlock.Text = "Lives: " + lives;
         }
 
         private void powerUpOnPowerUpCountUpdated(object self, EventArgs e)
@@ -89,15 +84,13 @@ namespace SpaceInvaders.View
             if (this.gameManager.Result == "win")
             {
                 title = "Congratulation you won!";
-
             }
             else
             {
                 title = "GameOver, You Lose!";
             }
 
-            var playerLostDialog = new ContentDialog
-            {
+            var playerLostDialog = new ContentDialog {
                 Title = title,
 
                 Content = content,
@@ -123,11 +116,11 @@ namespace SpaceInvaders.View
                 newWindow.Content = frame;
                 newWindow.Activate();
 
-                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum, currentAv.Id, ViewSizePreference.UseMinimum);
+                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum,
+                    currentAv.Id, ViewSizePreference.UseMinimum);
             }
 
             await newAv.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, AgileCallback);
-
         }
 
         private void coreWindowOnKeyDown(CoreWindow sender, KeyEventArgs args)
@@ -151,9 +144,7 @@ namespace SpaceInvaders.View
                 case VirtualKey.Down:
                     this.gameManager.MovePlayerShipDown();
                     break;
-
             }
-
         }
 
         private void coreWindowOnKeyUp(CoreWindow sender, KeyEventArgs args)

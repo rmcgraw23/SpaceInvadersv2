@@ -16,8 +16,9 @@
     </UserControl.Resources>
 
     <Canvas>
-        <local:Level4EnemySprite/>
+        <local:Level4EnemySprite />
         <Rectangle Width="4" Height="10" Fill="{StaticResource EnemyShipColor}" Canvas.Left="23" Canvas.Top="28" />
-        <Rectangle Name="turret3" Width="2" Height="5" Fill="{StaticResource EnemyShipColor}" Canvas.Left="24" Canvas.Top="38" />
+        <Rectangle Name="turret3" Width="2" Height="5" Fill="{StaticResource EnemyShipColor}" Canvas.Left="24"
+                   Canvas.Top="38" />
     </Canvas>
 </local:BaseSprite>

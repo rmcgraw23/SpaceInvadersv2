@@ -37,9 +37,9 @@ namespace SpaceInvaders.View.Sprites
         }
 
         /// <summary>
-        /// Changes the color of the ships lights.
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Changes the color of the ships lights.
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public abstract void ChangeLightsColors();
 

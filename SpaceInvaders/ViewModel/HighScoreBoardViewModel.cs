@@ -9,62 +9,62 @@ using SpaceInvaders.Utility;
 namespace SpaceInvaders.ViewModel
 {
     /// <summary>
-    /// Manages connection between model and view
+    ///     Manages connection between model and view
     /// </summary>
     /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public class HighScoreBoardViewModel : INotifyPropertyChanged
     {
-        #region DataMemebrs     
+        #region Data members
 
-        private readonly HighScoreBoardManager highScoreBoardManager;
+        private string name;
 
-        private ObservableCollection<HighScore> highScores;
+        private bool inTopTen;
 
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Gets or sets the add command.
+        ///     Gets or sets the add command.
         /// </summary>
         /// <value>
-        /// The add command.
+        ///     The add command.
         /// </value>
         public RelayCommand AddCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the sort command.
+        ///     Gets or sets the sort command.
         /// </summary>
         /// <value>
-        /// The sort command.
+        ///     The sort command.
         /// </value>
         public RelayCommand SortCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the sort name first command.
+        ///     Gets or sets the sort name first command.
         /// </summary>
         /// <value>
-        /// The sort name first command.
+        ///     The sort name first command.
         /// </value>
         public RelayCommand SortNameFirstCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the sort level first command.
+        ///     Gets or sets the sort level first command.
         /// </summary>
         /// <value>
-        /// The sort level first command.
+        ///     The sort level first command.
         /// </value>
         public RelayCommand SortLevelFirstCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the high scores.
+        ///     Gets or sets the high scores.
         /// </summary>
         /// <value>
-        /// The high scores.
+        ///     The high scores.
         /// </value>
         public ObservableCollection<HighScore> HighScores
         {
-            get { return this.highScores; }
+            get => this.highScores;
             set
             {
                 this.highScores = value;
@@ -74,17 +74,15 @@ namespace SpaceInvaders.ViewModel
             }
         }
 
-        private string name;
-
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         public string Name
         {
-            get { return this.name; }
+            get => this.name;
             set
             {
                 this.name = value;
@@ -92,17 +90,15 @@ namespace SpaceInvaders.ViewModel
             }
         }
 
-        private bool inTopTen;
-
         /// <summary>
-        /// Gets or sets a value indicating whether [in top ten].
+        ///     Gets or sets a value indicating whether [in top ten].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [in top ten]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [in top ten]; otherwise, <c>false</c>.
         /// </value>
         public bool InTopTen
         {
-            get { return this.inTopTen; }
+            get => this.inTopTen;
             set
             {
                 this.inTopTen = value;
@@ -115,12 +111,12 @@ namespace SpaceInvaders.ViewModel
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HighScoreBoardViewModel"/> class.
+        ///     Initializes a new instance of the <see cref="HighScoreBoardViewModel" /> class.
         /// </summary>
         public HighScoreBoardViewModel()
         {
             this.highScoreBoardManager = new HighScoreBoardManager();
-            
+
             this.AddCommand = new RelayCommand(this.addScore, this.canAddScore);
             this.SortCommand = new RelayCommand(this.sortScores, this.canSortScores);
             this.SortNameFirstCommand = new RelayCommand(this.sortNameFirstScores, this.canSortNameFirstScores);
@@ -136,12 +132,17 @@ namespace SpaceInvaders.ViewModel
         #region Methods
 
         /// <summary>
-        /// Gets the standing.
+        ///     Occurs when a property value changes.
+        /// </summary>
+        /// <returns></returns>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        ///     Gets the standing.
         /// </summary>
         private void getStanding()
         {
             this.inTopTen = this.highScoreBoardManager.WithinTopTen();
-
         }
 
         private bool canAddScore(object obj)
@@ -153,7 +154,6 @@ namespace SpaceInvaders.ViewModel
         {
             this.highScoreBoardManager.AddHighScore(this.name);
             this.HighScores = this.highScoreBoardManager.HighScores.ToObservableCollection();
-
         }
 
         private bool canSortScores(object obj)
@@ -189,13 +189,7 @@ namespace SpaceInvaders.ViewModel
         }
 
         /// <summary>
-        /// Occurs when a property value changes.
-        /// </summary>
-        /// <returns></returns>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Called when [property changed].
+        ///     Called when [property changed].
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         [NotifyPropertyChangedInvocator]
@@ -203,6 +197,14 @@ namespace SpaceInvaders.ViewModel
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
+
+        #region DataMemebrs     
+
+        private readonly HighScoreBoardManager highScoreBoardManager;
+
+        private ObservableCollection<HighScore> highScores;
 
         #endregion
     }

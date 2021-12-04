@@ -8,17 +8,6 @@ namespace SpaceInvaders.Model.Player
     /// </summary>
     internal class PlayerShipManager
     {
-
-        #region DataMembers
-
-        private const double PlayerShipBottomOffset = 30;
-        private const int OutOfLives = 0;
-        private const int OneLifeLeft = 1;
-
-        private readonly Canvas gameBackground;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -50,9 +39,9 @@ namespace SpaceInvaders.Model.Player
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerShipManager"/> class.
-        /// Precondition: none
-        /// Post-condition: gameBackground = background
+        ///     Initializes a new instance of the <see cref="PlayerShipManager" /> class.
+        ///     Precondition: none
+        ///     Post-condition: gameBackground = background
         /// </summary>
         /// <param name="background">The background.</param>
         public PlayerShipManager(Canvas background)
@@ -65,9 +54,9 @@ namespace SpaceInvaders.Model.Player
         #region Methods
 
         /// <summary>
-        /// Initializes the ships.
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Initializes the ships.
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public void InitializeShips()
         {
@@ -76,9 +65,9 @@ namespace SpaceInvaders.Model.Player
         }
 
         /// <summary>
-        /// Creates places the player ship.
-        /// Precondition: none
-        /// Post-condition: the player ship has been placed on the background.
+        ///     Creates places the player ship.
+        ///     Precondition: none
+        ///     Post-condition: the player ship has been placed on the background.
         /// </summary>
         public void CreateAndPlacePlayerShip()
         {
@@ -95,9 +84,9 @@ namespace SpaceInvaders.Model.Player
         }
 
         /// <summary>
-        /// Checks if the player was hit by a bullet.
-        /// Precondition: background != null
-        /// Post-condition: player ship should be removed if hit
+        ///     Checks if the player was hit by a bullet.
+        ///     Precondition: background != null
+        ///     Post-condition: player ship should be removed if hit
         /// </summary>
         public IDictionary<ShipBullet, int> PlayerDied(IList<ShipBullet> enemyBullets)
         {
@@ -164,7 +153,7 @@ namespace SpaceInvaders.Model.Player
         }
 
         /// <summary>
-        /// Moves the player ship down.
+        ///     Moves the player ship down.
         /// </summary>
         public void MovePlayerShipDown()
         {
@@ -175,7 +164,7 @@ namespace SpaceInvaders.Model.Player
         }
 
         /// <summary>
-        /// Moves the player ship up.
+        ///     Moves the player ship up.
         /// </summary>
         public void MovePlayerShipUp()
         {
@@ -186,7 +175,7 @@ namespace SpaceInvaders.Model.Player
         }
 
         /// <summary>
-        /// Players the collided with shield.
+        ///     Players the collided with shield.
         /// </summary>
         public void PlayerCollidedWithShield()
         {
@@ -204,9 +193,16 @@ namespace SpaceInvaders.Model.Player
             }
         }
 
-
         #endregion
 
+        #region DataMembers
+
+        private const double PlayerShipBottomOffset = 30;
+        private const int OutOfLives = 0;
+        private const int OneLifeLeft = 1;
+
+        private readonly Canvas gameBackground;
+
+        #endregion
     }
 }
-

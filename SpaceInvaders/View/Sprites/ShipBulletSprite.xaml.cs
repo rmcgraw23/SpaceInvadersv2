@@ -25,13 +25,12 @@ namespace SpaceInvaders.View.Sprites
         #region Methods
 
         /// <summary>
-        /// Changes the color of the ships lights.
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Changes the color of the ships lights.
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public override void ChangeLightsColors()
         {
-
         }
 
         #endregion

@@ -6,31 +6,17 @@ using System.Linq;
 namespace SpaceInvaders.Model.HighScoreBoard
 {
     /// <summary>
-    /// Manages the high score board.
+    ///     Manages the high score board.
     /// </summary>
     public class HighScoreBoardManager
     {
-        #region DataMembers
-
-        /// <summary>
-        /// The score
-        /// </summary>
-        private int score;
-
-        /// <summary>
-        /// The level
-        /// </summary>
-        private int level;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
-        /// Gets or sets the high scores.
+        ///     Gets or sets the high scores.
         /// </summary>
         /// <value>
-        /// The high scores.
+        ///     The high scores.
         /// </value>
         public List<HighScore> HighScores { get; set; }
 
@@ -39,7 +25,7 @@ namespace SpaceInvaders.Model.HighScoreBoard
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HighScoreBoardManager"/> class.
+        ///     Initializes a new instance of the <see cref="HighScoreBoardManager" /> class.
         /// </summary>
         public HighScoreBoardManager()
         {
@@ -47,7 +33,6 @@ namespace SpaceInvaders.Model.HighScoreBoard
             this.score = 0;
             this.level = 0;
             this.SetHighScoreBoard();
-            
         }
 
         #endregion
@@ -55,12 +40,12 @@ namespace SpaceInvaders.Model.HighScoreBoard
         #region Methods
 
         /// <summary>
-        /// Occurs when [high score updated].
+        ///     Occurs when [high score updated].
         /// </summary>
         public event EventHandler HighScoreUpdated;
 
         /// <summary>
-        /// Called when [high score updated].
+        ///     Called when [high score updated].
         /// </summary>
         public void OnHighScoreUpdated()
         {
@@ -68,7 +53,7 @@ namespace SpaceInvaders.Model.HighScoreBoard
         }
 
         /// <summary>
-        /// Adds the high score.
+        ///     Adds the high score.
         /// </summary>
         /// <param name="name">The name.</param>
         public void AddHighScore(string name)
@@ -93,18 +78,18 @@ namespace SpaceInvaders.Model.HighScoreBoard
 
                 this.HighScores.Remove(lowestScore);
 
-                var output = new []{""};
+                var output = new[] {""};
                 foreach (var highScore in this.HighScores)
                 {
                     output.Append(highScore.Name + highScore.Score + highScore.Level);
                 }
+
                 File.WriteAllLines("scores.txt", output);
             }
-
         }
 
         /// <summary>
-        /// Determines if score is Within the top ten.
+        ///     Determines if score is Within the top ten.
         /// </summary>
         /// <returns></returns>
         public bool WithinTopTen()
@@ -116,11 +101,13 @@ namespace SpaceInvaders.Model.HighScoreBoard
                     this.OnHighScoreUpdated();
                     return true;
                 }
-            } return false;
+            }
+
+            return false;
         }
 
         /// <summary>
-        /// Sets the high score board.
+        ///     Sets the high score board.
         /// </summary>
         public void SetHighScoreBoard()
         {
@@ -142,7 +129,7 @@ namespace SpaceInvaders.Model.HighScoreBoard
         }
 
         /// <summary>
-        /// Gets the score and level.
+        ///     Gets the score and level.
         /// </summary>
         /// <param name="playerScore">The score.</param>
         /// <param name="playerLevel">The level.</param>
@@ -151,6 +138,20 @@ namespace SpaceInvaders.Model.HighScoreBoard
             this.score = playerScore;
             this.level = playerLevel;
         }
+
+        #endregion
+
+        #region DataMembers
+
+        /// <summary>
+        ///     The score
+        /// </summary>
+        private int score;
+
+        /// <summary>
+        ///     The level
+        /// </summary>
+        private int level;
 
         #endregion
     }

@@ -8,10 +8,15 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" Text="Space Invaders" TextWrapping="Wrap" VerticalAlignment="Top" Width="1480" Height="272" FontWeight="Bold" FontSize="150" TextAlignment="Center"/>
-        <Button Content="Start Game" Margin="0,294,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Click="startGame_Button_Click"/>
-        <Button Content="View High Score Board" Margin="0,500,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Click="viewHighScoreBoard_Button_Click"/>
-        <Button Content="Reset High Score Board" HorizontalAlignment="Center" Margin="0,729,0,0" VerticalAlignment="Top" Click="resetHighScoreBoard_Button_Click"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" Text="Space Invaders" TextWrapping="Wrap"
+                   VerticalAlignment="Top" Width="1480" Height="272" FontWeight="Bold" FontSize="150"
+                   TextAlignment="Center" />
+        <Button Content="Start Game" Margin="0,294,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"
+                Click="startGame_Button_Click" />
+        <Button Content="View High Score Board" Margin="0,500,0,0" VerticalAlignment="Top" HorizontalAlignment="Center"
+                Click="viewHighScoreBoard_Button_Click" />
+        <Button Content="Reset High Score Board" HorizontalAlignment="Center" Margin="0,729,0,0"
+                VerticalAlignment="Top" Click="resetHighScoreBoard_Button_Click" />
 
     </Grid>
 </Page>

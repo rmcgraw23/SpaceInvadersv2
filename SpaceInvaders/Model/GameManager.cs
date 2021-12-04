@@ -17,40 +17,42 @@ namespace SpaceInvaders.Model
         #region Types and Delegates
 
         /// <summary>
-        /// Creates the score event handler.
-        /// precondition: none
-        /// post-condition: none
+        ///     Creates the animation event handler.
+        ///     precondition: none
+        ///     post-condition: none
         /// </summary>
-        /// <param name="count">The count.</param>
-        public delegate void ScoreCountHandler(int count);
+        public delegate void AnimationHandler();
 
         /// <summary>
-        /// Creates the game over event handler.
-        /// precondition: none
-        /// post-condition: none
+        ///     Creates the game over event handler.
+        ///     precondition: none
+        ///     post-condition: none
         /// </summary>
         /// <param name="content">The content.</param>
         /// <param name="title">The title.</param>
         public delegate void GameOverHandler(string content, string title);
 
         /// <summary>
-        /// Creates the animation event handler.
-        /// precondition: none
-        /// post-condition: none
-        /// </summary>
-        public delegate void AnimationHandler();
-
-        /// <summary>
-        /// Creates the lives event handler.
-        /// precondition: none
-        /// post-condition: none
+        ///     Creates the lives event handler.
+        ///     precondition: none
+        ///     post-condition: none
         /// </summary>
         /// <param name="lives">The lives.</param>
         public delegate void LivesCountHandler(int lives);
 
+        /// <summary>
+        ///     Creates the score event handler.
+        ///     precondition: none
+        ///     post-condition: none
+        /// </summary>
+        /// <param name="count">The count.</param>
+        public delegate void ScoreCountHandler(int count);
+
         #endregion
 
         #region Data members
+
+        private const int FinalRound = 3;
 
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
@@ -69,8 +71,6 @@ namespace SpaceInvaders.Model
         private int move;
         private int lives;
         private int currentRound;
-
-        private const int FinalRound = 3;
         private int count;
         private int powerUpsRemaining;
 
@@ -92,26 +92,26 @@ namespace SpaceInvaders.Model
         public int Score { get; set; }
 
         /// <summary>
-        /// Gets or sets the title.
+        ///     Gets or sets the title.
         /// </summary>
         /// <value>
-        /// The title.
+        ///     The title.
         /// </value>
         public string Result { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [right key down].
+        ///     Gets or sets a value indicating whether [right key down].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [right key down]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [right key down]; otherwise, <c>false</c>.
         /// </value>
         public bool RightKeyDown { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [left key down].
+        ///     Gets or sets a value indicating whether [left key down].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [left key down]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [left key down]; otherwise, <c>false</c>.
         /// </value>
         public bool LeftKeyDown { get; set; }
 
@@ -187,7 +187,6 @@ namespace SpaceInvaders.Model
             this.powerUpsRemaining = 0;
         }
 
-
         private void timerTick(object sender, object e)
         {
             if (this.count % 4 == 0)
@@ -201,7 +200,6 @@ namespace SpaceInvaders.Model
                         if (moves[this.move] % 2 != 0)
                         {
                             this.enemyShipManger.MoveEnemyShipsLeft();
-
                         }
                         else
                         {
@@ -217,8 +215,6 @@ namespace SpaceInvaders.Model
                         this.enemyShipManger.MoveEnemyShipsLevel3();
                         break;
                 }
-
-                
 
                 this.changeShipLights();
                 this.OnAnimationUpdated();
@@ -269,16 +265,16 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Creates the handler to handle the lives change
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Creates the handler to handle the lives change
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public event EventHandler PowerUpCountUpdated;
 
         /// <summary>
-        /// Defines what is handled when the lives is changed.
-        /// Precondition: none
-        /// Post-condition: the lives on screen should be updated if lives is changed.
+        ///     Defines what is handled when the lives is changed.
+        ///     Precondition: none
+        ///     Post-condition: the lives on screen should be updated if lives is changed.
         /// </summary>
         public void OnPowerUpCountUpdated()
         {
@@ -286,16 +282,16 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Creates the handler to handle the lives change
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Creates the handler to handle the lives change
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public event LivesCountHandler LivesCountUpdated;
 
         /// <summary>
-        /// Defines what is handled when the lives is changed.
-        /// Precondition: none
-        /// Post-condition: the lives on screen should be updated if lives is changed.
+        ///     Defines what is handled when the lives is changed.
+        ///     Precondition: none
+        ///     Post-condition: the lives on screen should be updated if lives is changed.
         /// </summary>
         public void OnLivesCountUpdated()
         {
@@ -303,16 +299,16 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Creates the handler to handle the score change
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Creates the handler to handle the score change
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public event ScoreCountHandler ScoreCountUpdated;
 
         /// <summary>
-        /// Defines what is handled when the score is changed.
-        /// Precondition: none
-        /// Post-condition: the score on screen should be updated if score is changed.
+        ///     Defines what is handled when the score is changed.
+        ///     Precondition: none
+        ///     Post-condition: the score on screen should be updated if score is changed.
         /// </summary>
         public void OnScoreCountUpdated()
         {
@@ -320,16 +316,16 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Creates the handler to handle game over
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Creates the handler to handle game over
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public event EventHandler GameOverUpdated;
 
         /// <summary>
-        /// Defines what is handled when the game is over.
-        /// Precondition: none
-        /// Post-condition: A dialog box should appear with the content for the game over condition.
+        ///     Defines what is handled when the game is over.
+        ///     Precondition: none
+        ///     Post-condition: A dialog box should appear with the content for the game over condition.
         /// </summary>
         public void OnGameOverUpdated()
         {
@@ -337,16 +333,16 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Creates the handler to handle the animation change
-        /// Precondition: none
-        /// Post-condition: none
+        ///     Creates the handler to handle the animation change
+        ///     Precondition: none
+        ///     Post-condition: none
         /// </summary>
         public event AnimationHandler AnimationUpdated;
 
         /// <summary>
-        /// Defines what is handled when the animation is changed.
-        /// Precondition: none
-        /// Post-condition: the animation for each ship on screen should be updated if animation is changed.
+        ///     Defines what is handled when the animation is changed.
+        ///     Precondition: none
+        ///     Post-condition: the animation for each ship on screen should be updated if animation is changed.
         /// </summary>
         public void OnAnimationUpdated()
         {
@@ -358,7 +354,6 @@ namespace SpaceInvaders.Model
             this.playerShipManager.CreateAndPlacePlayerShip();
             this.playerShip = this.playerShipManager.PlayerShip;
         }
-
 
         /// <summary>
         ///     Moves the player ship to the left.
@@ -387,9 +382,9 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Creates and places a bullet as long as there isn't another on the screen.
-        /// Precondition: none
-        /// post-condition: bullet has been placed on the canvas or bullet already exists.
+        ///     Creates and places a bullet as long as there isn't another on the screen.
+        ///     Precondition: none
+        ///     post-condition: bullet has been placed on the canvas or bullet already exists.
         /// </summary>
         public void CreateAndPlacePlayerShipBullet()
         {
@@ -406,23 +401,23 @@ namespace SpaceInvaders.Model
             {
                 this.bulletManager.CreateAndPlacePlayerShipBullet(this.playerShip);
             }
-
         }
 
         /// <summary>
-        /// Adds the enemy bullets fired to the canvas and list of bullets
-        /// Precondition: none
-        /// Post-condition: the bullets fired should be added to the background
+        ///     Adds the enemy bullets fired to the canvas and list of bullets
+        ///     Precondition: none
+        ///     Post-condition: the bullets fired should be added to the background
         /// </summary>
         public void GetEnemyBulletsFired()
         {
-            this.bulletManager.GetEnemyBulletsFired(this.enemyShipManger.GetFiringEnemies(), this.playerShipManager.PlayerShip.X);
+            this.bulletManager.GetEnemyBulletsFired(this.enemyShipManger.GetFiringEnemies(),
+                this.playerShipManager.PlayerShip.X);
         }
 
         /// <summary>
-        /// Checks if the player was hit by a bullet.
-        /// Precondition: none
-        /// Post-condition: player ship should be removed if hit
+        ///     Checks if the player was hit by a bullet.
+        ///     Precondition: none
+        ///     Post-condition: player ship should be removed if hit
         /// </summary>
         public void PlayerDied()
         {
@@ -436,15 +431,16 @@ namespace SpaceInvaders.Model
             {
                 this.lives = liveValue;
             }
+
             this.OnLivesCountUpdated();
 
             this.playerShip = this.playerShipManager.PlayerShip;
         }
 
         /// <summary>
-        /// Checks if an enemy ship is hit by a bullet
-        /// Precondition: none
-        /// Post-condition: the enemy and bullet should be removed if the ship is hit
+        ///     Checks if an enemy ship is hit by a bullet
+        ///     Precondition: none
+        ///     Post-condition: the enemy and bullet should be removed if the ship is hit
         /// </summary>
         public void EnemyDestroyed()
         {
@@ -454,13 +450,12 @@ namespace SpaceInvaders.Model
             this.enemyShips = this.enemyShipManger.EnemyShips;
             foreach (var bullet in result.Keys)
             {
-                this.bulletManager.RemovePlayerBullet((ShipBullet)bullet);
-                
+                this.bulletManager.RemovePlayerBullet((ShipBullet) bullet);
             }
 
-            foreach(var powerUp in powerUpResult.Keys)
+            foreach (var powerUp in powerUpResult.Keys)
             {
-                this.bulletManager.RemovePowerUp((PowerUp)powerUp);
+                this.bulletManager.RemovePowerUp((PowerUp) powerUp);
                 this.powerUpsRemaining -= 1;
                 this.OnPowerUpCountUpdated();
             }
@@ -478,7 +473,6 @@ namespace SpaceInvaders.Model
                     }
                 }
             }
-
         }
 
         private void updateScore(EnemyShip destroyedShip)
@@ -564,7 +558,6 @@ namespace SpaceInvaders.Model
         private void result()
         {
             this.timer.Stop();
-
         }
 
         private void placeShields()
@@ -577,7 +570,6 @@ namespace SpaceInvaders.Model
                 shieldX += 222.5;
                 this.gameBackground.Children.Add(shield.Sprite);
             }
-            
         }
 
         private void checkForShieldCollisions()
@@ -628,7 +620,8 @@ namespace SpaceInvaders.Model
             }
         }
 
-        private void checkForEnemyBulletShieldCollision(IList<ShipBullet> enemyBulletsToRemove, IList<Shield> shieldsToRemove)
+        private void checkForEnemyBulletShieldCollision(IList<ShipBullet> enemyBulletsToRemove,
+            IList<Shield> shieldsToRemove)
         {
             foreach (var currentBullet in this.bulletManager.EnemyBullets)
             {
@@ -655,7 +648,8 @@ namespace SpaceInvaders.Model
             }
         }
 
-        private void checkForPlayerBulletShieldCollision(IList<ShipBullet> playerBulletsToRemove, IList<Shield> shieldsToRemove)
+        private void checkForPlayerBulletShieldCollision(IList<ShipBullet> playerBulletsToRemove,
+            IList<Shield> shieldsToRemove)
         {
             foreach (var currentBullet in this.bulletManager.PlayerBullets)
             {
@@ -668,14 +662,14 @@ namespace SpaceInvaders.Model
                             currentShield.HitsRemaining--;
                             currentShield.Sprite.Opacity -= .25;
                             this.gameBackground.Children.Remove(currentBullet.Sprite);
-                            playerBulletsToRemove.Add((ShipBullet)currentBullet);
+                            playerBulletsToRemove.Add((ShipBullet) currentBullet);
                         }
                         else
                         {
                             this.gameBackground.Children.Remove(currentShield.Sprite);
                             this.gameBackground.Children.Remove(currentBullet.Sprite);
                             shieldsToRemove.Add(currentShield);
-                            playerBulletsToRemove.Add((ShipBullet)currentBullet);
+                            playerBulletsToRemove.Add((ShipBullet) currentBullet);
                         }
                     }
                 }
@@ -683,7 +677,7 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Moves the player ship up.
+        ///     Moves the player ship up.
         /// </summary>
         public void MovePlayerShipUp()
         {
@@ -691,7 +685,7 @@ namespace SpaceInvaders.Model
         }
 
         /// <summary>
-        /// Moves the player ship down.
+        ///     Moves the player ship down.
         /// </summary>
         public void MovePlayerShipDown()
         {
