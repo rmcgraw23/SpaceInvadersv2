@@ -589,6 +589,7 @@ namespace SpaceInvaders.Model
 
             this.checkForPlayerBulletShieldCollision(playerBulletsToRemove, shieldsToRemove);
             this.checkForEnemyBulletShieldCollision(enemyBulletsToRemove, shieldsToRemove);
+            this.checkForPlayerShipShieldCollision(shieldsToRemove);
 
             foreach (var currentBullet in playerBulletsToRemove)
             {
@@ -603,6 +604,28 @@ namespace SpaceInvaders.Model
             foreach (var currentShield in shieldsToRemove)
             {
                 this.shields.Remove(currentShield);
+            }
+        }
+
+        private void checkForPlayerShipShieldCollision(IList<Shield> shieldsToRemove)
+        {
+            foreach (var currentShield in this.shields)
+            {
+                if (CollisionDetector.detectCollision(currentShield, this.playerShipManager.PlayerShip))
+                {
+                    if (currentShield.HitsRemaining != 0)
+                    {
+                        currentShield.HitsRemaining--;
+                        currentShield.Sprite.Opacity -= .25;
+                        this.playerShipManager.PlayerCollidedWithShield();
+                    }
+                    else
+                    {
+                        this.gameBackground.Children.Remove(currentShield.Sprite);
+                        shieldsToRemove.Add(currentShield);
+                        this.playerShipManager.PlayerCollidedWithShield();
+                    }
+                }
             }
         }
 
@@ -658,6 +681,22 @@ namespace SpaceInvaders.Model
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Moves the player ship up.
+        /// </summary>
+        public void MovePlayerShipUp()
+        {
+            this.playerShipManager.MovePlayerShipUp();
+        }
+
+        /// <summary>
+        /// Moves the player ship down.
+        /// </summary>
+        public void MovePlayerShipDown()
+        {
+            this.playerShipManager.MovePlayerShipDown();
         }
 
         #endregion

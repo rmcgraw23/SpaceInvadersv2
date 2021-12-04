@@ -187,6 +187,47 @@ namespace SpaceInvaders.Model
             }
         }
 
+        /// <summary>
+        /// Moves the player ship down.
+        /// </summary>
+        public void MovePlayerShipDown()
+        {
+            if (this.PlayerShip.Y + this.PlayerShip.Height + this.PlayerShip.SpeedY < this.gameBackground.Height)
+            {
+                this.PlayerShip.MoveDown();
+            }
+        }
+
+        /// <summary>
+        /// Moves the player ship up.
+        /// </summary>
+        public void MovePlayerShipUp()
+        {
+            if (this.PlayerShip.Y + this.PlayerShip.SpeedY > 300)
+            {
+                this.PlayerShip.MoveUp();
+            }
+        }
+
+        /// <summary>
+        /// Players the collided with shield.
+        /// </summary>
+        public void PlayerCollidedWithShield()
+        {
+            this.gameBackground.Children.Remove(this.PlayerShip.Sprite);
+            SoundPlayer.PlaySound("destroyed.wav");
+
+            if (this.Lives > OneLifeLeft)
+            {
+                this.Lives--;
+                this.CreateAndPlacePlayerShip();
+            }
+            else
+            {
+                this.Lives = OutOfLives;
+            }
+        }
+
 
         #endregion
 

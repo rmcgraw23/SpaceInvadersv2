@@ -133,6 +133,13 @@ namespace SpaceInvaders.View
                 case VirtualKey.Space:
                     this.gameManager.CreateAndPlacePlayerShipBullet();
                     break;
+                case VirtualKey.Up:
+                    this.gameManager.MovePlayerShipUp();
+                    break;
+                case VirtualKey.Down:
+                    this.gameManager.MovePlayerShipDown();
+                    break;
+
             }
 
         }
