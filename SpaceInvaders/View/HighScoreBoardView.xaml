@@ -22,7 +22,7 @@
         <ListView ItemsSource="{Binding Path=HighScores}"
             x:Name="highScoreListView" RenderTransformOrigin="0.48,0.415" Margin="10,257,0,40" Grid.Row="1"/>
         <Button Command="{Binding Path= sortNameFirstCommand}"
-                x:Name="NameFirstSortButton" Content="Sort by Name First" Margin="205,166,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="205" Click="sortByNameFirst"/>
+                x:Name="NameFirstSortButton" Content="Sort by Name First" Margin="205,166,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="205"/>
         <Button Command="{Binding Path=sortLevelFirstCommand}" 
             x:Name="LevelFirstSortButton" Content="Sort by Level First" Margin="1096,166,0,0" Grid.Row="1" VerticalAlignment="Top" Height="82" Width="205" Click="sortByLevelFirst"/>
         <Button Command="{Binding Path=addCommand}"

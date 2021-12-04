@@ -71,6 +71,11 @@ namespace SpaceInvaders.Model.HighScoreBoard
             }
         }
 
+        public override string ToString()
+        {
+            return this.name + " " + this.score + " " + this.level;
+        }
+
         #endregion
     }
 }
