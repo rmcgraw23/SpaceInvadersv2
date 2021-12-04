@@ -72,6 +72,11 @@ namespace SpaceInvaders.View
             this.livesTextBlock.Text = "Lives: " + lives.ToString();
         }
 
+        private void PoerUpOnPowerUpCountUpdated(int lives)
+        {
+            this.livesTextBlock.Text = "Lives: " + lives.ToString();
+        }
+
         private async void GameOnGameOverUpdated(object self, EventArgs e)
         {
             string title = "";
@@ -126,7 +131,7 @@ namespace SpaceInvaders.View
                     this.gameManager.LeftKeyDown = true;
                     this.gameManager.MovePlayerShipLeft();
                     break;
-                case VirtualKey.Right:
+                case VirtualKey.Down:
                     this.gameManager.RightKeyDown = true;
                     this.gameManager.MovePlayerShipRight();
                     break;

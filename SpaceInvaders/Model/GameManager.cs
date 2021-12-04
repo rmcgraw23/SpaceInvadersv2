@@ -283,6 +283,23 @@ namespace SpaceInvaders.Model
         /// Precondition: none
         /// Post-condition: none
         /// </summary>
+        public event LivesCountHandler PowerUpCountUpdated;
+
+        /// <summary>
+        /// Defines what is handled when the lives is changed.
+        /// Precondition: none
+        /// Post-condition: the lives on screen should be updated if lives is changed.
+        /// </summary>
+        public void OnPowerUpCountUpdated()
+        {
+            this.LivesCountUpdated?.Invoke(this.powerUpsRemaining);
+        }
+
+        /// <summary>
+        /// Creates the handler to handle the lives change
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
         public event LivesCountHandler LivesCountUpdated;
 
         /// <summary>
@@ -460,13 +477,21 @@ namespace SpaceInvaders.Model
         {
             //EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed();
             IDictionary<GameObject, EnemyShip> result = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PlayerBullets);
-            IDictionary<GameObject, EnemyShip> powerUoResult = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PowerUps);
+            IDictionary<GameObject, EnemyShip> powerUpResult = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PowerUps);
 
             //this.enemyShips = this.shipsManager.EnemyShips;
             this.enemyShips = this.enemyShipManger.EnemyShips;
             foreach (var bullet in result.Keys)
             {
                 this.bulletManager.RemovePlayerBullet((ShipBullet)bullet);
+                
+            }
+
+            foreach(var powerup in powerUpResult.Keys)
+            {
+                this.bulletManager.RemovePowerUp((PowerUp)powerup);
+                this.powerUpsRemaining -= 1;
+                this.OnPowerUpCountUpdated();
             }
 
             foreach (var destroyedShip in result.Values)
@@ -477,7 +502,8 @@ namespace SpaceInvaders.Model
                     if (destroyedShip.Sprite is BonusEnemySprite)
                     {
                         this.gotPowerUp = true;
-                        this.powerUpsRemaining = 7;
+                        this.powerUpsRemaining += 7;
+                        this.OnPowerUpCountUpdated();
                     }
                 }
             }
