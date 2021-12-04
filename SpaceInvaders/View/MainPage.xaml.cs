@@ -56,10 +56,10 @@ namespace SpaceInvaders.View
             this.gameManager = new GameManager(ApplicationHeight, ApplicationWidth);
             this.gameManager.InitializeGame(this.theCanvas);
 
-            this.gameManager.ScoreCountUpdated += this.ScoreOnScoreCountUpdated;
-            this.gameManager.GameOverUpdated += this.GameOnGameOverUpdated;
-            this.gameManager.LivesCountUpdated += this.LivesOnLivesCountUpdated;
-            this.gameManager.PowerUpCountUpdated += this.PowerUpOnPowerUpCountUpdated;
+            this.gameManager.ScoreCountUpdated += this.scoreOnScoreCountUpdated;
+            this.gameManager.GameOverUpdated += this.gameOnGameOverUpdated;
+            this.gameManager.LivesCountUpdated += this.livesOnLivesCountUpdated;
+            this.gameManager.PowerUpCountUpdated += this.powerUpOnPowerUpCountUpdated;
 
         }
 
@@ -67,24 +67,24 @@ namespace SpaceInvaders.View
 
         #region Methods
 
-        private void ScoreOnScoreCountUpdated(int score)
+        private void scoreOnScoreCountUpdated(int score)
         {
             this.scoreTextBlock.Text = "Score: " + score.ToString();
         }
 
-        private void LivesOnLivesCountUpdated(int lives)
+        private void livesOnLivesCountUpdated(int lives)
         {
             this.livesTextBlock.Text = "Lives: " + lives.ToString();
         }
 
-        private void PowerUpOnPowerUpCountUpdated(object self, EventArgs e)
+        private void powerUpOnPowerUpCountUpdated(object self, EventArgs e)
         {
             this.powerUpTextBlock.Text = "PowerUp: " + self;
         }
 
-        private async void GameOnGameOverUpdated(object self, EventArgs e)
+        private async void gameOnGameOverUpdated(object self, EventArgs e)
         {
-            string content = "Score: " + this.gameManager.Score;
+            var content = "Score: " + this.gameManager.Score;
             string title;
             if (this.gameManager.Result == "win")
             {

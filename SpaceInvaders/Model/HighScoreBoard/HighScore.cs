@@ -64,7 +64,7 @@ namespace SpaceInvaders.Model.HighScoreBoard
         /// <returns>either 1 or -1 if score is greater or less than the other score.</returns>
         public int CompareTo(object obj)
         {
-            HighScore score2 = obj as HighScore;
+            var score2 = obj as HighScore;
             if (score2 == null)
             {
                 throw new ArgumentNullException();
@@ -79,11 +79,11 @@ namespace SpaceInvaders.Model.HighScoreBoard
             }
             else
             {
-                if (String.Compare(this.Name, score2.Name, StringComparison.Ordinal) < 0)
+                if (string.Compare(this.Name, score2.Name, StringComparison.Ordinal) < 0)
                 {
                     return -1;
                 }
-                else if (String.Compare(this.Name, score2.Name, StringComparison.Ordinal) > 0)
+                else if (string.Compare(this.Name, score2.Name, StringComparison.Ordinal) > 0)
                 {
                     return 1;
                 }

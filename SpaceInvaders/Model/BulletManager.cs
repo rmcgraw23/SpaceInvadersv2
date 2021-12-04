@@ -9,7 +9,7 @@ namespace SpaceInvaders.Model
     /// <summary>
     /// Manages the bullets.
     /// </summary>
-    class BulletManager
+    internal class BulletManager
     {
         #region DataMembers
 
@@ -143,19 +143,20 @@ namespace SpaceInvaders.Model
             var value = random.Next(0, 10);
             if (value == 0)
             {
-                ShipBullet bullet = new ShipBullet();
+                var bullet = new ShipBullet();
 
-                if (ship.Sprite is Level4EnemySprite)
+                switch (ship.Sprite)
                 {
-                    bullet.EndingX = playerX;
-                    bullet.StartingX = ship.X;
-                    bullet.IsLevel4Enemy = true;
-                }
-                else if (ship.Sprite is BonusEnemySprite)
-                {
-                    bullet.EndingX = playerX;
-                    bullet.StartingX = ship.X;
-                    bullet.IsBonusEnemy = true;
+                    case Level4EnemySprite _:
+                        bullet.EndingX = playerX;
+                        bullet.StartingX = ship.X;
+                        bullet.IsLevel4Enemy = true;
+                        break;
+                    case BonusEnemySprite _:
+                        bullet.EndingX = playerX;
+                        bullet.StartingX = ship.X;
+                        bullet.IsBonusEnemy = true;
+                        break;
                 }
 
                 this.placeBulletsBellowEnemies(ship, bullet);
@@ -179,7 +180,7 @@ namespace SpaceInvaders.Model
         /// <returns></returns>
         public IList<GameObject> CreateAndPlacePlayerShipBullet(PlayerShip playerShip)
         {
-            ShipBullet bullet = new ShipBullet();
+            var bullet = new ShipBullet();
 
             if (this.PlayerBullets.Count < MaxLives)
             {
@@ -193,7 +194,7 @@ namespace SpaceInvaders.Model
             return this.PlayerBullets;
         }
 
-        private void placePlayerBullet(ShipBullet bullet, PlayerShip playerShip)
+        private void placePlayerBullet(GameObject bullet, GameObject playerShip)
         {
             bullet.X = playerShip.X + (playerShip.Width / 2 - 1);
             bullet.Y = playerShip.Y - 15;
@@ -205,7 +206,7 @@ namespace SpaceInvaders.Model
         /// <param name="playerShip">The player ship.</param>
         public void CreateAndPlacePowerUp(PlayerShip playerShip)
         {
-            PowerUp powerUp = new PowerUp();
+            var powerUp = new PowerUp();
             this.gameBackground.Children.Add(new PowerUp().Sprite);
             this.PowerUps.Add(powerUp);
             this.placePowerUp(powerUp, playerShip);
@@ -214,7 +215,7 @@ namespace SpaceInvaders.Model
 
         }
 
-        private void placePowerUp(PowerUp powerUp, PlayerShip playerShip)
+        private void placePowerUp(GameObject powerUp, GameObject playerShip)
         {
             powerUp.X = playerShip.X + playerShip.Width;
             powerUp.Y = playerShip.Y - 15;
@@ -298,7 +299,7 @@ namespace SpaceInvaders.Model
 
         private void moveBulletTowardsPlayer(ShipBullet bullet)
         {
-            double bulletXMovement = bullet.StartingX - bullet.EndingX;
+            var bulletXMovement = bullet.StartingX - bullet.EndingX;
 
             if (bulletXMovement < -10 || bulletXMovement > 10)
             {

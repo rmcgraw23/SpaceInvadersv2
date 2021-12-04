@@ -8,7 +8,7 @@ namespace SpaceInvaders.Model.Enemies
     /// <summary>
     ///     Manages the Enemy Ships
     /// </summary>
-    class EnemyShipManager
+    internal class EnemyShipManager
     {
 
         #region DataMembers
@@ -153,21 +153,20 @@ namespace SpaceInvaders.Model.Enemies
         {
             var offset = (this.gameBackground.Width - this.enemyShipsPerRow * ship.Width) / (this.enemyShipsPerRow + 1);
             ship.X = offset * (count + 1) + count * ship.Width;
-            if (ship.Sprite is Level1EnemySprite)
+            switch (ship.Sprite)
             {
-                ship.Y = 224;
-            }
-            else if (ship.Sprite is Level2EnemySprite)
-            {
-                ship.Y = 166;
-            }
-            else if (ship.Sprite is Level3EnemySprite)
-            {
-                ship.Y = 108;
-            }
-            else if (ship.Sprite is Level4EnemySprite)
-            {
-                ship.Y = 50;
+                case Level1EnemySprite _:
+                    ship.Y = 224;
+                    break;
+                case Level2EnemySprite _:
+                    ship.Y = 166;
+                    break;
+                case Level3EnemySprite _:
+                    ship.Y = 108;
+                    break;
+                case Level4EnemySprite _:
+                    ship.Y = 50;
+                    break;
             }
         }
 
@@ -331,37 +330,44 @@ namespace SpaceInvaders.Model.Enemies
             {
                 if (this.EnemyShips.Count > 0)
                 {
-                    if (currentShip.Sprite is Level1EnemySprite || currentShip.Sprite is Level3EnemySprite)
+                    switch (currentShip.Sprite)
                     {
-                        if (this.level2FirstStep)
+                        case Level1EnemySprite _:
+                        case Level3EnemySprite _:
                         {
-                            currentShip.MoveRight();
-                        }
-                        else if (this.level2StepCounter <= 3)
-                        {
-                            currentShip.MoveLeft();
-                        }
-                        else if (this.level2StepCounter <= 7)
-                        {
-                            currentShip.MoveRight();
-                        }
+                            if (this.level2FirstStep)
+                            {
+                                currentShip.MoveRight();
+                            }
+                            else if (this.level2StepCounter <= 3)
+                            {
+                                currentShip.MoveLeft();
+                            }
+                            else if (this.level2StepCounter <= 7)
+                            {
+                                currentShip.MoveRight();
+                            }
 
-                    }
-                    else if (currentShip.Sprite is Level2EnemySprite || currentShip.Sprite is Level4EnemySprite)
-                    {
-                        if (this.level2FirstStep)
-                        {
-                            currentShip.MoveLeft();
+                            break;
                         }
-                        else if (this.level2StepCounter <= 3)
+                        case Level2EnemySprite _:
+                        case Level4EnemySprite _:
                         {
-                            currentShip.MoveRight();
-                        }
-                        else if (this.level2StepCounter <= 7)
-                        {
-                            currentShip.MoveLeft();
-                        }
+                            if (this.level2FirstStep)
+                            {
+                                currentShip.MoveLeft();
+                            }
+                            else if (this.level2StepCounter <= 3)
+                            {
+                                currentShip.MoveRight();
+                            }
+                            else if (this.level2StepCounter <= 7)
+                            {
+                                currentShip.MoveLeft();
+                            }
 
+                            break;
+                        }
                     }
                 }
             }

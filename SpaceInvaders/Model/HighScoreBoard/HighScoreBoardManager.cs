@@ -93,10 +93,10 @@ namespace SpaceInvaders.Model.HighScoreBoard
 
                 this.HighScores.Remove(lowestScore);
 
-                string[] output = new []{""};
+                var output = new []{""};
                 foreach (var highScore in this.HighScores)
                 {
-                    _ = output.Append(highScore.Name + highScore.Score + highScore.Level);
+                    output.Append(highScore.Name + highScore.Score + highScore.Level);
                 }
                 File.WriteAllLines("scores.txt", output);
             }
@@ -126,12 +126,12 @@ namespace SpaceInvaders.Model.HighScoreBoard
         {
             try
             {
-                string[] lines = File.ReadAllLines("scores.txt");
+                var lines = File.ReadAllLines("scores.txt");
 
                 foreach (var line in lines)
                 {
-                    string [] score = line.Split(" ");
-                    this.HighScores.Add(new HighScore(score[0], Int32.Parse(score[1]), Int32.Parse(score[2])));
+                    var score = line.Split(" ");
+                    this.HighScores.Add(new HighScore(score[0], int.Parse(score[1]), int.Parse(score[2])));
                 }
             }
             catch (Exception e)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SpaceInvaders.Model.HighScoreBoard
 {
     /// <summary>
-    /// Creates a new comparer interface to compare highcores by level first.
+    /// Creates a new comparer interface to compare high scores by level first.
     /// </summary>
     /// <seealso cref="HighScore" />
     public class NameScoreLevelComparer: IComparer<HighScore>
@@ -15,37 +15,37 @@ namespace SpaceInvaders.Model.HighScoreBoard
             {
                 throw new ArgumentNullException();
             }
-            if (String.Compare(score1.Name, score2.Name, StringComparison.Ordinal) == -1)
+
+            switch (string.Compare(score1.Name, score2.Name, StringComparison.Ordinal))
             {
-                return -1;
-            }
-            else if (String.Compare(score1.Name, score2.Name, StringComparison.Ordinal) == 1)
-            {
-                return 1;
-            }
-            else
-            {
-                if (score1.Score > score2.Score)
-                {
+                case -1:
                     return -1;
-                }
-                else if (score1.Score < score2.Score)
-                {
+                case 1:
                     return 1;
-                }
-                else
+                default:
                 {
-                    if (score1.Level > score2.Level)
+                    if (score1.Score > score2.Score)
                     {
                         return -1;
                     }
-                    else if (score1.Level < score2.Level)
+                    else if (score1.Score < score2.Score)
                     {
                         return 1;
                     }
                     else
                     {
-                        return 0;
+                        if (score1.Level > score2.Level)
+                        {
+                            return -1;
+                        }
+                        else if (score1.Level < score2.Level)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
                     }
                 }
             }

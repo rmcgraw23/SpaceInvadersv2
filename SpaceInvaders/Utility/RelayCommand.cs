@@ -21,7 +21,7 @@ namespace SpaceInvaders.Utility
         /// </returns>
         public bool CanExecute(object parameter)
         {
-            bool result = this.canExecute?.Invoke(parameter) ?? true;
+            var result = this.canExecute?.Invoke(parameter) ?? true;
             return result;
         }
 

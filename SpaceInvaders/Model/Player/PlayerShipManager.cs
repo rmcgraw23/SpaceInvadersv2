@@ -6,7 +6,7 @@ namespace SpaceInvaders.Model.Player
     /// <summary>
     ///     Manages the Player Ship.
     /// </summary>
-    class PlayerShipManager
+    internal class PlayerShipManager
     {
 
         #region DataMembers

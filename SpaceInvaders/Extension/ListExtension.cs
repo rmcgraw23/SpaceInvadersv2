@@ -9,7 +9,7 @@ namespace SpaceInvaders.Extension
     public static class ListExtension
     {
         /// <summary>
-        /// Converts to observablecollection.
+        /// Converts to an ObservableCollection.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="collection">The collection.</param>

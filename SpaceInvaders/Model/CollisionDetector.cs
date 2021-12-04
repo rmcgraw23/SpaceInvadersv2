@@ -18,19 +18,8 @@
         /// <returns></returns>
         public static bool DetectCollision(GameObject object1, GameObject object2)
         {
-
-            if (object1 == null || object2 == null ||
-                !(object1.X + object1.Width >= object2.X) ||
-                !(object1.X <= object2.X + object2.Width) ||
-                !(object1.Y + object1.Height >=
-                  object2.Y) ||
-                !(object1.Y <= object2.Y + object2.Height))
-            {
-                return false;
-            }
-
-            return true;
-
+            return object1 != null && object2 != null && object1.X + object1.Width >= object2.X && object1.X <= object2.X + object2.Width && object1.Y + object1.Height >=
+                   object2.Y && object1.Y <= object2.Y + object2.Height;
         }
 
         #endregion

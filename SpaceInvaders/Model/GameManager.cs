@@ -193,27 +193,29 @@ namespace SpaceInvaders.Model
             if (this.count % 4 == 0)
             {
                 IList<int> moves = null;
-                if (this.currentRound == 1)
+                switch (this.currentRound)
                 {
-                    moves = new List<int> {1, 2, 2, 1};
-                    if (moves[this.move] % 2 != 0)
+                    case 1:
                     {
-                        this.enemyShipManger.MoveEnemyShipsLeft();
+                        moves = new List<int> {1, 2, 2, 1};
+                        if (moves[this.move] % 2 != 0)
+                        {
+                            this.enemyShipManger.MoveEnemyShipsLeft();
 
-                    }
-                    else
-                    {
-                        this.enemyShipManger.MoveEnemyShipsRight();
-                    }
-                }
-                else if (this.currentRound == 2)
-                {
-                    this.enemyShipManger.MoveEnemySnipsLevel2();
+                        }
+                        else
+                        {
+                            this.enemyShipManger.MoveEnemyShipsRight();
+                        }
 
-                }
-                else if (this.currentRound == 3)
-                {
-                    this.enemyShipManger.MoveEnemyShipsLevel3();
+                        break;
+                    }
+                    case 2:
+                        this.enemyShipManger.MoveEnemySnipsLevel2();
+                        break;
+                    case 3:
+                        this.enemyShipManger.MoveEnemyShipsLevel3();
+                        break;
                 }
 
                 
@@ -224,7 +226,7 @@ namespace SpaceInvaders.Model
                 if (this.currentRound == 1)
                 {
                     this.move++;
-                    if (this.move >= moves.Count)
+                    if (moves != null && this.move >= moves.Count)
                     {
                         this.move = 0;
                     }
@@ -235,7 +237,7 @@ namespace SpaceInvaders.Model
 
             this.enemyShipManger.PlaceBonusShip();
 
-            count += 1;
+            this.count += 1;
             this.bulletManager.MoveBulletUp();
             this.bulletManager.MovePowerUp();
             this.EnemyDestroyed();
@@ -424,7 +426,7 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void PlayerDied()
         {
-            IDictionary<ShipBullet, int> result = this.playerShipManager.PlayerDied(this.bulletManager.EnemyBullets);
+            var result = this.playerShipManager.PlayerDied(this.bulletManager.EnemyBullets);
             foreach (var bullet in result.Keys)
             {
                 this.bulletManager.RemoveEnemyBullet(bullet);
@@ -446,8 +448,8 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void EnemyDestroyed()
         {
-            IDictionary<GameObject, EnemyShip> result = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PlayerBullets);
-            IDictionary<GameObject, EnemyShip> powerUpResult = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PowerUps);
+            var result = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PlayerBullets);
+            var powerUpResult = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PowerUps);
 
             this.enemyShips = this.enemyShipManger.EnemyShips;
             foreach (var bullet in result.Keys)
@@ -456,9 +458,9 @@ namespace SpaceInvaders.Model
                 
             }
 
-            foreach(var powerup in powerUpResult.Keys)
+            foreach(var powerUp in powerUpResult.Keys)
             {
-                this.bulletManager.RemovePowerUp((PowerUp)powerup);
+                this.bulletManager.RemovePowerUp((PowerUp)powerUp);
                 this.powerUpsRemaining -= 1;
                 this.OnPowerUpCountUpdated();
             }
@@ -489,33 +491,36 @@ namespace SpaceInvaders.Model
         private void gameOver()
         {
             this.highScoreBoard.GetScoreAndLevel(this.Score, this.currentRound);
-            if (this.enemyShips.Count == 0 && this.currentRound == FinalRound)
+            switch (this.enemyShips.Count)
             {
-                SoundPlayer.PlaySound("gameOver.wav");
-                this.Result = "win";
-                this.result();
-                this.OnGameOverUpdated();
-            }
+                case 0 when this.currentRound == FinalRound:
+                    SoundPlayer.PlaySound("gameOver.wav");
+                    this.Result = "win";
+                    this.result();
+                    this.OnGameOverUpdated();
+                    break;
+                case 0 when this.currentRound != FinalRound:
+                    this.currentRound++;
+                    this.gameBackground.Children.Remove(this.playerShip.Sprite);
+                    this.clearBulletsFromGameBoard();
+                    this.clearShieldsFromGameBoard();
+                    this.timer.Stop();
+                    this.InitializeGame(this.gameBackground);
+                    this.setTimerIntervalForRound();
+                    break;
+                default:
+                {
+                    if (!this.gameBackground.Children.Contains(this.playerShip.Sprite))
+                    {
+                        SoundPlayer.PlaySound("gameOver.wav");
+                        this.Result = "lose";
+                        this.result();
+                        this.OnGameOverUpdated();
+                    }
 
-            else if (this.enemyShips.Count == 0 && this.currentRound != FinalRound)
-            {
-                this.currentRound++;
-                this.gameBackground.Children.Remove(this.playerShip.Sprite);
-                this.clearBulletsFromGameBoard();
-                this.clearShieldsFromGameBoard();
-                this.timer.Stop();
-                this.InitializeGame(this.gameBackground);
-                this.setTimerIntervalForRound();
+                    break;
+                }
             }
-
-            else if (!this.gameBackground.Children.Contains(this.playerShip.Sprite))
-            {
-                SoundPlayer.PlaySound("gameOver.wav");
-                this.Result = "lose";
-                this.result();
-                this.OnGameOverUpdated();
-            }
-
         }
 
         private void clearShieldsFromGameBoard()
@@ -532,13 +537,14 @@ namespace SpaceInvaders.Model
 
         private void setTimerIntervalForRound()
         {
-            if (this.currentRound == 2)
+            switch (this.currentRound)
             {
-                this.timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            }
-            else if (this.currentRound == 3)
-            {
-                this.timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+                case 2:
+                    this.timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+                    break;
+                case 3:
+                    this.timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+                    break;
             }
         }
 
@@ -563,12 +569,10 @@ namespace SpaceInvaders.Model
 
         private void placeShields()
         {
-            double shieldX = 172.5;
-            for (int i = 0; i <= 2; i++)
+            var shieldX = 172.5;
+            for (var i = 0; i <= 2; i++)
             {
-                Shield shield = new Shield();
-                shield.Y = 450;
-                shield.X = shieldX;
+                var shield = new Shield {Y = 450, X = shieldX};
                 this.shields.Add(shield);
                 shieldX += 222.5;
                 this.gameBackground.Children.Add(shield.Sprite);

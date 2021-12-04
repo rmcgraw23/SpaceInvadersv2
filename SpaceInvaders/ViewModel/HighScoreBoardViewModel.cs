@@ -16,7 +16,7 @@ namespace SpaceInvaders.ViewModel
     {
         #region DataMemebrs     
 
-        private HighScoreBoardManager HighScoreBoardManager;
+        private readonly HighScoreBoardManager highScoreBoardManager;
 
         private ObservableCollection<HighScore> highScores;
 
@@ -119,13 +119,13 @@ namespace SpaceInvaders.ViewModel
         /// </summary>
         public HighScoreBoardViewModel()
         {
-            this.HighScoreBoardManager = new HighScoreBoardManager();
+            this.highScoreBoardManager = new HighScoreBoardManager();
             
             this.AddCommand = new RelayCommand(this.addScore, this.canAddScore);
             this.SortCommand = new RelayCommand(this.sortScores, this.canSortScores);
             this.SortNameFirstCommand = new RelayCommand(this.sortNameFirstScores, this.canSortNameFirstScores);
             this.SortLevelFirstCommand = new RelayCommand(this.sortLevelFirstScores, this.canSortLevelFirstScores);
-            this.HighScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
+            this.HighScores = this.highScoreBoardManager.HighScores.ToObservableCollection();
             this.name = "Add your name to the board!";
             this.inTopTen = false;
             this.getStanding();
@@ -140,19 +140,19 @@ namespace SpaceInvaders.ViewModel
         /// </summary>
         private void getStanding()
         {
-            this.inTopTen = this.HighScoreBoardManager.WithinTopTen();
+            this.inTopTen = this.highScoreBoardManager.WithinTopTen();
 
         }
 
         private bool canAddScore(object obj)
         {
-            return this.HighScoreBoardManager.WithinTopTen();
+            return this.highScoreBoardManager.WithinTopTen();
         }
 
         private void addScore(object obj)
         {
-            this.HighScoreBoardManager.AddHighScore(this.name);
-            this.HighScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
+            this.highScoreBoardManager.AddHighScore(this.name);
+            this.HighScores = this.highScoreBoardManager.HighScores.ToObservableCollection();
 
         }
 
@@ -163,7 +163,7 @@ namespace SpaceInvaders.ViewModel
 
         private void sortScores(object obj)
         {
-            this.HighScoreBoardManager.HighScores.Sort();
+            this.highScoreBoardManager.HighScores.Sort();
         }
 
         private bool canSortNameFirstScores(object obj)
@@ -173,8 +173,8 @@ namespace SpaceInvaders.ViewModel
 
         private void sortNameFirstScores(object obj)
         {
-            this.HighScoreBoardManager.HighScores.Sort(new NameScoreLevelComparer());
-            this.HighScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
+            this.highScoreBoardManager.HighScores.Sort(new NameScoreLevelComparer());
+            this.HighScores = this.highScoreBoardManager.HighScores.ToObservableCollection();
         }
 
         private bool canSortLevelFirstScores(object obj)
@@ -184,8 +184,8 @@ namespace SpaceInvaders.ViewModel
 
         private void sortLevelFirstScores(object obj)
         {
-            this.HighScoreBoardManager.HighScores.Sort(new LevelScoreNameComparer());
-            this.HighScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
+            this.highScoreBoardManager.HighScores.Sort(new LevelScoreNameComparer());
+            this.HighScores = this.highScoreBoardManager.HighScores.ToObservableCollection();
         }
 
         /// <summary>

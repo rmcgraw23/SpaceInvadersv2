@@ -17,13 +17,13 @@ namespace SpaceInvaders.Model
         /// Plays the sound.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
-        public static async void PlaySound(String fileName)
+        public static async void PlaySound(string fileName)
         {
-            MediaPlayer mediaPlayer = new MediaPlayer();
+            var mediaPlayer = new MediaPlayer();
 
-            Windows.Storage.StorageFolder folder =
+            var folder =
                 await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets");
-            Windows.Storage.StorageFile file = await folder.GetFileAsync(fileName);
+            var file = await folder.GetFileAsync(fileName);
 
             mediaPlayer.AutoPlay = false;
             mediaPlayer.Source = MediaSource.CreateFromStorageFile(file);

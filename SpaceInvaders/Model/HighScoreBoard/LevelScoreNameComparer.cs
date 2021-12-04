@@ -35,17 +35,14 @@ namespace SpaceInvaders.Model.HighScoreBoard
                 }
                 else
                 {
-                    if (String.Compare(score1.Name, score2.Name, StringComparison.Ordinal) == -1)
+                    switch (string.Compare(score1.Name, score2.Name, StringComparison.Ordinal))
                     {
-                        return -1;
-                    }
-                    else if (String.Compare(score1.Name, score2.Name, StringComparison.Ordinal) == 1)
-                    {
-                        return 1;
-                    }
-                    else
-                    {
-                        return 0;
+                        case -1:
+                            return -1;
+                        case 1:
+                            return 1;
+                        default:
+                            return 0;
                     }
                 }
             }

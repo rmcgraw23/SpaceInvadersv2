@@ -43,14 +43,14 @@ namespace SpaceInvaders.View.Sprites
         {
             if (this.hasMoved)
             {
-                this.turret1.Fill = new SolidColorBrush(color: Colors.Yellow);
-                this.turret2.Fill = new SolidColorBrush(color: Colors.Yellow);
+                this.turret1.Fill = new SolidColorBrush(Colors.Yellow);
+                this.turret2.Fill = new SolidColorBrush(Colors.Yellow);
                 this.hasMoved = false;
             }
             else
             {
-                this.turret1.Fill = new SolidColorBrush(color: Colors.Red);
-                this.turret2.Fill = new SolidColorBrush(color: Colors.Red);
+                this.turret1.Fill = new SolidColorBrush(Colors.Red);
+                this.turret2.Fill = new SolidColorBrush(Colors.Red);
                 this.hasMoved = true;
             }
         }
