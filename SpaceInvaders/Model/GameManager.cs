@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SpaceInvaders.Model.Enemies;
+using SpaceInvaders.Model.HighScoreBoard;
+using SpaceInvaders.Model.Player;
 using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
@@ -231,7 +233,7 @@ namespace SpaceInvaders.Model
                 this.GetEnemyBulletsFired();
             }
 
-            this.enemyShipManger.placeBonusShip();
+            this.enemyShipManger.PlaceBonusShip();
 
             count += 1;
             this.bulletManager.MoveBulletUp();
@@ -426,7 +428,7 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void GetEnemyBulletsFired()
         {
-            this.bulletManager.GetEnemyBulletsFired(this.enemyShipManger.getFiringEnemies(), this.playerShipManager.PlayerShip.X);
+            this.bulletManager.GetEnemyBulletsFired(this.enemyShipManger.GetFiringEnemies(), this.playerShipManager.PlayerShip.X);
             //this.enemyBullets = this.enemyShipManger.EnemyBullets;
         }
 
@@ -505,7 +507,7 @@ namespace SpaceInvaders.Model
 
         private void gameOver()
         {
-            this.highScoreBoard.getScoreAndLevel(this.Score, this.currentRound);
+            this.highScoreBoard.GetScoreAndLevel(this.Score, this.currentRound);
             if (this.enemyShips.Count == 0 && this.currentRound == finalRound)
             {
                 SoundPlayer.PlaySound("gameOver.wav");

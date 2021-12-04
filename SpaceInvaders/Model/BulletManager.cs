@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
+using SpaceInvaders.Model.Player;
 using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model

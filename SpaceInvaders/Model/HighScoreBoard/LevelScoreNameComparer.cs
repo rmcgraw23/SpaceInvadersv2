@@ -1,41 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SpaceInvaders.Model.HighScoreBoard;
 
 namespace SpaceInvaders.Model.HighScoreBoard
 {
+    /// <summary>
+    /// Creates a new comparer interface for sort by name first.
+    /// </summary>
+    /// <seealso cref="HighScore" />
     public class LevelScoreNameComparer : IComparer<HighScore>
     {
         int IComparer<HighScore>.Compare(HighScore score1, HighScore score2)
         {
-            if (score1.level > score2.level)
+            if (score1 == null || score2 == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (score1.Level > score2.Level)
             {
                 return -1;
             }
-            else if (score1.level < score2.level)
+            else if (score1.Level < score2.Level)
             {
                 return 1;
             }
             else
             {
-                if (score1.score > score2.score)
+                if (score1.Score > score2.Score)
                 {
                     return -1;
                 }
-                else if (score1.score < score2.score)
+                else if (score1.Score < score2.Score)
                 {
                     return 1;
                 }
                 else
                 {
-                    if (score1.name.CompareTo(score2.name) == -1)
+                    if (String.Compare(score1.Name, score2.Name, StringComparison.Ordinal) == -1)
                     {
                         return -1;
                     }
-                    else if (score1.name.CompareTo(score2.name) == 1)
+                    else if (String.Compare(score1.Name, score2.Name, StringComparison.Ordinal) == 1)
                     {
                         return 1;
                     }

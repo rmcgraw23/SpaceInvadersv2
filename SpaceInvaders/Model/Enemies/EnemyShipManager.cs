@@ -37,14 +37,6 @@ namespace SpaceInvaders.Model.Enemies
         public IList<EnemyShip> EnemyShips { get; set; }
 
         /// <summary>
-        ///     Gets or sets the enemy bullets.
-        /// </summary>
-        /// <value>
-        ///     The enemy bullets.
-        /// </value>
-        //public IList<ShipBullet> EnemyBullets { get; set; }
-
-        /// <summary>
         ///     Gets or sets whether a bullet was fired.
         /// </summary>
         /// <value>
@@ -188,7 +180,7 @@ namespace SpaceInvaders.Model.Enemies
         /// <summary>
         /// Places the bonus ship.
         /// </summary>
-        public void placeBonusShip()
+        public void PlaceBonusShip()
         {
             var random = new Random();
             random.Next(0, 100);
@@ -216,7 +208,7 @@ namespace SpaceInvaders.Model.Enemies
 
         private bool containsBonusShip()
         {
-            foreach (var ship in EnemyShips)
+            foreach (var ship in this.EnemyShips)
             {
                 if (ship.Sprite is BonusEnemySprite)
                 {
@@ -230,8 +222,8 @@ namespace SpaceInvaders.Model.Enemies
         /// <summary>
         /// Gets the firing enemies.
         /// </summary>
-        /// <returns></returns>
-        public IList<GameObject> getFiringEnemies()
+        /// <returns>the list of enemies that fire.</returns>
+        public IList<GameObject> GetFiringEnemies()
         {
             IList<GameObject> firingEnemies = new List<GameObject>();
             foreach (var ship in this.EnemyShips)
@@ -267,9 +259,7 @@ namespace SpaceInvaders.Model.Enemies
             }
 
             this.EnemyShips.Remove(destroyedShip);
-            //TODO: Fix line below
-            // this.PlayerBullet.Remove(hitBullet);
-            //playerBullets = this.manager.RemovePlayerBullet(hitBullet);
+            
             if (hitBullet != null)
             {
                 result.Add(hitBullet, destroyedShip);

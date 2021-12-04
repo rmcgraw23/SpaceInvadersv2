@@ -1,65 +1,99 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpaceInvaders.Model.HighScoreBoard
 {
+    /// <summary>
+    /// Creates a high score
+    /// </summary>
+    /// <seealso cref="System.IComparable" />
     public class HighScore : IComparable
     {
 
         #region Properties
 
-        public string name { get; set; }
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
+        public string Name { get; set; }
 
-        public int score { get; set; }
+        /// <summary>
+        /// Gets or sets the score.
+        /// </summary>
+        /// <value>
+        /// The score.
+        /// </value>
+        public int Score { get; set; }
 
-        public int level { get; set; }
+        /// <summary>
+        /// Gets or sets the level.
+        /// </summary>
+        /// <value>
+        /// The level.
+        /// </value>
+        public int Level { get; set; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HighScore"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="score">The score.</param>
+        /// <param name="level">The level.</param>
+        /// <exception cref="ArgumentNullException">Name</exception>
         public HighScore(string name, int score, int level)
         {
-            this.name = name ?? throw new ArgumentNullException(nameof(this.name));
-            this.score = score;
-            this.level = level;
+            this.Name = name ?? throw new ArgumentNullException(nameof(name));
+            this.Score = score;
+            this.Level = level;
         }
 
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Compares to.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>either 1 or -1 if score is greater or less than the other score.</returns>
         public int CompareTo(object obj)
         {
             HighScore score2 = obj as HighScore;
-            if (this.score > score2.score)
+            if (score2 == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (this.Score > score2.Score)
             {
                 return -1;
             }
-            else if (this.score < score2.score)
+            else if (this.Score < score2.Score)
             {
                 return 1;
             }
             else
             {
-                if (this.name.CompareTo(score2.name) < 0)
+                if (String.Compare(this.Name, score2.Name, StringComparison.Ordinal) < 0)
                 {
                     return -1;
                 }
-                else if (this.name.CompareTo(score2.name) > 0)
+                else if (String.Compare(this.Name, score2.Name, StringComparison.Ordinal) > 0)
                 {
                     return 1;
                 }
                 else
                 {
-                    if (this.level > score2.level)
+                    if (this.Level > score2.Level)
                     {
                         return -1;
                     }
-                    else if (this.level < score2.level)
+                    else if (this.Level < score2.Level)
                     {
                         return 1;
                     }
@@ -71,9 +105,15 @@ namespace SpaceInvaders.Model.HighScoreBoard
             }
         }
 
+        /// <summary>
+        /// Converts to string.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
-            return this.name + " " + this.score + " " + this.level;
+            return this.Name + " " + this.Score + " " + this.Level;
         }
 
         #endregion

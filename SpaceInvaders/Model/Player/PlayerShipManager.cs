@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 
-namespace SpaceInvaders.Model
+namespace SpaceInvaders.Model.Player
 {
     /// <summary>
     ///     Manages the Player Ship.
@@ -33,14 +33,6 @@ namespace SpaceInvaders.Model
         public PlayerShip PlayerShip { get; set; }
 
         /// <summary>
-        ///     Gets or sets the player bullet.
-        /// </summary>
-        /// <value>
-        ///     The player bullet.
-        /// </value>
-        //public IList<ShipBullet> PlayerBullets { get; set; }
-
-        /// <summary>
         ///     Gets or sets whether a bullet was fired.
         /// </summary>
         /// <value>
@@ -55,14 +47,6 @@ namespace SpaceInvaders.Model
         ///     The lives.
         /// </value>
         public int Lives { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the powerUp.
-        /// </summary>
-        /// <value>
-        ///     The powerUp.
-        /// </value>
-        public PowerUp PowerUp { get; set; }
 
         #endregion
 
@@ -129,12 +113,9 @@ namespace SpaceInvaders.Model
                 this.playerDestroyed(bullet, ref hitBullet);
             }
 
-            //TODO: Fix line below
-            //this.EnemyBullets.Remove(hitBullet);
-            //enemyBullets = this.manager.RemoveEnemyBullet(hitBullet);
             if (hitBullet != null)
             {
-                result.Add(hitBullet, Lives);
+                result.Add(hitBullet, this.Lives);
             }
 
             return result;

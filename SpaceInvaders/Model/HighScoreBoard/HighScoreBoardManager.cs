@@ -1,39 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SpaceInvaders.Model.HighScoreBoard;
 
-namespace SpaceInvaders.Model
+namespace SpaceInvaders.Model.HighScoreBoard
 {
+    /// <summary>
+    /// Manages the high score board.
+    /// </summary>
     public class HighScoreBoardManager
     {
         #region DataMembers
 
-        
+        /// <summary>
+        /// The score
+        /// </summary>
+        private int score;
+
+        /// <summary>
+        /// The level
+        /// </summary>
+        private int level;
 
         #endregion
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the high scores.
+        /// </summary>
+        /// <value>
+        /// The high scores.
+        /// </value>
         public List<HighScore> HighScores { get; set; }
-
-        private int Score;
-
-        private int Level;
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HighScoreBoardManager"/> class.
+        /// </summary>
         public HighScoreBoardManager()
         {
             this.HighScores = new List<HighScore>();
-            this.Score = 0;
-            this.Level = 0;
+            this.score = 0;
+            this.level = 0;
             this.SetHighScoreBoard();
             
         }
@@ -42,15 +53,26 @@ namespace SpaceInvaders.Model
 
         #region Methods
 
+        /// <summary>
+        /// Occurs when [high score updated].
+        /// </summary>
         public event EventHandler HighScoreUpdated;
 
+        /// <summary>
+        /// Called when [high score updated].
+        /// </summary>
         public void OnHighScoreUpdated()
         {
             this.HighScoreUpdated?.Invoke(this, EventArgs.Empty);
         }
+
+        /// <summary>
+        /// Adds the high score.
+        /// </summary>
+        /// <param name="name">The name.</param>
         public void AddHighScore(string name)
         {
-            this.HighScores.Add(new HighScore(name, this.Score, this.Level));
+            this.HighScores.Add(new HighScore(name, this.score, this.level));
             this.HighScores.Sort();
 
             if (this.HighScores.Count >= 10)
@@ -62,7 +84,7 @@ namespace SpaceInvaders.Model
                     {
                         lowestScore = currentScore;
                     }
-                    else if (lowestScore.score > currentScore.score)
+                    else if (lowestScore.Score > currentScore.Score)
                     {
                         lowestScore = currentScore;
                     }
@@ -71,27 +93,34 @@ namespace SpaceInvaders.Model
                 this.HighScores.Remove(lowestScore);
 
                 string[] output = new []{""};
-                foreach (var highScore in HighScores)
+                foreach (var highScore in this.HighScores)
                 {
-                    output.Append(highScore.name + highScore.score + highScore.level);
+                    _ = output.Append(highScore.Name + highScore.Score + highScore.Level);
                 }
                 File.WriteAllLines("scores.txt", output);
             }
 
         }
 
+        /// <summary>
+        /// Determines if score is Within the top ten.
+        /// </summary>
+        /// <returns></returns>
         public bool WithinTopTen()
         {
             foreach (var highScore in this.HighScores)
             {
-                if (this.Score > highScore.score)
+                if (this.score > highScore.Score)
                 {
-                    return true;
                     this.OnHighScoreUpdated();
+                    return true;
                 }
             } return false;
         }
 
+        /// <summary>
+        /// Sets the high score board.
+        /// </summary>
         public void SetHighScoreBoard()
         {
             try
@@ -111,10 +140,15 @@ namespace SpaceInvaders.Model
             }
         }
 
-        public void getScoreAndLevel(int score, int level)
+        /// <summary>
+        /// Gets the score and level.
+        /// </summary>
+        /// <param name="playerScore">The score.</param>
+        /// <param name="playerLevel">The level.</param>
+        public void GetScoreAndLevel(int playerScore, int playerLevel)
         {
-            this.Score = score;
-            this.Level = level;
+            this.score = playerScore;
+            this.level = playerLevel;
         }
 
         #endregion
