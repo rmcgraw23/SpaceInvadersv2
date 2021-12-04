@@ -192,7 +192,7 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void MovePlayerShipDown()
         {
-            if (this.PlayerShip.Y + this.PlayerShip.Height + this.PlayerShip.SpeedY < this.gameBackground.Height)
+            if (this.PlayerShip.Y + this.PlayerShip.Height + this.PlayerShip.SpeedY < this.gameBackground.Height - 30)
             {
                 this.PlayerShip.MoveDown();
             }
