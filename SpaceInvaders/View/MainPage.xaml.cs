@@ -55,6 +55,7 @@ namespace SpaceInvaders.View
             this.gameManager.ScoreCountUpdated += this.ScoreOnScoreCountUpdated;
             this.gameManager.GameOverUpdated += this.GameOnGameOverUpdated;
             this.gameManager.LivesCountUpdated += this.LivesOnLivesCountUpdated;
+            this.gameManager.PowerUpCountUpdated += this.PowerUpOnPowerUpCountUpdated;
 
         }
 
@@ -68,6 +69,11 @@ namespace SpaceInvaders.View
         }
 
         private void LivesOnLivesCountUpdated(int lives)
+        {
+            this.livesTextBlock.Text = "Lives: " + lives.ToString();
+        }
+
+        private void PowerUpOnPowerUpCountUpdated(int lives)
         {
             this.livesTextBlock.Text = "Lives: " + lives.ToString();
         }
@@ -126,7 +132,7 @@ namespace SpaceInvaders.View
                     this.gameManager.LeftKeyDown = true;
                     this.gameManager.MovePlayerShipLeft();
                     break;
-                case VirtualKey.Right:
+                case VirtualKey.Down:
                     this.gameManager.RightKeyDown = true;
                     this.gameManager.MovePlayerShipRight();
                     break;

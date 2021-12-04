@@ -92,6 +92,13 @@ namespace SpaceInvaders.Model
             this.PlayerBullets.Remove(bullet);
             return this.PlayerBullets;
         }
+
+        public IList<GameObject> RemovePowerUp(PowerUp powerup)
+        {
+            this.PowerUps.Remove(powerup);
+            return this.PowerUps;
+        }
+
         /// <summary>
         /// Adds the enemy bullets fired to the canvas and list of bullets
         /// Precondition: none

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -57,9 +56,6 @@ namespace SpaceInvaders.Model
         private PlayerShip playerShip;
         private IList<EnemyShip> enemyShips;
 
-        //private IList<ShipBullet> playerBullet;
-        //private IList<GameObject> enemyBullets;
-
         private DispatcherTimer timer;
 
         private Canvas gameBackground;
@@ -100,14 +96,6 @@ namespace SpaceInvaders.Model
         /// The title.
         /// </value>
         public string Result { get; set; }
-
-        /// <summary>
-        /// Gets or sets the content.
-        /// </summary>
-        /// <value>
-        /// The content.
-        /// </value>
-        public bool OnTheBoard { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [right key down].
@@ -166,15 +154,13 @@ namespace SpaceInvaders.Model
         /// <param name="background">The background canvas.</param>
         public void InitializeGame(Canvas background)
         {
-            this.gameBackground = background ?? throw new ArgumentNullException(nameof(this.gameBackground));
+            this.gameBackground = background ?? throw new ArgumentNullException(nameof(background));
             this.playerShipManager = new PlayerShipManager(this.gameBackground);
             this.enemyShipManger = new EnemyShipManager(this.gameBackground);
             this.bulletManager = new BulletManager(this.gameBackground);
             this.playerShipManager.InitializeShips();
             this.enemyShipManger.InitializeShips();
             this.highScoreBoard = new HighScoreBoardManager();
-            //this.enemyBullets = new List<GameObject>();
-            //this.playerBullet = new List<ShipBullet>();
             this.lives = 3;
             this.gotPowerUp = false;
             this.shields = new List<Shield>();
@@ -202,13 +188,13 @@ namespace SpaceInvaders.Model
 
         private void timerTick(object sender, object e)
         {
-            if (count % 4 == 0)
+            if (this.count % 4 == 0)
             {
                 IList<int> moves = null;
                 if (this.currentRound == 1)
                 {
                     moves = new List<int> {1, 2, 2, 1};
-                    if (moves[move] % 2 != 0)
+                    if (moves[this.move] % 2 != 0)
                     {
                         this.enemyShipManger.MoveEnemyShipsLeft();
 
@@ -276,6 +262,23 @@ namespace SpaceInvaders.Model
             {
                 ship.Sprite.ChangeLightsColors();
             }
+        }
+
+        /// <summary>
+        /// Creates the handler to handle the lives change
+        /// Precondition: none
+        /// Post-condition: none
+        /// </summary>
+        public event LivesCountHandler PowerUpCountUpdated;
+
+        /// <summary>
+        /// Defines what is handled when the lives is changed.
+        /// Precondition: none
+        /// Post-condition: the lives on screen should be updated if lives is changed.
+        /// </summary>
+        public void OnPowerUpCountUpdated()
+        {
+            this.PowerUpCountUpdated?.Invoke(this.powerUpsRemaining);
         }
 
         /// <summary>
@@ -460,13 +463,21 @@ namespace SpaceInvaders.Model
         {
             //EnemyShip destroyedShip = this.shipsManager.EnemyDestroyed();
             IDictionary<GameObject, EnemyShip> result = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PlayerBullets);
-            IDictionary<GameObject, EnemyShip> powerUoResult = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PowerUps);
+            IDictionary<GameObject, EnemyShip> powerUpResult = this.enemyShipManger.EnemyDestroyed(this.bulletManager.PowerUps);
 
             //this.enemyShips = this.shipsManager.EnemyShips;
             this.enemyShips = this.enemyShipManger.EnemyShips;
             foreach (var bullet in result.Keys)
             {
                 this.bulletManager.RemovePlayerBullet((ShipBullet)bullet);
+                
+            }
+
+            foreach(var powerup in powerUpResult.Keys)
+            {
+                this.bulletManager.RemovePowerUp((PowerUp)powerup);
+                this.powerUpsRemaining -= 1;
+                this.OnPowerUpCountUpdated();
             }
 
             foreach (var destroyedShip in result.Values)
@@ -477,7 +488,8 @@ namespace SpaceInvaders.Model
                     if (destroyedShip.Sprite is BonusEnemySprite)
                     {
                         this.gotPowerUp = true;
-                        this.powerUpsRemaining = 7;
+                        this.powerUpsRemaining += 7;
+                        this.OnPowerUpCountUpdated();
                     }
                 }
             }
