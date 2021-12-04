@@ -52,7 +52,7 @@ namespace SpaceInvaders.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="BulletManager"/> class.
         /// Precondition: none
-        /// Post-condition: PlayerBullets.Count() == 0 && EnemyBullets.Count() == 0 && PowerUps.Count() == 0
+        /// Post-condition: PlayerBullets.Count() == 0 and EnemyBullets.Count() == 0 and PowerUps.Count() == 0
         /// </summary>
         /// <param name="gameBackground">The game background.</param>
         public BulletManager(Canvas gameBackground)

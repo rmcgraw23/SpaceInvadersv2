@@ -271,7 +271,7 @@ namespace SpaceInvaders.Model
         /// Precondition: none
         /// Post-condition: none
         /// </summary>
-        public event LivesCountHandler PowerUpCountUpdated;
+        public event EventHandler PowerUpCountUpdated;
 
         /// <summary>
         /// Defines what is handled when the lives is changed.
@@ -280,7 +280,7 @@ namespace SpaceInvaders.Model
         /// </summary>
         public void OnPowerUpCountUpdated()
         {
-            this.PowerUpCountUpdated?.Invoke(this.powerUpsRemaining);
+            this.PowerUpCountUpdated?.Invoke(this.powerUpsRemaining, EventArgs.Empty);
         }
 
         /// <summary>

@@ -73,9 +73,9 @@ namespace SpaceInvaders.View
             this.livesTextBlock.Text = "Lives: " + lives.ToString();
         }
 
-        private void PowerUpOnPowerUpCountUpdated(int lives)
+        private void PowerUpOnPowerUpCountUpdated(object self, EventArgs e)
         {
-            this.livesTextBlock.Text = "Lives: " + lives.ToString();
+            this.powerUpTextBlock.Text = "PowerUp: " + self;
         }
 
         private async void GameOnGameOverUpdated(object self, EventArgs e)
