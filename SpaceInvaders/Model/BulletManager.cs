@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using SpaceInvaders.Model.Player;
 using SpaceInvaders.View.Sprites;
@@ -94,9 +93,9 @@ namespace SpaceInvaders.Model
             return this.PlayerBullets;
         }
 
-        public IList<GameObject> RemovePowerUp(PowerUp powerup)
+        public IList<GameObject> RemovePowerUp(PowerUp powerUp)
         {
-            this.PowerUps.Remove(powerup);
+            this.PowerUps.Remove(powerUp);
             return this.PowerUps;
         }
 
@@ -114,7 +113,7 @@ namespace SpaceInvaders.Model
             }
         }
 
-        private IList<ShipBullet> createAndPlaceEnemyBullets(Random random, GameObject ship, double playerX)
+        private void createAndPlaceEnemyBullets(Random random, GameObject ship, double playerX)
         {
             var value = random.Next(0, 10);
             if (value == 0)
@@ -136,7 +135,7 @@ namespace SpaceInvaders.Model
 
                 this.placeBulletsBellowEnemies(ship, bullet);
 
-               this.gameBackground.Children.Add(bullet.Sprite);
+                this.gameBackground.Children.Add(bullet.Sprite);
                 this.AddEnemyBullet(bullet);
                 SoundPlayer.PlaySound("laser.wav");
 
@@ -149,8 +148,6 @@ namespace SpaceInvaders.Model
                     this.EnemyFired = true;
                 }*/
             }
-
-            return this.EnemyBullets;
         }
 
         private void placeBulletsBellowEnemies(GameObject ship, GameObject bullet)
@@ -159,14 +156,14 @@ namespace SpaceInvaders.Model
             bullet.Y = ship.Y + 18;
         }
 
-        public IList<GameObject> CreateAndPlacePlayerShipBullet(Canvas gameBackground, PlayerShip playerShip)
+        public IList<GameObject> CreateAndPlacePlayerShipBullet(PlayerShip playerShip)
         {
             ShipBullet bullet = new ShipBullet();
 
             if (this.PlayerBullets.Count < MaxLives)
             {
                 this.AddPlayerBullet(bullet);
-                gameBackground.Children.Add(bullet.Sprite);
+                this.gameBackground.Children.Add(bullet.Sprite);
                 this.placePlayerBullet(bullet, playerShip);
                 //this.BulletFired = true;
                 SoundPlayer.PlaySound("cannonFire.wav");
@@ -182,7 +179,7 @@ namespace SpaceInvaders.Model
             bullet.Y = playerShip.Y - 15;
         }
 
-        public void CreateandPlacePowerUp(PlayerShip playerShip)
+        public void CreateAndPlacePowerUp(PlayerShip playerShip)
         {
             PowerUp powerUp = new PowerUp();
             this.gameBackground.Children.Add(new PowerUp().Sprite);
@@ -224,20 +221,19 @@ namespace SpaceInvaders.Model
 
         public void MovePowerUp()
         {
-            GameObject PowerUp = null;
-            foreach (var powerUp in this.PowerUps)
+            GameObject powerUp = null;
+            foreach (var curPowerUp in this.PowerUps)
             {
-                if (powerUp.Y + powerUp.SpeedY < 0)
+                if (curPowerUp.Y + curPowerUp.SpeedY < 0)
                 {
-                    this.gameBackground.Children.Remove(powerUp.Sprite);
-                    PowerUp = powerUp;
+                    this.gameBackground.Children.Remove(curPowerUp.Sprite);
+                    powerUp = curPowerUp;
                 }
 
-                powerUp.MoveUp();
+                curPowerUp.MoveUp();
             }
 
-            this.PowerUps.Remove(PowerUp);
-            //this.playerShipManager.PlayerBullets = this.playerShipManager.PlayerBullets;
+            this.PowerUps.Remove(powerUp);
         }
 
         /// <summary>

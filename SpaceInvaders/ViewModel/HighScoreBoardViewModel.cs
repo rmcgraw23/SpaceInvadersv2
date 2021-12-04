@@ -1,27 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using SpaceInvaders.Annotations;
 using SpaceInvaders.Extension;
-using SpaceInvaders.Model;
 using SpaceInvaders.Model.HighScoreBoard;
 using SpaceInvaders.Utility;
 
 namespace SpaceInvaders.ViewModel
 {
+    /// <summary>
+    /// Manages connection between model and view
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public class HighScoreBoardViewModel : INotifyPropertyChanged
     {
-        #region DataMemebrs
+        #region DataMemebrs     
+        
+        /// <summary>
+        /// Gets or sets the add command.
+        /// </summary>
+        /// <value>
+        /// The add command.
+        /// </value>
+        public RelayCommand AddCommand { get; set; }
 
-        public RelayCommand addCommand { get; set; }
-        public RelayCommand sortCommand { get; set; }
-        public RelayCommand sortNameFirstCommand { get; set; }
-        public RelayCommand sortLevelFirstCommand { get; set; }
+        /// <summary>
+        /// Gets or sets the sort command.
+        /// </summary>
+        /// <value>
+        /// The sort command.
+        /// </value>
+        public RelayCommand SortCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sort name first command.
+        /// </summary>
+        /// <value>
+        /// The sort name first command.
+        /// </value>
+        public RelayCommand SortNameFirstCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sort level first command.
+        /// </summary>
+        /// <value>
+        /// The sort level first command.
+        /// </value>
+        public RelayCommand SortLevelFirstCommand { get; set; }
 
         #endregion
 
@@ -31,40 +56,58 @@ namespace SpaceInvaders.ViewModel
 
         private ObservableCollection<HighScore> highScores;
 
+        /// <summary>
+        /// Gets or sets the high scores.
+        /// </summary>
+        /// <value>
+        /// The high scores.
+        /// </value>
         public ObservableCollection<HighScore> HighScores
         {
             get { return this.highScores; }
             set
             {
                 this.highScores = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
                 //this.sortCommand.OnCanExecuteChanged();
-                this.sortNameFirstCommand.OnCanExecuteChanged();
-                this.sortLevelFirstCommand.OnCanExecuteChanged();
+                this.SortNameFirstCommand.OnCanExecuteChanged();
+                this.SortLevelFirstCommand.OnCanExecuteChanged();
             }
         }
 
         private string name;
 
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
         public string Name
         {
             get { return this.name;}
             set
             {
                 this.name = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         private bool inTopTen;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [in top ten].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [in top ten]; otherwise, <c>false</c>.
+        /// </value>
         public bool InTopTen
         {
             get { return this.inTopTen; }
             set
             {
                 this.inTopTen = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
@@ -72,97 +115,101 @@ namespace SpaceInvaders.ViewModel
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HighScoreBoardViewModel"/> class.
+        /// </summary>
         public HighScoreBoardViewModel()
         {
             this.HighScoreBoardManager = new HighScoreBoardManager();
             
-            this.addCommand = new RelayCommand(AddScore, CanAddScore);
-            this.sortCommand = new RelayCommand(SortScores, CanSortScores);
-            this.sortNameFirstCommand = new RelayCommand(SortNameFirstScores, CanSortNameFirstScores);
-            this.sortLevelFirstCommand = new RelayCommand(SortLevelFirstScores, CanSortLevelFirstScores);
+            this.AddCommand = new RelayCommand(this.addScore, this.canAddScore);
+            this.SortCommand = new RelayCommand(this.sortScores, this.canSortScores);
+            this.SortNameFirstCommand = new RelayCommand(this.sortNameFirstScores, this.canSortNameFirstScores);
+            this.SortLevelFirstCommand = new RelayCommand(this.sortLevelFirstScores, this.canSortLevelFirstScores);
             this.HighScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
             this.name = "Add your name to the board!";
             this.inTopTen = false;
-            this.GetStanding();
+            this.getStanding();
         }
 
         #endregion
 
         #region Methods
 
-        private void GetStanding()
+        /// <summary>
+        /// Gets the standing.
+        /// </summary>
+        private void getStanding()
         {
             this.inTopTen = this.HighScoreBoardManager.WithinTopTen();
 
         }
 
-        private bool CanAddScore(object obj)
+        /// <summary>
+        /// Determines whether this instance [can add score] the specified object.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>
+        ///   <c>true</c> if this instance [can add score] the specified object; otherwise, <c>false</c>.
+        /// </returns>
+        private bool canAddScore(object obj)
         {
             return this.HighScoreBoardManager.WithinTopTen();
         }
 
-        private void AddScore(object obj)
+        private void addScore(object obj)
         {
             this.HighScoreBoardManager.AddHighScore(this.name);
             this.HighScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
 
         }
 
-        private bool CanSortScores(object obj)
+        private bool canSortScores(object obj)
         {
             return this.HighScores != null;
         }
 
-        private void SortScores(object obj)
+        private void sortScores(object obj)
         {
             this.HighScoreBoardManager.HighScores.Sort();
         }
 
-        private bool CanSortNameFirstScores(object obj)
+        private bool canSortNameFirstScores(object obj)
         {
             return this.HighScores != null;
         }
 
-        private void SortNameFirstScores(object obj)
+        private void sortNameFirstScores(object obj)
         {
             this.HighScoreBoardManager.HighScores.Sort(new NameScoreLevelComparer());
             this.HighScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
         }
 
-        private bool CanSortLevelFirstScores(object obj)
+        private bool canSortLevelFirstScores(object obj)
         {
             return this.HighScores != null;
         }
 
-        private void SortLevelFirstScores(object obj)
+        private void sortLevelFirstScores(object obj)
         {
             this.HighScoreBoardManager.HighScores.Sort(new LevelScoreNameComparer());
             this.HighScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
         }
 
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
+        /// <returns></returns>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Called when [property changed].
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void sortByName()
-        {
-            this.HighScoreBoardManager.HighScores.Sort(new NameScoreLevelComparer());
-            this.highScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
-        }
-
-        public void sortByNameFirst(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            this.HighScoreBoardManager.HighScores.Sort(new NameScoreLevelComparer());
-            this.highScores = this.HighScoreBoardManager.HighScores.ToObservableCollection();
-        }
-
-        public void sortByLevelFirst(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

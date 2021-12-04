@@ -1,31 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Foundation;
+﻿using Windows.Foundation;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
 
 namespace SpaceInvaders.View
 {
+    /// <summary>
+    /// The high score board for the game.
+    /// </summary>
+    /// <seealso cref="Windows.UI.Xaml.Controls.Page" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
+    /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
     public sealed partial class HighScoreBoardView
     {
         #region DataMemebers
-
-        private bool show;
 
         #endregion
 
         #region Properties
 
-        // <summary>
-        ///     The application height
+        /// <summary>
+        /// The application height
         /// </summary>
         public const double ApplicationHeight = 580;
 
         /// <summary>
-        ///     The application width
+        /// The application width
         /// </summary>
         public const double ApplicationWidth = 840;
 
@@ -33,6 +31,9 @@ namespace SpaceInvaders.View
 
         #region Constructors
 
+        /// <summary>
+        /// Creates a new high score board instance.
+        /// </summary>
         public HighScoreBoardView()
         {
             this.InitializeComponent();
@@ -47,20 +48,7 @@ namespace SpaceInvaders.View
         #endregion
 
         #region Methods
-
-        private void sortByNameFirst(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-        }
-
-        private void sortByLevelFirst(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
-        }
-
-        private void SubmitButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
-        }
+        
 
         #endregion
 

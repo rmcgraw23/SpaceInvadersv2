@@ -9,14 +9,14 @@
         #region Methods
 
         /// <summary>
-        /// Detects if a collision occured between 2 game objects.
+        /// Detects if a collision occurred between 2 game objects.
         /// Precondition: none
         /// Post-Condition: none
         /// </summary>
         /// <param name="object1">The object1.</param>
         /// <param name="object2">The object2.</param>
         /// <returns></returns>
-        public static bool detectCollision(GameObject object1, GameObject object2)
+        public static bool DetectCollision(GameObject object1, GameObject object2)
         {
 
             if (object1 == null || object2 == null ||

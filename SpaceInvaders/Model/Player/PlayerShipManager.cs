@@ -123,7 +123,7 @@ namespace SpaceInvaders.Model.Player
 
         private void playerDestroyed(ShipBullet bullet, ref ShipBullet hitBullet)
         {
-            if (CollisionDetector.detectCollision(this.PlayerShip, bullet))
+            if (CollisionDetector.DetectCollision(this.PlayerShip, bullet))
             {
                 this.gameBackground.Children.Remove(this.PlayerShip.Sprite);
                 this.gameBackground.Children.Remove(bullet.Sprite);

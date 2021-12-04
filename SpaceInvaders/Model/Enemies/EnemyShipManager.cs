@@ -272,7 +272,7 @@ namespace SpaceInvaders.Model.Enemies
         {
             foreach (var bullet in playerBullets)
             {
-                if (CollisionDetector.detectCollision(ship, bullet))
+                if (CollisionDetector.DetectCollision(ship, bullet))
                 {
                     this.gameBackground.Children.Remove(ship.Sprite);
                     if (bullet.Sprite is PowerUpSprite && ((PowerUp)bullet).HitCount == 0)

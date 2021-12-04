@@ -406,7 +406,7 @@ namespace SpaceInvaders.Model
         {
             if (this.gotPowerUp)
             {
-                this.bulletManager.CreateandPlacePowerUp(this.playerShip);
+                this.bulletManager.CreateAndPlacePowerUp(this.playerShip);
                 this.powerUpsRemaining -= 1;
                 if (this.powerUpsRemaining == 0)
                 {
@@ -415,7 +415,7 @@ namespace SpaceInvaders.Model
             }
             else
             {
-                this.bulletManager.CreateAndPlacePlayerShipBullet(this.gameBackground, this.playerShip);
+                this.bulletManager.CreateAndPlacePlayerShipBullet(this.playerShip);
             }
             //this.playerBullet = this.playerShipManager.PlayerBullets;
 
@@ -625,7 +625,7 @@ namespace SpaceInvaders.Model
         {
             foreach (var currentShield in this.shields)
             {
-                if (CollisionDetector.detectCollision(currentShield, this.playerShipManager.PlayerShip))
+                if (CollisionDetector.DetectCollision(currentShield, this.playerShipManager.PlayerShip))
                 {
                     if (currentShield.HitsRemaining != 0)
                     {
@@ -649,7 +649,7 @@ namespace SpaceInvaders.Model
             {
                 foreach (var currentShield in this.shields)
                 {
-                    if (CollisionDetector.detectCollision(currentShield, currentBullet))
+                    if (CollisionDetector.DetectCollision(currentShield, currentBullet))
                     {
                         if (currentShield.HitsRemaining != 0)
                         {
@@ -676,7 +676,7 @@ namespace SpaceInvaders.Model
             {
                 foreach (var currentShield in this.shields)
                 {
-                    if (CollisionDetector.detectCollision(currentShield, currentBullet))
+                    if (CollisionDetector.DetectCollision(currentShield, currentBullet))
                     {
                         if (currentShield.HitsRemaining != 0)
                         {

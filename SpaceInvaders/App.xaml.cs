@@ -21,8 +21,8 @@ namespace SpaceInvaders
         /// </summary>
         public App()
         {
-            InitializeComponent();
-            Suspending += OnSuspending;
+            this.InitializeComponent();
+            Suspending += this.OnSuspending;
         }
 
         #endregion
@@ -45,7 +45,7 @@ namespace SpaceInvaders
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
-                rootFrame.NavigationFailed += OnNavigationFailed;
+                rootFrame.NavigationFailed += this.OnNavigationFailed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -65,7 +65,9 @@ namespace SpaceInvaders
 
 
                     //rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                {
                     rootFrame.Navigate(typeof(StartScreen), e.Arguments);
+                }
 
                 // Ensure the current window is active
                 Window.Current.Activate();

@@ -80,18 +80,18 @@ namespace SpaceInvaders.View
 
         private async void GameOnGameOverUpdated(object self, EventArgs e)
         {
-            string title = "";
             string content = "Score: " + this.gameManager.Score;
+            string title;
             if (this.gameManager.Result == "win")
             {
                 title = "Congratulation you won!";
-                
+
             }
             else
             {
                 title = "GameOver, You Lose!";
             }
-            
+
             var playerLostDialog = new ContentDialog
             {
                 Title = title,
@@ -106,9 +106,10 @@ namespace SpaceInvaders.View
 
         private async void waitOnScoreBoard()
         {
-            var currentAV = ApplicationView.GetForCurrentView();
-            var newAV = CoreApplication.CreateNewView();
-            await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            var currentAv = ApplicationView.GetForCurrentView();
+            var newAv = CoreApplication.CreateNewView();
+
+            async void AgileCallback()
             {
                 var newWindow = Window.Current;
                 var newAppView = ApplicationView.GetForCurrentView();
@@ -118,9 +119,10 @@ namespace SpaceInvaders.View
                 newWindow.Content = frame;
                 newWindow.Activate();
 
-                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum,
-                    currentAV.Id, ViewSizePreference.UseMinimum);
-            });
+                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum, currentAv.Id, ViewSizePreference.UseMinimum);
+            }
+
+            await newAv.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, AgileCallback);
 
         }
 

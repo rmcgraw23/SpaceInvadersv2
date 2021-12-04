@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
-using SpaceInvaders.View.Sprites;
+﻿using SpaceInvaders.View.Sprites;
 
 namespace SpaceInvaders.Model
 {
@@ -18,6 +12,13 @@ namespace SpaceInvaders.Model
         private const int SpeedXDirection = 0;
         private const int SpeedYDirection = 20;
 
+        #endregion
+
+        #region Properties      
+        
+        /// <summary>
+        /// The hit count
+        /// </summary>
         public int HitCount = 1;
 
         #endregion

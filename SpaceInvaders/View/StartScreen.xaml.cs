@@ -33,16 +33,17 @@ namespace SpaceInvaders.View
 
         #region Methods
 
-        private void startGame_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void startGame_Button_Click(object sender, RoutedEventArgs e)
         {
             this.waitOnStart();
         }
 
         private async void waitOnStart()
         {
-            var currentAV = ApplicationView.GetForCurrentView();
-            var newAV = CoreApplication.CreateNewView();
-            await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            var currentAv = ApplicationView.GetForCurrentView();
+            var newAv = CoreApplication.CreateNewView();
+
+            async void AgileCallback()
             {
                 var newWindow = Window.Current;
                 var newAppView = ApplicationView.GetForCurrentView();
@@ -52,22 +53,24 @@ namespace SpaceInvaders.View
                 newWindow.Content = frame;
                 newWindow.Activate();
 
-                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum,
-                    currentAV.Id, ViewSizePreference.UseMinimum);
-            });
+                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum, currentAv.Id, ViewSizePreference.UseMinimum);
+            }
+
+            await newAv.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, AgileCallback);
 
         }
 
-        private void viewHighScoreBoard_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void viewHighScoreBoard_Button_Click(object sender, RoutedEventArgs e)
         {
             this.waitOnScoreBoard();
         }
 
         private async void waitOnScoreBoard()
         {
-            var currentAV = ApplicationView.GetForCurrentView();
-            var newAV = CoreApplication.CreateNewView();
-            await newAV.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            var currentAv = ApplicationView.GetForCurrentView();
+            var newAv = CoreApplication.CreateNewView();
+
+            async void AgileCallback()
             {
                 var newWindow = Window.Current;
                 var newAppView = ApplicationView.GetForCurrentView();
@@ -77,13 +80,14 @@ namespace SpaceInvaders.View
                 newWindow.Content = frame;
                 newWindow.Activate();
 
-                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum,
-                    currentAV.Id, ViewSizePreference.UseMinimum);
-            });
+                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.UseMinimum, currentAv.Id, ViewSizePreference.UseMinimum);
+            }
+
+            await newAv.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, AgileCallback);
 
         }
 
-        private void resetHighScoreBoard_Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void resetHighScoreBoard_Button_Click(object sender, RoutedEventArgs e)
         {
 
         }
